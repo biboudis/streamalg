@@ -1,4 +1,4 @@
-## Defunctionalizing main.java.Streams for Java
+## Defunctionalizing Streams for Java
 
 ### Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
