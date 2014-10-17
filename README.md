@@ -1,6 +1,6 @@
 ## Defunctionalizing main.java.Streams for Java
 
-### main.java.Streams-Zoo
+### Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
 * [Nessos/main.java.Streams](https://github.com/nessos/main.java.Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
