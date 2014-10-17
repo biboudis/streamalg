@@ -1,8 +1,8 @@
-## Defunctionalizing Streams for Java
+## Defunctionalizing main.java.Streams for Java
 
-### Streams-Zoo
+### main.java.Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
-* [Nessos/Streams](https://github.com/nessos/Streams) in F#
+* [Nessos/main.java.Streams](https://github.com/nessos/main.java.Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
 * [sml-streams](https://github.com/biboudis/sml-streams) in SML/MLton
 * [Iterator combinators](http://mlton.org/ForLoops), [iter.sml](https://github.com/MLton/mltonlib/blob/master/com/ssh/extended-basis/unstable/detail/control/iter.sml) / [iter.sig](https://github.com/MLton/mltonlib/blob/master/com/ssh/extended-basis/unstable/public/control/iter.sig) in SML/MLton

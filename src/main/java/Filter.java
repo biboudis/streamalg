@@ -25,4 +25,6 @@ public class Filter<T> extends Stream<T> implements StreamStep {
     public <Result> Result accept(StreamVisitor<Result> streamVisitor) {
         return streamVisitor.visit(this);
     }
+
+
 }
