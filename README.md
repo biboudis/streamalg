@@ -8,6 +8,7 @@
 * [Iterator combinators](http://mlton.org/ForLoops), [iter.sml](https://github.com/MLton/mltonlib/blob/master/com/ssh/extended-basis/unstable/detail/control/iter.sml) / [iter.sig](https://github.com/MLton/mltonlib/blob/master/com/ssh/extended-basis/unstable/public/control/iter.sig) in SML/MLton
 
 ### References
+* [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
 * [Defunctionalizing Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
 * [The Anatomy of a Loop](http://www.ccs.neu.edu/home/shivers/papers/loop.pdf)
 
