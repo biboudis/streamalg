@@ -1,3 +1,4 @@
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -13,5 +14,17 @@ public abstract class Stream<T> {
         return new Filter(predicate, this);
     };
 
-    long count(){ return 0L; };
+    long temp = 0L;
+
+    long count(){
+        temp = 0;
+
+        Consumer<T> k = i -> this.temp++;
+
+        this.push().accept(k);
+
+        return temp;
+    };
+
+    abstract Consumer<Consumer<T>> push();
 }

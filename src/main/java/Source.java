@@ -1,7 +1,9 @@
+import java.util.function.Consumer;
+
 /**
  * Created by bibou on 10/14/14.
  */
-public class Source<T> extends Stream<T> implements StreamStep {
+public class Source<T> extends Stream<T> {
 
     final T[] array;
 
@@ -14,7 +16,11 @@ public class Source<T> extends Stream<T> implements StreamStep {
     }
 
     @Override
-    public <Result> Result accept(StreamVisitor<Result> streamVisitor) {
-        return streamVisitor.visit(this);
+    Consumer<Consumer<T>> push() {
+        return k -> {
+            for(int i=0 ; i < array.length ; i++){
+                k.accept(array[i]);
+            }
+        };
     }
 }

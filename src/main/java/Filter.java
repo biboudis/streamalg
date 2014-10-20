@@ -1,9 +1,10 @@
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
  * Created by bibou on 10/14/14.
  */
-public class Filter<T> extends Stream<T> implements StreamStep {
+public class Filter<T> extends Stream<T> {
 
     final Predicate<T> predicate;
     final Stream<T> stream;
@@ -22,9 +23,10 @@ public class Filter<T> extends Stream<T> implements StreamStep {
     }
 
     @Override
-    public <Result> Result accept(StreamVisitor<Result> streamVisitor) {
-        return streamVisitor.visit(this);
+    Consumer<Consumer<T>> push() {
+        return k -> stream.push().accept(i -> {
+            if(predicate.test(i))
+                k.accept(i);
+        });
     }
-
-
 }
