@@ -6,7 +6,7 @@ import java.util.function.Function;
  */
 public class Map<T,R> extends Stream<R> {
 
-    final Function<T,R > mapper;
+    final Function<T,R> mapper;
     final Stream<T> stream;
 
     public Map(Function<T, R> mapper, Stream<T> stream) {
@@ -23,7 +23,7 @@ public class Map<T,R> extends Stream<R> {
     }
 
     @Override
-    Consumer<Consumer<R>> push() {
-        return k -> stream.push().accept(i-> k.accept(mapper.apply(i)));
+    <C> App<C, R> accept(StreamVisitor<C> visitor) {
+        return visitor.visit(this);
     }
 }

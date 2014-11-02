@@ -16,11 +16,7 @@ public class Source<T> extends Stream<T> {
     }
 
     @Override
-    Consumer<Consumer<T>> push() {
-        return k -> {
-            for(int i=0 ; i < array.length ; i++){
-                k.accept(array[i]);
-            }
-        };
+    <C> App<C, T> accept(StreamVisitor<C> visitor) {
+        return visitor.visit(this);
     }
 }

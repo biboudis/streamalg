@@ -23,10 +23,8 @@ public class Filter<T> extends Stream<T> {
     }
 
     @Override
-    Consumer<Consumer<T>> push() {
-        return k -> stream.push().accept(i -> {
-            if(predicate.test(i))
-                k.accept(i);
-        });
+    <C> App<C, T> accept(StreamVisitor<C> visitor) {
+        return visitor.visit(this);
     }
+
 }
