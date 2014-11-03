@@ -8,15 +8,15 @@ import java.util.function.Predicate;
  */
 public abstract class Stream<T> {
 
-    <R> Stream<R> map(Function<T,R> mapper) {
+    long temp = 0L;
+
+    <R> Stream<R> map(Function<T, R> mapper) {
         return new Map(mapper, this);
     };
 
-    Stream<T> filter (Predicate<T> predicate){
+    Stream<T> filter(Predicate<T> predicate) {
         return new Filter(predicate, this);
-    };
-
-    long temp = 0L;
+    }
 
     long count(){
         temp = 0;
@@ -26,12 +26,11 @@ public abstract class Stream<T> {
         Push.prj(this.accept(new PushVisitor())).invoke(k);
 
         return temp;
-    };
+    }
 
     Iterator<T> iterator() {
         return Pull.prj(this.accept(new PullVisitor()));
     }
 
     abstract <C> App<C, T> accept(StreamVisitor<C> visitor);
-
 }

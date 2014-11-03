@@ -1,5 +1,3 @@
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  * Created by bibou on 11/1/14.
  */
@@ -21,8 +19,8 @@ public class PushVisitor implements StreamVisitor<Push.t> {
                 .prj(filter.getStream().accept(this));
 
         Push<T> f = k -> inner.invoke(i -> {
-                if (filter.getPredicate().test(i))
-                    k.accept(i);
+            if (filter.getPredicate().test(i))
+                k.accept(i);
         });
 
         return f;
