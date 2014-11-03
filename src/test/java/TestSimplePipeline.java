@@ -15,7 +15,7 @@ public class TestSimplePipeline {
 
     @Before
     public void setUp() {
-        array = IntStream.range(0, 10000).mapToObj(i -> new Long(i % 1000)).toArray(Long[]::new);
+        array = IntStream.range(0, 100).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
     }
 
     @Test
@@ -81,5 +81,36 @@ public class TestSimplePipeline {
         Iterators.addAll(l2, it2);
 
         assertEquals(l1, l2) ;
+    }
+
+    @Test
+    public void testFlatMapPush(){
+
+        long size = Streams.of(array)
+                .flatMap(x -> Streams.of(array).map(y -> x * y))
+                .count();
+
+        long size2 = java.util.stream.Stream.of(array)
+                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+                .count();
+
+        assert size==size2;
+    }
+
+    @Test
+    public void testLog(){
+        Streams.of(array)
+                .map(x -> x + 1)
+                .filter(x -> x % 2L==0)
+                .flatMap(x -> Streams.of(array).map(y -> x * y).log())
+                .log()
+                .count();
+
+        assert true;
+    }
+
+    @Test
+    public void testFlatMapPull(){
+        assert false;
     }
 }

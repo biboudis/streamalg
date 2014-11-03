@@ -37,6 +37,11 @@ public class PullVisitor implements StreamVisitor<Pull.t> {
     }
 
     @Override
+    public <T, R> App<Pull.t, R> visit(FlatMap<T, R> map) {
+        return null;
+    }
+
+    @Override
     public <T> App<Pull.t, T> visit(Filter<T> filter) {
         final Pull<T> inner = Pull.prj(filter.getStream().accept(PullVisitor.this));
 

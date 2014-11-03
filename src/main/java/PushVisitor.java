@@ -14,6 +14,19 @@ public class PushVisitor implements StreamVisitor<Push.t> {
     }
 
     @Override
+    public <T, R> App<Push.t, R> visit(FlatMap<T, R> flatMap) {
+        Push<T> outer = Push
+                .prj(flatMap.getStream().accept(this));
+
+        Push<R> f = k -> outer.invoke(v-> {
+            Push<R> inner = Push.prj(flatMap.getMapper().apply(v).accept(new PushVisitor()));
+            inner.invoke(k);
+        });
+
+        return f;
+    }
+
+    @Override
     public <T> App<Push.t, T> visit(Filter<T> filter) {
         Push<T> inner = Push
                 .prj(filter.getStream().accept(this));

@@ -6,7 +6,15 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 10/14/14.
  */
-public abstract class Stream<T> {
+public abstract class Stream<T> implements App<Stream.t, T> {
+
+    static class t {
+
+    }
+
+    static <A> Stream<A> prj(App<Stream.t, A> app) {
+        return (Stream) app;
+    };
 
     long temp = 0L;
 
@@ -18,6 +26,8 @@ public abstract class Stream<T> {
         return new Filter(predicate, this);
     }
 
+    <R> Stream<Stream<R>> flatMap(Function<T, Stream<R>> mapper) { return new FlatMap(mapper, this);}
+
     long count(){
         temp = 0;
 
@@ -26,6 +36,10 @@ public abstract class Stream<T> {
         Push.prj(this.accept(new PushVisitor())).invoke(k);
 
         return temp;
+    }
+
+    Stream<T> log(){
+        return Stream.prj(this.accept(new LogVisitor()));
     }
 
     Iterator<T> iterator() {
