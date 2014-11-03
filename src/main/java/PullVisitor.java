@@ -7,7 +7,7 @@ public class PullVisitor implements StreamVisitor<Pull.t> {
 
     @Override
     public <T, R> App<Pull.t, R> visit(Map<T, R> map) {
-        Pull<T> inner = Pull.prj(map.getStream().accept(PullVisitor.this));
+        final Pull<T> inner = Pull.prj(map.getStream().accept(PullVisitor.this));
 
         Pull<R> f = new Pull<R>() {
             R next = null;
@@ -38,7 +38,7 @@ public class PullVisitor implements StreamVisitor<Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> visit(Filter<T> filter) {
-        Pull<T> inner = Pull.prj(filter.getStream().accept(PullVisitor.this));
+        final Pull<T> inner = Pull.prj(filter.getStream().accept(PullVisitor.this));
 
         Pull<T> f = new Pull<T>() {
             T next = null;
@@ -64,8 +64,6 @@ public class PullVisitor implements StreamVisitor<Pull.t> {
                 }
                 throw new NoSuchElementException();
             }
-
-            ;
         };
         return f;
     }
@@ -73,7 +71,7 @@ public class PullVisitor implements StreamVisitor<Pull.t> {
     @Override
     public <T> App<Pull.t, T> visit(Source<T> source) {
 
-        T[] array = source.getArray();
+        final T[] array = source.getArray();
 
         Pull<T> f = new Pull<T>() {
 
