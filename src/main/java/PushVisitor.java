@@ -7,20 +7,24 @@ public class PushVisitor implements StreamVisitor<Push.t> {
 
     @Override
     public <T, R> App<Push.t, R> visit(Map<T, R> map) {
-        Push<R> f = k -> Push
-                .prj(map.getStream().accept(this))
-                .invoke(i -> k.accept(map.getMapper().apply(i)));
+        Push<T> inner = Push
+                .prj(map.getStream().accept(this));
+
+        Push<R> f = k -> inner.invoke(i -> k.accept(map.getMapper().apply(i)));
+
         return f;
     }
 
     @Override
     public <T> App<Push.t, T> visit(Filter<T> filter) {
-        Push<T> f = k -> Push
-                .prj(filter.getStream().accept(this))
-                .invoke(i -> {
-                    if (filter.getPredicate().test(i))
-                        k.accept(i);
-                    });
+        Push<T> inner = Push
+                .prj(filter.getStream().accept(this));
+
+        Push<T> f = k -> inner.invoke(i -> {
+                if (filter.getPredicate().test(i))
+                    k.accept(i);
+        });
+
         return f;
     }
 
