@@ -8,13 +8,18 @@
 * [Iterator combinators](http://mlton.org/ForLoops) in SML/MLton
 
 ### References
-* [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
-* [Generalized Algebraic Data Types and Object-Oriented Programming](http://research.microsoft.com/apps/pubs/default.aspx?id=64040)
+#### 1. Push vs Pull
 * [Defunctionalizing Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
+* [The Anatomy of a Loop](http://www.ccs.neu.edu/home/shivers/papers/loop.pdf)
+
+#### 2. GADTs in Java
+* [Generalized Algebraic Data Types and Object-Oriented Programming](http://research.microsoft.com/apps/pubs/default.aspx?id=64040)
 * [Lightweight Higher-Kinded Polymorphism](https://ocamllabs.github.io/higher/lightweight-higher-kinded-polymorphism.pdf) ([extended](http://www.lpw25.net/flops2014.pdf))
 * [Generics of a Higher Kind](https://lirias.kuleuven.be/bitstream/123456789/186940/4/tcpoly.pdf)
 * [Adding Type Constructor Parameterization to Java](http://www.jot.fm/issues/issue_2008_06/article2.pdf)
-* [The Anatomy of a Loop](http://www.ccs.neu.edu/home/shivers/papers/loop.pdf)
+
+#### 3. Object Algebras
+* [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
 
 ### Dependencies
 * [JMH](http://openjdk.java.net/projects/code-tools/jmh/)
