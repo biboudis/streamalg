@@ -22,7 +22,7 @@ public class FlatMap<T,R> extends Stream<R> {
     }
 
     @Override
-    <C> App<C, R> accept(StreamVisitor<C> visitor) {
-        return visitor.visit(this);
+    <C> App<C, R> fold(StreamAlg<C> algebra) {
+        return algebra.flatMap(x -> mapper.apply(x).fold(algebra), stream.<C>fold(algebra));
     }
 }

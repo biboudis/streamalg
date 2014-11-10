@@ -23,7 +23,7 @@ public class Map<T,R> extends Stream<R> {
     }
 
     @Override
-    <C> App<C, R> accept(StreamVisitor<C> visitor) {
-        return visitor.visit(this);
+    <C> App<C, R> fold(StreamAlg<C> algebra) {
+        return algebra.map(mapper, stream.fold(algebra));
     }
 }

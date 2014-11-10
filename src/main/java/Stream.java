@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -33,18 +32,18 @@ public abstract class Stream<T> implements App<Stream.t, T> {
 
         Consumer<T> k = i -> this.temp ++;
 
-        Push.prj(this.accept(new PushVisitor())).invoke(k);
+        Push.prj(this.fold(new PushAlg())).invoke(k);
 
         return temp;
     }
 
-    Stream<T> log(){
-        return Stream.prj(this.accept(new LogVisitor()));
-    }
+//    Stream<T> log(){
+//        return Stream.prj(this.fold(new LogVisitor()));
+//    }
 
-    Iterator<T> iterator() {
-        return Pull.prj(this.accept(new PullVisitor()));
-    }
+//    Iterator<T> iterator() {
+//        return Pull.prj(this.fold(new PullAlg()));
+//    }
 
-    abstract <C> App<C, T> accept(StreamVisitor<C> visitor);
+    abstract <C> App<C, T> fold(StreamAlg<C> algebra);
 }

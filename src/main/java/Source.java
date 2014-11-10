@@ -16,7 +16,7 @@ public class Source<T> extends Stream<T> {
     }
 
     @Override
-    <C> App<C, T> accept(StreamVisitor<C> visitor) {
-        return visitor.visit(this);
+    <C> App<C, T> fold(StreamAlg<C> algebra) {
+        return algebra.source(array);
     }
 }

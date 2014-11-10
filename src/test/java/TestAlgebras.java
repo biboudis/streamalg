@@ -33,80 +33,84 @@ public class TestAlgebras {
 
     @Test
     public void testMapPush(){
-
-        long size = Streams.of(array)
-                .map(x -> x + 1L)
-                .count();
-
-        long size2 = java.util.stream.Stream.of(array)
-                .map(x -> x + 1L)
-                .count();
-
-        assert size==size2;
+        assert false;
+//        long size = Streams.of(array)
+//                .map(x -> x + 1L)
+//                .count();
+//
+//        long size2 = java.util.stream.Stream.of(array)
+//                .map(x -> x + 1L)
+//                .count();
+//
+//        assert size==size2;
     }
 
     @Test
     public void testFilterPull(){
-        Iterator<Long> it1 = Streams.of(array)
-                .filter(x -> x % 2L == 0L)
-                .iterator();
-
-        Iterator<Long> it2 = java.util.stream.Stream.of(array)
-                .filter(x -> x % 2L == 0L)
-                .iterator();
-
-        ArrayList<Long> l1 = new ArrayList<>();
-        ArrayList<Long> l2 = new ArrayList<>();
-
-        Iterators.addAll(l1, it1);
-        Iterators.addAll(l2, it2);
-
-        assertEquals(l1, l2) ;
+        assert false;
+//        Iterator<Long> it1 = Streams.of(array)
+//                .filter(x -> x % 2L == 0L)
+//                .iterator();
+//
+//        Iterator<Long> it2 = java.util.stream.Stream.of(array)
+//                .filter(x -> x % 2L == 0L)
+//                .iterator();
+//
+//        ArrayList<Long> l1 = new ArrayList<>();
+//        ArrayList<Long> l2 = new ArrayList<>();
+//
+//        Iterators.addAll(l1, it1);
+//        Iterators.addAll(l2, it2);
+//
+//        assertEquals(l1, l2) ;
     }
 
     @Test
     public void testMapPull(){
-        Iterator<Long> it1 = Streams.of(array)
-                .map(x -> x + 1)
-                .iterator();
-
-        Iterator<Long> it2 = java.util.stream.Stream.of(array)
-                .map(x -> x + 1)
-                .iterator();
-
-        ArrayList<Long> l1 = new ArrayList<>();
-        ArrayList<Long> l2 = new ArrayList<>();
-
-        Iterators.addAll(l1, it1);
-        Iterators.addAll(l2, it2);
-
-        assertEquals(l1, l2) ;
+//        Iterator<Long> it1 = Streams.of(array)
+//                .map(x -> x + 1)
+//                .iterator();
+//
+//        Iterator<Long> it2 = java.util.stream.Stream.of(array)
+//                .map(x -> x + 1)
+//                .iterator();
+//
+//        ArrayList<Long> l1 = new ArrayList<>();
+//        ArrayList<Long> l2 = new ArrayList<>();
+//
+//        Iterators.addAll(l1, it1);
+//        Iterators.addAll(l2, it2);
+//
+//        assertEquals(l1, l2) ;
+        assert false;
     }
 
     @Test
     public void testFlatMapPush(){
 
-        long size = Streams.of(array)
-                .flatMap(x -> Streams.of(array).map(y -> x * y))
-                .count();
-
-        long size2 = java.util.stream.Stream.of(array)
-                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
-                .count();
-
-        assert size==size2;
+//        long size = Streams.of(array)
+//                .flatMap(x -> Streams.of(array).map(y -> x * y))
+//                .count();
+//
+//        long size2 = java.util.stream.Stream.of(array)
+//                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+//                .count();
+//
+//        assert size==size2;
+        assert false;
     }
 
     @Test
     public void testLog(){
-        Streams.of(array)
-                .map(x -> x + 1)
-                .filter(x -> x % 2L==0)
-                .flatMap(x -> Streams.of(array).map(y -> x * y).log())
-                .log()
-                .count();
-
-        assert true;
+        assert false;
+//        Streams.of(array)
+//                .map(x -> x + 1)
+//                .filter(x -> x % 2L==0)
+//                .flatMap(x -> Streams.of(array).map(y -> x * y).log())
+//                .log()
+//                .count();
+//
+//        assert true;
     }
 
     @Test

@@ -1,4 +1,3 @@
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -23,8 +22,8 @@ public class Filter<T> extends Stream<T> {
     }
 
     @Override
-    <C> App<C, T> accept(StreamVisitor<C> visitor) {
-        return visitor.visit(this);
+    <C> App<C, T> fold(StreamAlg<C> algebra) {
+        return algebra.filter(predicate, stream.fold(algebra));
     }
 
 }
