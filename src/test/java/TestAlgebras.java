@@ -18,11 +18,25 @@ public class TestAlgebras {
     }
 
     @Test
-    public void testFilterPush(){
+    public void testFilterCountPush(){
 
         PushAlg push = new PushAlg();
 
         long size = push.length(push.filter(x -> (long) x % 2L == 0, push.source(array)));
+
+        long size2 = java.util.stream.Stream.of(array)
+                .filter(x -> x % 2L == 0L)
+                .count();
+
+        assert size==size2;
+    }
+
+    @Test
+    public void testFilterCountPull(){
+
+        PullAlg pull = new PullAlg();
+
+        long size = pull.length(pull.filter(x -> (long) x % 2L == 0, pull.source(array)));
 
         long size2 = java.util.stream.Stream.of(array)
                 .filter(x -> x % 2L == 0L)
@@ -43,26 +57,6 @@ public class TestAlgebras {
 //                .count();
 //
 //        assert size==size2;
-    }
-
-    @Test
-    public void testFilterPull(){
-        assert false;
-//        Iterator<Long> it1 = Streams.of(array)
-//                .filter(x -> x % 2L == 0L)
-//                .iterator();
-//
-//        Iterator<Long> it2 = java.util.stream.Stream.of(array)
-//                .filter(x -> x % 2L == 0L)
-//                .iterator();
-//
-//        ArrayList<Long> l1 = new ArrayList<>();
-//        ArrayList<Long> l2 = new ArrayList<>();
-//
-//        Iterators.addAll(l1, it1);
-//        Iterators.addAll(l2, it2);
-//
-//        assertEquals(l1, l2) ;
     }
 
     @Test
