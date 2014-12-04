@@ -1,3 +1,5 @@
+package streams;
+
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -67,26 +69,30 @@ public class PullAlg implements StreamAlg<Pull.t> {
         Pull<T> self = Pull.prj(app);
         Pull<R> f = new Pull<R>() {
             Pull<R> current = null;
+
             R next = null;
+
             @Override
             public boolean hasNext() {
-                while (self.hasNext()) {
-                    if( current != null && current.hasNext()){
+
+                while(true) {
+                    while (current != null && current.hasNext()) {
                         next = current.next();
+                        return true;
                     }
-                    else {
+
+                    if (self.hasNext())
                         this.current = Pull.prj(mapper.apply(self.next()));
-                    }
-                    return true;
+                    else
+                        return false;
                 }
-                return false;
+
             }
             @Override
             public R next() {
                 if (current != null || this.hasNext()) {
-                    current = Pull.prj(this.current);
-                    R  temp = current.next();
-                    this.current = null;
+                    R temp = this.next;
+                    this.next = null;
                     return temp;
                 }
                 throw new NoSuchElementException();

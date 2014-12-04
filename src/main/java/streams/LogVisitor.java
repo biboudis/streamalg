@@ -1,3 +1,5 @@
+package streams;
+
 /**
  * Created by bibou on 11/1/14.
  */

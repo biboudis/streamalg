@@ -1,19 +1,21 @@
+package streams;
+
 import java.util.function.Function;
 
 /**
  * Created by bibou on 10/14/14.
  */
-public class Map<T,R> extends Stream<R> {
+public class FlatMap<T,R> extends Stream<R> {
 
-    final Function<T,R> mapper;
+    final Function<T, Stream<R>> mapper;
     final Stream<T> stream;
 
-    public Map(Function<T, R> mapper, Stream<T> stream) {
+    public FlatMap(Function<T, Stream<R>> mapper, Stream<T> stream) {
         this.mapper = mapper;
         this.stream = stream;
     }
 
-    public Function<T, R> getMapper() {
+    public Function<T, Stream<R>> getMapper() {
         return mapper;
     }
 
@@ -23,6 +25,6 @@ public class Map<T,R> extends Stream<R> {
 
     @Override
     <C> App<C, R> fold(StreamAlg<C> algebra) {
-        return algebra.map(mapper, stream.fold(algebra));
+        return algebra.flatMap(x -> mapper.apply(x).fold(algebra), stream.<C>fold(algebra));
     }
 }

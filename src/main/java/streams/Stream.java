@@ -1,3 +1,5 @@
+package streams;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -37,12 +39,12 @@ public abstract class Stream<T> implements App<Stream.t, T> {
         return temp;
     }
 
-//    Stream<T> log(){
-//        return Stream.prj(this.fold(new LogVisitor()));
+//    streams.Stream<T> log(){
+//        return streams.Stream.prj(this.fold(new streams.LogVisitor()));
 //    }
 
 //    Iterator<T> iterator() {
-//        return Pull.prj(this.fold(new PullAlg()));
+//        return streams.Pull.prj(this.fold(new streams.PullAlg()));
 //    }
 
     abstract <C> App<C, T> fold(StreamAlg<C> algebra);

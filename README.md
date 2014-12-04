@@ -1,12 +1,12 @@
-## Defunctionalizing Streams for Java
+## Defunctionalizing streams.Streams for Java
 
 ## Motivation
-In this project our motivation is to provide a new library design for Stream APIs that enable extensibility of Stream
+In this project our motivation is to provide a new library design for streams.Stream APIs that enable extensibility of streams.Stream
 libraries in 2 dimensions: open to both new combinators and new traversal methods.
 
 ## References
-### 1. Push vs Pull
-* [Defunctionalizing Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
+### 1. streams.Push vs streams.Pull
+* [Defunctionalizing streams.Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
 * [The Anatomy of a Loop](http://www.ccs.neu.edu/home/shivers/papers/loop.pdf)
 
 ### 2. External vs Internal Visitors
@@ -21,9 +21,22 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 ### 4. Object Algebras
 * [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
 
-## Streams-Zoo
+## Preliminary Performance Characteristics
+```
+Benchmark                                                     Mode  Samples    Score    Error  Units
+b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPull            avgt        5  124.572 ± 43.102  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPush            avgt        5  111.503 ± 14.016  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_Baseline                avgt        5   65.601 ±  4.542  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_Java8Streams            avgt        5  156.475 ±  7.912  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPull    avgt        5    4.384 ±  2.174  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPush    avgt        5    3.597 ±  1.847  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_Baseline        avgt        5    6.131 ±  1.420  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    3.366 ±  0.681  ms/op
+```
+
+## streams.Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
-* [Nessos/Streams](https://github.com/nessos/Streams) in F#
+* [Nessos/streams.Streams](https://github.com/nessos/streams.Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
 * [sml-streams](https://github.com/biboudis/sml-streams) in SML/MLton
 * [Iterator combinators](http://mlton.org/ForLoops) in SML/MLton

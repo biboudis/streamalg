@@ -1,20 +1,20 @@
-import com.google.common.collect.Iterators;
 import org.junit.Before;
 import org.junit.Test;
+import streams.PullAlg;
+import streams.PushAlg;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestAlgebras {
 
-    public Long[] array;
+    public Long[] v, v_inner;
 
     @Before
     public void setUp() {
-        array = IntStream.range(0, 100).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 100).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 10).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
     }
 
     @Test
@@ -22,9 +22,9 @@ public class TestAlgebras {
 
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(array)));
+        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(array)
+        long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
@@ -36,9 +36,9 @@ public class TestAlgebras {
 
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.filter(x -> x % 2L == 0, alg.source(array)));
+        long actual = alg.length(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(array)
+        long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
@@ -49,9 +49,9 @@ public class TestAlgebras {
     public void testMapPush(){
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.map(x -> (long) x ^ 2, alg.source(array)));
+        long actual = alg.length(alg.map(x -> (long) x ^ 2, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(array)
+        long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
                 .count();
 
@@ -62,9 +62,9 @@ public class TestAlgebras {
     public void testMapPull(){
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.map(x -> x ^ 2, alg.source(array)));
+        long actual = alg.length(alg.map(x -> x ^ 2, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(array)
+        long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
                 .count();
 
@@ -77,11 +77,11 @@ public class TestAlgebras {
 
         long actual = alg.length(alg.flatMap(x -> {
             PushAlg inner = new PushAlg();
-            return inner.map(y -> (long)x * (long) y, alg.source(array));
-        }, alg.source(array)));
+            return inner.map(y -> (long)x * (long) y, alg.source(v_inner));
+        }, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(array)
-                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+        long expected = java.util.stream.Stream.of(v)
+                .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
                 .count();
 
         assertEquals(expected, actual);
@@ -93,11 +93,11 @@ public class TestAlgebras {
 
         long actual = alg.length(alg.flatMap(x -> {
             PullAlg inner = new PullAlg();
-            return inner.map(y -> (long) x * (long) y, alg.source(array));
-        }, alg.source(array)));
+            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
+        }, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(array)
-                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+        long expected = java.util.stream.Stream.of(v)
+                .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
                 .count();
 
         assertEquals(expected, actual);
@@ -105,10 +105,10 @@ public class TestAlgebras {
 
 //    @Test
 //    public void testLog(){
-//        Streams.of(array)
+//        streams.Streams.of(v)
 //                .map(x -> x + 1)
 //                .filter(x -> x % 2L==0)
-//                .flatMap(x -> Streams.of(array).map(y -> x * y).log())
+//                .flatMap(x -> streams.Streams.of(v).map(y -> x * y).log())
 //                .log()
 //                .count();
 //

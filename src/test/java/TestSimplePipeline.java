@@ -11,20 +11,20 @@
 //
 //public class TestSimplePipeline {
 //
-//    public Long[] array;
+//    public Long[] v;
 //
 //    @Before
 //    public void setUp() {
-//        array = IntStream.range(0, 100).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+//        v = IntStream.range(0, 100).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
 //    }
 //
 //    @Test
 //    public void testFilterPush(){
-//        long size = Streams.of(array)
+//        long size = streams.Streams.of(v)
 //                .filter(x -> x % 2L == 0L)
 //                .count();
 //
-//        long size2 = java.util.stream.Stream.of(array)
+//        long size2 = java.util.stream.streams.Stream.of(v)
 //                .filter(x -> x % 2L == 0L)
 //                .count();
 //
@@ -34,11 +34,11 @@
 //    @Test
 //    public void testMapPush(){
 //
-//        long size = Streams.of(array)
+//        long size = streams.Streams.of(v)
 //                .map(x -> x + 1L)
 //                .count();
 //
-//        long size2 = java.util.stream.Stream.of(array)
+//        long size2 = java.util.stream.streams.Stream.of(v)
 //                .map(x -> x + 1L)
 //                .count();
 //
@@ -47,11 +47,11 @@
 //
 //    @Test
 //    public void testFilterPull(){
-//        Iterator<Long> it1 = Streams.of(array)
+//        Iterator<Long> it1 = streams.Streams.of(v)
 //                .filter(x -> x % 2L == 0L)
 //                .iterator();
 //
-//        Iterator<Long> it2 = java.util.stream.Stream.of(array)
+//        Iterator<Long> it2 = java.util.stream.streams.Stream.of(v)
 //                .filter(x -> x % 2L == 0L)
 //                .iterator();
 //
@@ -66,11 +66,11 @@
 //
 //    @Test
 //    public void testMapPull(){
-//        Iterator<Long> it1 = Streams.of(array)
+//        Iterator<Long> it1 = streams.Streams.of(v)
 //                .map(x -> x + 1)
 //                .iterator();
 //
-//        Iterator<Long> it2 = java.util.stream.Stream.of(array)
+//        Iterator<Long> it2 = java.util.stream.streams.Stream.of(v)
 //                .map(x -> x + 1)
 //                .iterator();
 //
@@ -86,12 +86,12 @@
 //    @Test
 //    public void testFlatMapPush(){
 //
-//        long size = Streams.of(array)
-//                .flatMap(x -> Streams.of(array).map(y -> x * y))
+//        long size = streams.Streams.of(v)
+//                .flatMap(x -> streams.Streams.of(v).map(y -> x * y))
 //                .count();
 //
-//        long size2 = java.util.stream.Stream.of(array)
-//                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+//        long size2 = java.util.stream.streams.Stream.of(v)
+//                .flatMap(x -> java.util.stream.streams.Stream.of(v).map(y -> x * y))
 //                .count();
 //
 //        assert size==size2;
@@ -99,10 +99,10 @@
 //
 //    @Test
 //    public void testLog(){
-//        Streams.of(array)
+//        streams.Streams.of(v)
 //                .map(x -> x + 1)
 //                .filter(x -> x % 2L==0)
-//                .flatMap(x -> Streams.of(array).map(y -> x * y).log())
+//                .flatMap(x -> streams.Streams.of(v).map(y -> x * y).log())
 //                .log()
 //                .count();
 //
