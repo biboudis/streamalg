@@ -36,7 +36,7 @@ b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    3
 
 ## Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
-* [Nessos/streams.Streams](https://github.com/nessos/streams.Streams) in F#
+* [Nessos/Streams](https://github.com/nessos/Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
 * [sml-streams](https://github.com/biboudis/sml-streams) in SML/MLton
 * [Iterator combinators](http://mlton.org/ForLoops) in SML/MLton
