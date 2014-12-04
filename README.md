@@ -1,12 +1,12 @@
 ## Defunctionalizing Streams for Java
 
 ## Motivation
-In this project our motivation is to provide a new library design for streams.Stream APIs that enable extensibility of streams.Stream
+In this project our motivation is to provide a new library design for Stream APIs that enable extensibility of Stream
 libraries in 2 dimensions: open to both new combinators and new traversal methods.
 
 ## References
 ### 1. Push vs Pull
-* [Defunctionalizing streams.Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
+* [Defunctionalizing Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
 * [The Anatomy of a Loop](http://www.ccs.neu.edu/home/shivers/papers/loop.pdf)
 
 ### 2. External vs Internal Visitors
