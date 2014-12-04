@@ -1,11 +1,11 @@
-## Defunctionalizing streams.Streams for Java
+## Defunctionalizing Streams for Java
 
 ## Motivation
 In this project our motivation is to provide a new library design for streams.Stream APIs that enable extensibility of streams.Stream
 libraries in 2 dimensions: open to both new combinators and new traversal methods.
 
 ## References
-### 1. streams.Push vs streams.Pull
+### 1. Push vs Pull
 * [Defunctionalizing streams.Push Arrays](http://www.cse.chalmers.se/~joels/writing/defuncEmb.pdf)
 * [The Anatomy of a Loop](http://www.ccs.neu.edu/home/shivers/papers/loop.pdf)
 
@@ -34,7 +34,7 @@ b.Benchmark_SimpleBoxedPipelines.filter_count_Baseline        avgt        5    6
 b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    3.366 ±  0.681  ms/op
 ```
 
-## streams.Streams-Zoo
+## Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
 * [Nessos/streams.Streams](https://github.com/nessos/streams.Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
