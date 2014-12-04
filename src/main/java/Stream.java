@@ -11,7 +11,7 @@ public abstract class Stream<T> implements App<Stream.t, T> {
 
     }
 
-    static <A> Stream<A> prj(App<Stream.t, A> app) {
+    static <A> Stream<A> prj(App<t, A> app) {
         return (Stream) app;
     };
 

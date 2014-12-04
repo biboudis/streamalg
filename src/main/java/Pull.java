@@ -1,5 +1,4 @@
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 /**
  * Created by bibou on 11/1/14.

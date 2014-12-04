@@ -1,5 +1,3 @@
-import java.util.function.Consumer;
-
 /**
  * Created by bibou on 10/14/14.
  */

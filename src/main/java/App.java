@@ -1,5 +1,5 @@
 /**
  * Created by bibou on 11/1/14.
  */
-interface App<C, T> {
+public interface App<C, T> {
 }

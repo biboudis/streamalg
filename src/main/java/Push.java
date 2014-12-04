@@ -3,7 +3,7 @@ import java.util.function.Consumer;
 /**
  * Created by bibou on 11/1/14.
  */
-public interface Push<T> extends App<Push.t, T>{
+public interface Push<T> extends App<Push.t, T> {
 
     static class t {
 
