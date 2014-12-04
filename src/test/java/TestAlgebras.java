@@ -20,83 +20,91 @@ public class TestAlgebras {
     @Test
     public void testFilterCountPush(){
 
-        PushAlg push = new PushAlg();
+        PushAlg alg = new PushAlg();
 
-        long size = push.length(push.filter(x -> (long) x % 2L == 0, push.source(array)));
+        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(array)));
 
-        long size2 = java.util.stream.Stream.of(array)
+        long expected = java.util.stream.Stream.of(array)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
-        assert size==size2;
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testFilterCountPull(){
 
-        PullAlg pull = new PullAlg();
+        PullAlg alg = new PullAlg();
 
-        long size = pull.length(pull.filter(x -> (long) x % 2L == 0, pull.source(array)));
+        long actual = alg.length(alg.filter(x -> x % 2L == 0, alg.source(array)));
 
-        long size2 = java.util.stream.Stream.of(array)
+        long expected = java.util.stream.Stream.of(array)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
-        assert size==size2;
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testMapPush(){
-        assert false;
-//        long size = Streams.of(array)
-//                .map(x -> x + 1L)
-//                .count();
-//
-//        long size2 = java.util.stream.Stream.of(array)
-//                .map(x -> x + 1L)
-//                .count();
-//
-//        assert size==size2;
+        PushAlg alg = new PushAlg();
+
+        long actual = alg.length(alg.map(x -> (long) x ^ 2, alg.source(array)));
+
+        long expected = java.util.stream.Stream.of(array)
+                .map(x -> x^2)
+                .count();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testMapPull(){
-//        Iterator<Long> it1 = Streams.of(array)
-//                .map(x -> x + 1)
-//                .iterator();
-//
-//        Iterator<Long> it2 = java.util.stream.Stream.of(array)
-//                .map(x -> x + 1)
-//                .iterator();
-//
-//        ArrayList<Long> l1 = new ArrayList<>();
-//        ArrayList<Long> l2 = new ArrayList<>();
-//
-//        Iterators.addAll(l1, it1);
-//        Iterators.addAll(l2, it2);
-//
-//        assertEquals(l1, l2) ;
-        assert false;
+        PullAlg alg = new PullAlg();
+
+        long actual = alg.length(alg.map(x -> x ^ 2, alg.source(array)));
+
+        long expected = java.util.stream.Stream.of(array)
+                .map(x -> x^2)
+                .count();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testFlatMapPush(){
+        PushAlg alg = new PushAlg();
 
-//        long size = Streams.of(array)
-//                .flatMap(x -> Streams.of(array).map(y -> x * y))
-//                .count();
-//
-//        long size2 = java.util.stream.Stream.of(array)
-//                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
-//                .count();
-//
-//        assert size==size2;
-        assert false;
+        long actual = alg.length(alg.flatMap(x -> {
+            PushAlg inner = new PushAlg();
+            return inner.map(y -> (long)x * (long) y, alg.source(array));
+        }, alg.source(array)));
+
+        long expected = java.util.stream.Stream.of(array)
+                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+                .count();
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testLog(){
-        assert false;
+    public void testFlatMapPull(){
+        PullAlg alg = new PullAlg();
+
+        long actual = alg.length(alg.flatMap(x -> {
+            PullAlg inner = new PullAlg();
+            return inner.map(y -> (long) x * (long) y, alg.source(array));
+        }, alg.source(array)));
+
+        long expected = java.util.stream.Stream.of(array)
+                .flatMap(x -> java.util.stream.Stream.of(array).map(y -> x * y))
+                .count();
+
+        assertEquals(expected, actual);
+    }
+
+//    @Test
+//    public void testLog(){
 //        Streams.of(array)
 //                .map(x -> x + 1)
 //                .filter(x -> x % 2L==0)
@@ -105,10 +113,5 @@ public class TestAlgebras {
 //                .count();
 //
 //        assert true;
-    }
-
-    @Test
-    public void testFlatMapPull(){
-        assert false;
-    }
+//    }
 }

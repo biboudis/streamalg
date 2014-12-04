@@ -32,15 +32,15 @@ public class PullAlg implements StreamAlg<Pull.t> {
 
     @Override
     public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
-        Pull<T> inner = Pull.prj(app);
+        Pull<T> self = Pull.prj(app);
 
         Pull<R> f = new Pull<R>() {
             R next = null;
 
             @Override
             public boolean hasNext() {
-                while (inner.hasNext()) {
-                    T current = inner.next();
+                while (self.hasNext()) {
+                    T current = self.next();
                     next = mapper.apply(current);
                     return true;
                 }
@@ -64,48 +64,49 @@ public class PullAlg implements StreamAlg<Pull.t> {
 
     @Override
     public <T, R> App<Pull.t, R> flatMap(Function<T, App<Pull.t, R>> mapper, App<Pull.t, T> app) {
-//        Pull<T> outer = Pull.prj(app);
-//
-//        Pull<R> f = new Pull<R>() {
-//            App<Pull.t, R> next = null;
-//
-//            @Override
-//            public boolean hasNext() {
-//                while (outer.hasNext()) {
-//                    T current = outer.next();
-//                    next = mapper.apply(current);
-//                    return true;
-//                }
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public R next() {
-//                if (next != null || this.hasNext()) {
-//                    App<Pull.t, R>  temp = Pull.prj(this.next);
-//                    this.next = null;
-//                    return temp;
-//                }
-//                throw new NoSuchElementException();
-//            }
-//        };
-//
-//        return f;
-        return null;
+        Pull<T> self = Pull.prj(app);
+        Pull<R> f = new Pull<R>() {
+            Pull<R> current = null;
+            R next = null;
+            @Override
+            public boolean hasNext() {
+                while (self.hasNext()) {
+                    if( current != null && current.hasNext()){
+                        next = current.next();
+                    }
+                    else {
+                        this.current = Pull.prj(mapper.apply(self.next()));
+                    }
+                    return true;
+                }
+                return false;
+            }
+            @Override
+            public R next() {
+                if (current != null || this.hasNext()) {
+                    current = Pull.prj(this.current);
+                    R  temp = current.next();
+                    this.current = null;
+                    return temp;
+                }
+                throw new NoSuchElementException();
+            }
+        };
+
+        return f;
     }
 
     @Override
     public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
-        final Pull<T> inner = Pull.prj(app);
+        final Pull<T> self = Pull.prj(app);
 
         Pull<T> f = new Pull<T>() {
             T next = null;
 
             @Override
             public boolean hasNext() {
-                while (inner.hasNext()) {
-                    T current = inner.next();
+                while (self.hasNext()) {
+                    T current = self.next();
                     if (filter.test(current)) {
                         next = current;
                         return true;
@@ -130,14 +131,13 @@ public class PullAlg implements StreamAlg<Pull.t> {
     long temp = 0L;
     @Override
     public <T> long length(App<Pull.t, T> app) {
-        Pull<T> inner = Pull.prj(app);
+        Pull<T> self = Pull.prj(app);
 
         temp = 0L;
 
-        while(inner.hasNext()){
+        while(self.hasNext()){
             this.temp++;
         }
-
         return temp;
     }
 }
