@@ -1,5 +1,6 @@
 package streams;
 
+import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -19,17 +20,17 @@ public abstract class Stream<T> implements App<Stream.t, T> {
 
     long temp = 0L;
 
-    <R> Stream<R> map(Function<T, R> mapper) {
+    public <R> Stream<R> map(Function<T, R> mapper) {
         return new Map(mapper, this);
     };
 
-    Stream<T> filter(Predicate<T> predicate) {
+    public Stream<T> filter(Predicate<T> predicate) {
         return new Filter(predicate, this);
     }
 
-    <R> Stream<Stream<R>> flatMap(Function<T, Stream<R>> mapper) { return new FlatMap(mapper, this);}
+    public <R> Stream<Stream<R>> flatMap(Function<T, Stream<R>> mapper) { return new FlatMap(mapper, this);}
 
-    long count(){
+    public long count(){
         temp = 0;
 
         Consumer<T> k = i -> this.temp ++;
@@ -39,13 +40,9 @@ public abstract class Stream<T> implements App<Stream.t, T> {
         return temp;
     }
 
-//    streams.Stream<T> log(){
-//        return streams.Stream.prj(this.fold(new streams.LogVisitor()));
-//    }
-
-//    Iterator<T> iterator() {
-//        return streams.Pull.prj(this.fold(new streams.PullAlg()));
-//    }
+    public Iterator<T> iterator() {
+        return streams.Pull.prj(this.fold(new streams.PullAlg()));
+    }
 
     abstract <C> App<C, T> fold(StreamAlg<C> algebra);
 }
