@@ -2,6 +2,8 @@ import gadt.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
+
 /**
  * Created by bibou on 12/7/14.
  */
@@ -13,9 +15,10 @@ public class TestGADT {
     }
 
     @Test
-    public void testEvaluator() {
-        Expr<Integer> expression = new Plus(new IntLit(2), new IntLit(3));
+    public void testPlusEvaluator() {
 
-        //App<Expr.t, Integer> app = new EvalVisitor<Integer>().eval(expression);
+        Plus expression = new Plus(new IntLit(3), new Plus(new IntLit(2), new IntLit(5)));
+
+        assertEquals(10, NumberHigh.prj(expression.accept((Visitor) new EvalVisitor())).value.intValue());
     }
 }

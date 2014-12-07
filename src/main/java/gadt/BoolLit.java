@@ -3,11 +3,15 @@ package gadt;
 /**
  * Created by bibou on 12/5/14.
  */
-public class BoolLit extends Expr<Boolean> {
-    boolean x;
+public class BoolLit extends Expr<BooleanHigh> {
+    BooleanHigh value;
+
+    public BoolLit(boolean i) {
+        this.value = new BooleanHigh(i);
+    }
 
     @Override
-    <C> App<C, Boolean> accept(Visitor<C> v) {
+    public <C> App<C, BooleanHigh> accept(Visitor<C> v) {
         return v.caseBoolLit(this);
     }
 }

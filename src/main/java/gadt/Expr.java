@@ -9,9 +9,9 @@ public abstract class Expr<T> implements App<Expr.t, T> {
 
     }
 
-    static <A> Expr<A> prj(App<Expr.t, A> app) {
+    public static <A> Expr<A> prj(App<Expr.t, A> app) {
         return (Expr<A>) app;
     };
 
-    abstract <C> App<C, T> accept(Visitor<C> v);
+    public abstract <C> App<C, T> accept(Visitor<C> v);
 }

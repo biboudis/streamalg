@@ -3,15 +3,15 @@ package gadt;
 /**
  * Created by bibou on 12/5/14.
  */
-public class IntLit extends Expr<Integer>  {
-    int value;
+public class IntLit extends Expr<NumberHigh>  {
+    public NumberHigh value;
 
     public IntLit(int i) {
-        this.value = i;
+        this.value = new NumberHigh(i);
     }
 
     @Override
-    <C> App<C, Integer> accept(Visitor<C> v) {
+    public <C> App<C, NumberHigh> accept(Visitor<C> v) {
         return v.caseIntLit(this);
     }
 }

@@ -6,7 +6,21 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogAlgebra implements StreamAlg<Log.t> {
+public class LogAlgebra extends PullAlg implements StreamAlg<Pull.t> {
+    @Override
+    public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
+        return super.map(mapper, app);
+    }
+
+    @Override
+    public <T, R> App<Pull.t, R> flatMap(Function<T, App<Pull.t, R>> mapper, App<Pull.t, T> app) {
+        return super.flatMap(mapper, app);
+    }
+
+    @Override
+    public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
+        return super.filter(filter, app);
+    }
 
     /*
     @Override
@@ -45,28 +59,4 @@ public class LogAlgebra implements StreamAlg<Log.t> {
     }
     */
 
-    @Override
-    public <T> App<Log.t, T> source(T[] array) {
-        return null;
-    }
-
-    @Override
-    public <T, R> App<Log.t, R> map(Function<T, R> f, App<Log.t, T> app) {
-        return null;
-    }
-
-    @Override
-    public <T, R> App<Log.t, R> flatMap(Function<T, App<Log.t, R>> f, App<Log.t, T> app) {
-        return null;
-    }
-
-    @Override
-    public <T> App<Log.t, T> filter(Predicate<T> f, App<Log.t, T> app) {
-        return null;
-    }
-
-    @Override
-    public <T> long length(App<Log.t, T> app) {
-        return 0;
-    }
 }

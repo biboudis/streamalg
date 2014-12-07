@@ -3,25 +3,25 @@ package gadt;
 /**
  * Created by bibou on 12/5/14.
  */
-public class EvalVisitor<R> implements Visitor<Expr.t> {
-    
-    public R eval(Expr<R> expr) {
-        return null; // expr.accept(this);
+public class EvalVisitor implements Visitor<Expr.t> {
+
+    @Override
+    public App<Expr.t, NumberHigh> caseIntLit(IntLit expr) {
+        return expr.value;
     }
 
     @Override
-    public App<Expr.t, Integer> caseIntLit(IntLit expr) {
-        return expr;
+    public App<Expr.t, BooleanHigh> caseBoolLit(BoolLit expr) {
+        return expr.value;
     }
 
     @Override
-    public App<Expr.t, Boolean> caseBoolLit(BoolLit expr) {
-        return expr;
-    }
+    public <A> App<Expr.t, A> casePlus(Plus expr) {
 
-    @Override
-    public App<Expr.t, Integer> casePlus(Plus expr) {
-        return null; // Expr.prj(eval(expr.right)) + Expr.prj(eval(expr.right));
+        NumberHigh left = NumberHigh.prj(expr.left.accept( (Visitor) this));
+        NumberHigh right = NumberHigh.prj(expr.right.accept( (Visitor) this));
+
+        return new NumberHigh(left.value + right.value);
     }
 
     @Override

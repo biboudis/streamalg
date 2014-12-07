@@ -9,7 +9,7 @@ public class If<T> extends Expr<T>
     Expr <T> y,z;
 
     @Override
-    <C> App<C, T> accept(Visitor<C> v) {
+    public <C> App<C, T> accept(Visitor<C> v) {
         return v.caseIf(this);
     }
 }
