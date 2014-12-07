@@ -12,7 +12,7 @@ public interface Push<T> extends App<Push.t, T> {
     }
 
     static <A> Push<A> prj(App<Push.t, A> app) {
-        return (Push) app;
+        return (Push<A>) app;
     };
 
     void invoke(Consumer<T> k);

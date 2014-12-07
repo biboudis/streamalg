@@ -12,6 +12,6 @@ public interface Log<T> extends App<Log.t, T>, Iterator<T> {
     }
 
     static <A> Log<A> prj(App<Log.t, A> app) {
-        return (Log) app;
+        return (Log<A>) app;
     };
 }

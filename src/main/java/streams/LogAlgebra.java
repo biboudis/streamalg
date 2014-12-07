@@ -1,10 +1,14 @@
 package streams;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogVisitor implements StreamVisitor<Stream.t> {
+public class LogAlgebra implements StreamAlg<Log.t> {
 
+    /*
     @Override
     public <T, R> App<Stream.t, R> visit(Map<T, R> map) {
         return new Map<T,R>(x -> {
@@ -38,5 +42,31 @@ public class LogVisitor implements StreamVisitor<Stream.t> {
     @Override
     public <T> App<Stream.t, T> visit(Source<T> source) {
         return source;
+    }
+    */
+
+    @Override
+    public <T> App<Log.t, T> source(T[] array) {
+        return null;
+    }
+
+    @Override
+    public <T, R> App<Log.t, R> map(Function<T, R> f, App<Log.t, T> app) {
+        return null;
+    }
+
+    @Override
+    public <T, R> App<Log.t, R> flatMap(Function<T, App<Log.t, R>> f, App<Log.t, T> app) {
+        return null;
+    }
+
+    @Override
+    public <T> App<Log.t, T> filter(Predicate<T> f, App<Log.t, T> app) {
+        return null;
+    }
+
+    @Override
+    public <T> long length(App<Log.t, T> app) {
+        return 0;
     }
 }

@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import streams.PullAlg;
 import streams.PushAlg;
+import streams.PushWithTakeAlg;
 
 import java.util.stream.IntStream;
 
@@ -98,6 +99,19 @@ public class TestAlgebras {
 
         long expected = java.util.stream.Stream.of(v)
                 .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
+                .count();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testTakePush(){
+        PushWithTakeAlg alg = new PushWithTakeAlg();
+
+        long actual = alg.length(alg.take(5, alg.source(v)));
+
+        long expected = java.util.stream.Stream.of(v)
+                .limit(5)
                 .count();
 
         assertEquals(expected, actual);
