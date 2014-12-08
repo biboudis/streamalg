@@ -13,8 +13,8 @@ package gadt;
 //      If          :: Expr Bool -> Expr Y -> Expr Y
 
 public interface Visitor<C> {
-    <A> App<C, A> caseIntLit (IntLit expr);
-    <A> App<C, A> caseBoolLit (BoolLit expr);
-    <A> App<C, A> casePlus (Plus expr);
-    <Y, A> App<C, A> caseIf (If<Y> expr);
+    App<C, Integer> caseIntLit (IntLit expr);
+    App<C, Boolean> caseBoolLit (BoolLit expr);
+    App<C, Integer> casePlus (Plus expr);
+    <T> App<C, T> caseIf (If<T> expr);
 }

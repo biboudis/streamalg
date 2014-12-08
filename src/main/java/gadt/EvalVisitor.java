@@ -1,37 +1,34 @@
 package gadt;
 
-import gadt.primitives.BooleanHigh;
-import gadt.primitives.NumberHigh;
-
 /**
  * Created by bibou on 12/5/14.
  */
-public class EvalVisitor implements Visitor<Expr.t> {
+public class EvalVisitor implements Visitor<Id.t> {
 
     @Override
-    public <A> App<Expr.t, A> caseIntLit(IntLit expr) {
-        return expr.value;
+    public App<Id.t, Integer> caseIntLit(IntLit expr) {
+        return new Id(expr.value);
     }
 
     @Override
-    public <A> App<Expr.t, A> caseBoolLit(BoolLit expr) {
-        return expr.value;
+    public App<Id.t, Boolean> caseBoolLit(BoolLit expr) {
+        return new Id(expr.value);
     }
 
     @Override
-    public <A> App<Expr.t, A> casePlus(Plus expr) {
+    public App<Id.t, Integer> casePlus(Plus expr) {
 
-        NumberHigh left = NumberHigh.prj(expr.left.accept((Visitor) this));
-        NumberHigh right = NumberHigh.prj(expr.right.accept((Visitor) this));
+        Id<Integer> left = Id.prj(expr.left.accept( this));
+        Id<Integer> right = Id.prj(expr.right.accept( this));
 
-        return new NumberHigh(left.value + right.value);
+        return new Id(left.value + right.value);
     }
 
     @Override
-    public <Y, R> App<Expr.t, R> caseIf(If<Y> expr) {
-        BooleanHigh left = BooleanHigh.prj(expr.x.accept( (Visitor) this));
+    public <T> App<Id.t, T> caseIf(If<T> expr) {
+        Id<Boolean> test = Id.prj(expr.x.accept(this));
 
-        return left.value.booleanValue() ? expr.y.accept((Visitor) this): expr.z.accept((Visitor) this);
+        return test.value.booleanValue() ? expr.y.accept(this): expr.z.accept(this);
 
     }
 }

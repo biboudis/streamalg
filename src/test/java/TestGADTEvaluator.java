@@ -1,5 +1,4 @@
 import gadt.*;
-import gadt.primitives.NumberHigh;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class TestGADTEvaluator {
     public void testPlus() {
         Plus expression = new Plus(new IntLit(3), new Plus(new IntLit(2), new IntLit(5)));
 
-        assertEquals(10, NumberHigh.prj(expression.accept((Visitor) new EvalVisitor())).value.intValue());
+        assertEquals((Integer) 10, Id.prj(expression.accept(new EvalVisitor())).value);
     }
 
     @Test
@@ -28,6 +27,6 @@ public class TestGADTEvaluator {
                 new Plus(new IntLit(1), new Plus(new IntLit(1), new IntLit(1))),
                 new Plus(new IntLit(5), new Plus(new IntLit(5), new IntLit(5))));
 
-        assertEquals(3, NumberHigh.prj(expression.accept((Visitor) new EvalVisitor())).value.intValue());
+        assertEquals(3, Id.prj(expression.accept(new EvalVisitor())).value);
     }
 }
