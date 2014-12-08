@@ -1,6 +1,7 @@
 package streams;
 
 import java.util.NoSuchElementException;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -137,7 +138,7 @@ public class PullAlg implements StreamAlg<Pull.t> {
 
     long temp = 0L;
     @Override
-    public <T> long length(App<Pull.t, T> app) {
+    public <T> long count(App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
 
         temp = 0L;
@@ -146,5 +147,18 @@ public class PullAlg implements StreamAlg<Pull.t> {
             this.temp++;
         }
         return temp;
+    }
+
+    @Override
+    public <T> T reduce(T identity, BinaryOperator<T> accumulator, App<Pull.t, T> app) {
+        Pull<T> self = Pull.prj(app);
+
+        T accumulatorV = identity;
+
+        while(self.hasNext()){
+            accumulatorV = accumulator.apply(accumulatorV, self.next());
+        }
+
+        return accumulatorV;
     }
 }

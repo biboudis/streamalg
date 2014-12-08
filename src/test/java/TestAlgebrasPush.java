@@ -3,6 +3,7 @@ import org.junit.Test;
 import streams.*;
 
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,9 +22,9 @@ public class TestAlgebrasPush {
 
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(v)));
+        Long actual = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
@@ -34,9 +35,9 @@ public class TestAlgebrasPush {
     public void testMapPush(){
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.map(x -> (long) x ^ 2, alg.source(v)));
+        Long actual = alg.count(alg.map(x -> (long) x ^ 2, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
                 .count();
 
@@ -47,14 +48,27 @@ public class TestAlgebrasPush {
     public void testFlatMapPush(){
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.flatMap(x -> {
+        Long actual = alg.count(alg.flatMap(x -> {
             PushAlg inner = new PushAlg();
-            return inner.map(y -> (long)x * (long) y, alg.source(v_inner));
+            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
         }, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
                 .count();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testReducePush(){
+        PushAlg alg = new PushAlg();
+
+        Long actual = (long) alg.<Long>reduce(0L, (a,x)-> (long) a+ (long) x, alg.map(x -> (long) x ^ 2, alg.source(v)));
+
+        Long expected = java.util.stream.Stream.of(v)
+                .map(x -> x^2)
+                .reduce(0L, Long::sum);
 
         assertEquals(expected, actual);
     }
@@ -63,9 +77,9 @@ public class TestAlgebrasPush {
     public void testTakePush(){
         PushWithTakeAlg alg = new PushWithTakeAlg();
 
-        long actual = alg.length(alg.take(5, alg.source(v)));
+        Long actual = alg.count(alg.take(5, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .limit(5)
                 .count();
 

@@ -1,9 +1,12 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
+import streams.App;
 import streams.PullAlg;
+import streams.Push;
 import streams.PushAlg;
 
+import java.util.function.LongBinaryOperator;
 import java.util.stream.Stream;
 
 @State(Scope.Thread)
@@ -42,48 +45,50 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long filter_count_Baseline() {
-        Long acc = 0L;
+        Long value = 0L;
         for (int i =0 ; i < v.length ; i++) {
             if (v[i] % 2L == 0L)
-                acc ++;
+                value ++;
         }
-        return acc;
+        return value;
     }
 
     @Benchmark
     public Long cart_Baseline() {
-        Long cart = 0L;
+        Long value = 0L;
         for (int d = 0 ; d < v_outer.length ; d++) {
             for (int dp = 0 ; dp < v_inner.length ; dp++){
-                cart += v_outer[d] * v_inner[dp];
+                value += v_outer[d] * v_inner[dp];
             }
         }
-        return cart;
+        return value;
     }
 
     @Benchmark
     public Long filter_count_Java8Streams() {
-        Long sum = java.util.stream.Stream.of(v)
+        Long value = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
-        return sum;
+
+        return value;
     }
 
     @Benchmark
     public Long cart_Java8Streams() {
-        long cart = Stream.of(v_outer)
+        Long value = Stream.of(v_outer)
                 .flatMap(d -> Stream.of(v_inner).map(dP -> dP * d))
                 .reduce(0L, Long::sum);
-        return cart;
+
+        return value;
     }
 
     @Benchmark
     public Long filter_count_AlgebrasPush() {
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(v)));
+        Long value = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
 
-        return actual;
+        return value;
     }
 
     @Benchmark
@@ -91,21 +96,21 @@ public class Benchmark_SimpleBoxedPipelines {
 
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.flatMap(x -> {
+        Long value = (Long) alg.<Long>reduce(0L, (a,x)-> (Long) a+ (Long) x, alg.flatMap(x -> {
             PushAlg inner = new PushAlg();
-            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
+            return inner.map(y -> (Long)x *(Long) y, alg.source(v_inner));
         }, alg.source(v_outer)));
 
-        return actual;
+        return value;
     }
 
     @Benchmark
     public Long filter_count_AlgebrasPull() {
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(v)));
+        Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
-        return actual;
+        return value;
     }
 
     @Benchmark
@@ -113,179 +118,11 @@ public class Benchmark_SimpleBoxedPipelines {
 
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.flatMap(x -> {
+        Long value = alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
             PullAlg inner = new PullAlg();
-            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
+            return inner.<Long, Long>map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)));
 
-        return actual;
+        return value;
     }
-
-//    @Benchmark
-//    public Long[] sort_copyOf() {
-//        return Arrays.copyOf(v_forSorting_Baseline, N);
-//    }
-//
-//    @Benchmark
-//    public Long[] sort_Baseline(){
-//        Long[] copyOf = Arrays.copyOf(v_forSorting_Baseline, N);
-//
-//        Arrays.sort(copyOf);
-//
-//        return copyOf;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Algebras_2(){
-//        Long sum = LStream.of(v)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Algebras_4(){
-//        Long sum = LStream.of(v)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Algebras_6(){
-//        Long sum = LStream.of(v)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Algebras_single_lambda_2(){
-//        UnaryOperator<Long> lambda = x -> x + 2L;
-//        Long sum = LStream.of(v)
-//                .map(lambda)
-//                .map(lambda)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Algebras_single_lambda_4(){
-//        UnaryOperator<Long> lambda = x -> x + 2L;
-//        Long sum = LStream.of(v)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Algebras_single_lambda_6(){
-//        UnaryOperator<Long> lambda = x -> x + 2L;
-//        Long sum = LStream.of(v)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Java8Streams_2(){
-//        Long sum = streams.Stream.of(v)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Java8Streams_4(){
-//        Long sum = streams.Stream.of(v)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Java8Streams_6(){
-//        Long sum = streams.Stream.of(v)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .map(x -> x + 2L)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Java8Streams_single_lambda_2(){
-//        UnaryOperator<Long> lambda = x -> x + 2L;
-//        Long sum = streams.Stream.of(v)
-//                .map(lambda)
-//                .map(lambda)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Java8Streams_single_lambda_4(){
-//        UnaryOperator<Long> lambda = x -> x + 2L;
-//        Long sum = streams.Stream.of(v)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long map_megamorphic_Java8Streams_single_lambda_6(){
-//        UnaryOperator<Long> lambda = x -> x + 2L;
-//        Long sum = streams.Stream.of(v)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .map(lambda)
-//                .reduce(0L, Long::sum);
-//        return sum;
-//    }
-//
-//    @Benchmark
-//    public Long[] sort_Algebras(){
-//        Long[] res = LStream.of(v_forSorting_Algebras)
-//                .sorted(Comparator.<Long>naturalOrder())
-//                .toArray(Long[]::new);
-//        return res;
-//    }
-//
-//    @Benchmark
-//    public Long[] sort_Java8Streams(){
-//        Long[] res = streams.Stream.of(v_forSorting_Java8Streams)
-//                .sorted(Comparator.<Long>naturalOrder())
-//                .toArray(Long[]::new);
-//        return res;
-//    }
 }

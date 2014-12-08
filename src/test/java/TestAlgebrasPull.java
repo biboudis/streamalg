@@ -21,7 +21,7 @@ public class TestAlgebrasPull {
 
         PushAlg alg = new PushAlg();
 
-        long actual = alg.length(alg.filter(x -> (long)x % 2L == 0, alg.source(v)));
+        long actual = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
 
         long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
@@ -35,7 +35,7 @@ public class TestAlgebrasPull {
 
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.filter(x -> x % 2L == 0, alg.source(v)));
+        long actual = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
         long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
@@ -48,7 +48,7 @@ public class TestAlgebrasPull {
     public void testMapPull(){
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.map(x -> x ^ 2, alg.source(v)));
+        long actual = alg.count(alg.map(x -> x ^ 2, alg.source(v)));
 
         long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
@@ -61,7 +61,7 @@ public class TestAlgebrasPull {
     public void testFlatMapPull(){
         PullAlg alg = new PullAlg();
 
-        long actual = alg.length(alg.flatMap(x -> {
+        long actual = alg.count(alg.flatMap(x -> {
             PullAlg inner = new PullAlg();
             return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
         }, alg.source(v)));
@@ -69,6 +69,19 @@ public class TestAlgebrasPull {
         long expected = java.util.stream.Stream.of(v)
                 .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
                 .count();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testReducePull(){
+        PullAlg alg = new PullAlg();
+
+        long actual = alg.reduce(0L, Long::sum, alg.map(x -> x^2, alg.source(v)));
+
+        long expected = java.util.stream.Stream.of(v)
+                .map(x -> x^2)
+                .reduce(0L, Long::sum);
 
         assertEquals(expected, actual);
     }

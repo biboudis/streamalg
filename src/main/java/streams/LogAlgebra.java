@@ -13,8 +13,8 @@ public class LogAlgebra<C> extends PushAlg<C> implements LogPushAlgebra, StreamA
         Push<R> f = k -> Push.prj(app).invoke(i -> {
             System.out.print("flatMap : " + i.toString());
             Push<R> result = Push.prj(mapper.apply(i));
-            result.invoke(k);
             System.out.println(" -> " + result.toString());
+            result.invoke(k);
         });
         return f;
     }
@@ -24,8 +24,8 @@ public class LogAlgebra<C> extends PushAlg<C> implements LogPushAlgebra, StreamA
         Push<R> f = k -> Push.prj(app).invoke(i -> {
             System.out.print("map: " + i.toString());
             R result = mapper.apply(i);
-            k.accept(result);
             System.out.println(" -> " + result.toString());
+            k.accept(result);
         });
         return f;
     }

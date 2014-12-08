@@ -21,17 +21,32 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 ### 4. Object Algebras
 * [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
 
-## Preliminary Performance Characteristics
+
+## Running benchmarks
+
+```shell
+# run unit tests
+mvn -q test
+
+# build benchmarks über-jar
+mvn clean package -Dskiptests
+
+# run benchmarks
+java -Xmx2g -Xms2g -XX:-TieredCompilation -Dbenchmark.N=1000000 -Dbenchmark.F=3000000 -Dbenchmark.N_outer=1000000 -Dbenchmark.N_inner=10 -jar target/microbenchmarks.jar -wi 5 -i 5 -f 1 -gc true -tu ms ".*"
+```
+
+## Preliminary Measurements
 ```
 Benchmark                                                     Mode  Samples    Score    Error  Units
-b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPull            avgt        5  124.572 ± 43.102  ms/op
-b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPush            avgt        5  111.503 ± 14.016  ms/op
-b.Benchmark_SimpleBoxedPipelines.cart_Baseline                avgt        5   65.601 ±  4.542  ms/op
-b.Benchmark_SimpleBoxedPipelines.cart_Java8Streams            avgt        5  156.475 ±  7.912  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPull    avgt        5    4.384 ±  2.174  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPush    avgt        5    3.597 ±  1.847  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_Baseline        avgt        5    6.131 ±  1.420  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    3.366 ±  0.681  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPull            avgt        5  154.066 ± 35.864  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPush            avgt        5  150.490 ± 18.222  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_Baseline                avgt        5   60.792 ±  7.264  ms/op
+b.Benchmark_SimpleBoxedPipelines.cart_Java8Streams            avgt        5  165.766 ± 74.355  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPull    avgt        5    3.791 ±  0.384  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPush    avgt        5    2.645 ±  0.120  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_Baseline        avgt        5    4.904 ±  0.068  ms/op
+b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    2.791 ±  0.141  ms/op
+
 ```
 
 ## Streams-Zoo

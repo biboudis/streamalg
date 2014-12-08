@@ -15,8 +15,8 @@ public class TestAlgebrasLog {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 10).mapToObj(i -> new Long(i)).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 5).mapToObj(i -> new Long(i)).toArray(Long[]::new);
     }
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -38,19 +38,31 @@ public class TestAlgebrasLog {
     public void testLog(){
         LogPushAlgebra alg = new LogAlgebra();
 
-        alg.<Long>length(alg.map(x -> x ^ 2, alg.log(alg.source(v))));
+        alg.<Long>count(alg.map(x -> x + 2, alg.log(alg.source(v))));
 
         assertEquals(
                 "map: 0 -> 2\n" +
                 "map: 1 -> 3\n" +
-                "map: 2 -> 0\n" +
-                "map: 3 -> 1\n" +
+                "map: 2 -> 4\n" +
+                "map: 3 -> 5\n" +
                 "map: 4 -> 6\n" +
-                "map: 0 -> 2\n" +
-                "map: 1 -> 3\n" +
-                "map: 2 -> 0\n" +
-                "map: 3 -> 1\n" +
-                "map: 4 -> 6\n",
+                "map: 5 -> 7\n" +
+                "map: 6 -> 8\n" +
+                "map: 7 -> 9\n" +
+                "map: 8 -> 10\n" +
+                "map: 9 -> 11\n",
                 outContent.toString());
+    }
+
+    @Test
+    public void testLogLength() {
+        LogPushAlgebra alg = new LogAlgebra();
+
+        long actual = alg.<Long>count(alg.log(alg.source(v)));
+
+        long expected = java.util.stream.Stream.of(v)
+                .count();
+
+        assertEquals(expected, actual);
     }
 }
