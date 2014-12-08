@@ -96,7 +96,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
         PushAlg alg = new PushAlg();
 
-        Long value = (Long) alg.<Long>reduce(0L, (a,x)-> (Long) a+ (Long) x, alg.flatMap(x -> {
+        Long value =  (Long) alg.<Long>reduce(0L, (a,x)-> (Long) a+ (Long) x, alg.<Long, App<Push.t, Long>>flatMap(x -> {
             PushAlg inner = new PushAlg();
             return inner.map(y -> (Long)x *(Long) y, alg.source(v_inner));
         }, alg.source(v_outer)));

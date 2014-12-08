@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogAlgebra<C> extends PushAlg<C> implements LogPushAlgebra, StreamAlg<Push.t> {
+public class LogAlg<C> extends PushAlg<C> implements LogPushAlg, StreamAlg<Push.t> {
 
     @Override
     public <T, R> App<Push.t, R> flatMap(Function<T, App<Push.t, R>> mapper, App<Push.t, T> app) {

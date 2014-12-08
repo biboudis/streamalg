@@ -36,7 +36,7 @@ public class TestAlgebrasLog {
 
     @Test
     public void testLog(){
-        LogPushAlgebra alg = new LogAlgebra();
+        LogPushAlg alg = new LogAlg();
 
         alg.<Long>count(alg.map(x -> x + 2, alg.log(alg.source(v))));
 
@@ -56,7 +56,7 @@ public class TestAlgebrasLog {
 
     @Test
     public void testLogLength() {
-        LogPushAlgebra alg = new LogAlgebra();
+        LogPushAlg alg = new LogAlg();
 
         long actual = alg.<Long>count(alg.log(alg.source(v)));
 

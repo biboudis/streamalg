@@ -64,7 +64,7 @@ public class TestAlgebrasPush {
     public void testReducePush(){
         PushAlg alg = new PushAlg();
 
-        Long actual = (long) alg.<Long>reduce(0L, (a,x)-> (long) a+ (long) x, alg.map(x -> (long) x ^ 2, alg.source(v)));
+        Long actual = (Long) alg.<Long>reduce(0L, (a,x)-> (long) a+ (long) x, alg.map(x -> (long) x ^ 2, alg.source(v)));
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)

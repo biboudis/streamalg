@@ -12,7 +12,6 @@ package gadt;
 //      Plus        :: Expr Int -> Expr Int -> Expr Int
 //      If          :: Expr Bool -> Expr Y -> Expr Y
 
-
 public interface Visitor<C> {
     <A> App<C, A> caseIntLit (IntLit expr);
     <A> App<C, A> caseBoolLit (BoolLit expr);
