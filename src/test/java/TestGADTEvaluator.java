@@ -8,7 +8,7 @@ import static junit.framework.Assert.assertEquals;
 /**
  * Created by bibou on 12/7/14.
  */
-public class TestGADTs {
+public class TestGADTEvaluator {
 
     @Before
     public void setUp() {
