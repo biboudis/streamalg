@@ -1,5 +1,7 @@
 package gadt;
 
+import gadt.primitives.BooleanHigh;
+
 /**
  * Created by bibou on 12/5/14.
  */

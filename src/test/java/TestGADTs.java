@@ -1,4 +1,5 @@
 import gadt.*;
+import gadt.primitives.NumberHigh;
 import org.junit.Before;
 import org.junit.Test;
 

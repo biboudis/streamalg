@@ -1,4 +1,6 @@
-package gadt;
+package gadt.primitives;
+
+import gadt.App;
 
 /**
  * Created by bibou on 12/7/14.

@@ -1,5 +1,7 @@
 package gadt;
 
+import gadt.primitives.NumberHigh;
+
 /**
  * Created by bibou on 12/5/14.
  */
