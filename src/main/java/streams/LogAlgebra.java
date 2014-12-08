@@ -6,57 +6,44 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogAlgebra extends PullAlg implements StreamAlg<Pull.t> {
+public class LogAlgebra<C> extends PushAlg<C> implements LogPushAlgebra, StreamAlg<Push.t> {
+
     @Override
-    public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
-        return super.map(mapper, app);
+    public <T, R> App<Push.t, R> flatMap(Function<T, App<Push.t, R>> mapper, App<Push.t, T> app) {
+        Push<R> f = k -> Push.prj(app).invoke(i -> {
+            System.out.print("flatMap : " + i.toString());
+            Push<R> result = Push.prj(mapper.apply(i));
+            result.invoke(k);
+            System.out.println(" -> " + result.toString());
+        });
+        return f;
     }
 
     @Override
-    public <T, R> App<Pull.t, R> flatMap(Function<T, App<Pull.t, R>> mapper, App<Pull.t, T> app) {
-        return super.flatMap(mapper, app);
+    public <T, R> App<Push.t, R> map(Function<T, R> mapper, App<Push.t, T> app) {
+        Push<R> f = k -> Push.prj(app).invoke(i -> {
+            System.out.print("map: " + i.toString());
+            R result = mapper.apply(i);
+            k.accept(result);
+            System.out.println(" -> " + result.toString());
+        });
+        return f;
     }
 
     @Override
-    public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
-        return super.filter(filter, app);
+    public <T> App<Push.t, T> filter(Predicate<T> predicate, App<Push.t, T> app) {
+        Push<T> f = k -> Push.prj(app).invoke(i -> {
+            System.out.println("filter: " + i.toString());
+            if(predicate.test(i))
+                k.accept(i);
+            System.out.println(" -> " + i.toString());
+        });
+        return f;
     }
 
-    /*
-    @Override
-    public <T, R> App<Stream.t, R> visit(Map<T, R> map) {
-        return new Map<T,R>(x -> {
-            System.out.println("mapped with -> " + x.toString());
-            R r = map.getMapper().apply(x);
-            System.out.println("mapped returned: " + r.toString());
-            return r;
-        }, map.getStream());
-    }
+    public <T> App<Push.t, T> log(App<Push.t, T> app) {
+        Push<T> f = k -> Push.prj(app).invoke(k);
 
-    @Override
-    public <T, R> App<Stream.t, R> visit(FlatMap<T, R> map) {
-        return new FlatMap<T,R>(x -> {
-            System.out.println("flatMapping -> " + x.toString());
-            Stream<R> r = map.getMapper().apply(x);
-            System.out.println("flatMapping ended");
-            return r;
-        }, map.getStream());
+        return f;
     }
-
-    @Override
-    public <T> App<Stream.t, T> visit(Filter<T> filter) {
-        return new Filter<T>(x -> {
-            System.out.println("filter with-> " + x.toString());
-            Boolean t = filter.getPredicate().test(x);
-            System.out.println("filter returned: " + t.toString());
-            return t;
-        }, filter.getStream());
-    }
-
-    @Override
-    public <T> App<Stream.t, T> visit(Source<T> source) {
-        return source;
-    }
-    */
-
 }
