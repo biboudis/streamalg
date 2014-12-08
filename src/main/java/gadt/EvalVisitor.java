@@ -11,15 +11,15 @@ public class EvalVisitor implements Visitor<Expr.t> {
     }
 
     @Override
-    public App<Expr.t, BooleanHigh> caseBoolLit(BoolLit expr) {
+    public <A> App<Expr.t, A> caseBoolLit(BoolLit expr) {
         return expr.value;
     }
 
     @Override
     public <A> App<Expr.t, A> casePlus(Plus expr) {
 
-        NumberHigh left = NumberHigh.prj(expr.left.accept( (Visitor) this));
-        NumberHigh right = NumberHigh.prj(expr.right.accept( (Visitor) this));
+        NumberHigh left = NumberHigh.prj(expr.left.accept((Visitor) this));
+        NumberHigh right = NumberHigh.prj(expr.right.accept((Visitor) this));
 
         return new NumberHigh(left.value + right.value);
     }
