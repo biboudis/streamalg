@@ -6,7 +6,7 @@ package gadt;
 public class EvalVisitor implements Visitor<Expr.t> {
 
     @Override
-    public App<Expr.t, NumberHigh> caseIntLit(IntLit expr) {
+    public <A> App<Expr.t, A> caseIntLit(IntLit expr) {
         return expr.value;
     }
 
@@ -26,6 +26,9 @@ public class EvalVisitor implements Visitor<Expr.t> {
 
     @Override
     public <Y, R> App<Expr.t, R> caseIf(If<Y> expr) {
-        return null;
+        BooleanHigh left = BooleanHigh.prj(expr.x.accept( (Visitor) this));
+
+        return left.value.booleanValue() ? expr.y.accept((Visitor) this): expr.z.accept((Visitor) this);
+
     }
 }

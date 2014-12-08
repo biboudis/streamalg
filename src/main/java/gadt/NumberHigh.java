@@ -16,9 +16,5 @@ public class NumberHigh<T> implements App<NumberHigh.t, T> {
 
     public static <A> NumberHigh<A> prj(App<NumberHigh.t, A> app) {
         return (NumberHigh<A>) app;
-    };
-
-//    static <A> App<IntegerHigh.t, A>  inj(IntegerHigh val) {
-//        return (App<IntegerHigh.t, A>) val;
-//    };
+    }
 }
