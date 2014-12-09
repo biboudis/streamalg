@@ -21,7 +21,7 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 
 ### 4. Object Algebras
 * [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
-
+* [Feature-Oriented Programming with Object Algebras](http://www.cs.utexas.edu/~wcook/Drafts/2012/FOPwOA.pdf)
 
 ## Running benchmarks
 
