@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/3/14.
  */
-public class PushAlg<C> implements StreamAlg<Push.t> {
+public class PushAlg implements StreamAlg<Push.t> {
 
     @Override
     public <T> App<Push.t, T> source(T[] array) {
