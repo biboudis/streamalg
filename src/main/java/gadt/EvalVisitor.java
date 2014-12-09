@@ -7,12 +7,12 @@ public class EvalVisitor implements Visitor<Id.t> {
 
     @Override
     public App<Id.t, Integer> caseIntLit(IntLit expr) {
-        return Id.inj(expr.value);
+        return Id.newA(expr.value);
     }
 
     @Override
     public App<Id.t, Boolean> caseBoolLit(BoolLit expr) {
-        return Id.inj(expr.value);
+        return Id.newA(expr.value);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class EvalVisitor implements Visitor<Id.t> {
         Id<Integer> left = Id.prj(expr.left.accept(this));
         Id<Integer> right = Id.prj(expr.right.accept(this));
 
-        return Id.inj(left.value + right.value);
+        return Id.newA(left.value + right.value);
     }
 
     @Override

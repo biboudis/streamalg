@@ -7,7 +7,7 @@ public class Id<T> implements App<Id.t, T>{
 
     public T value;
 
-    private Id(T value) {
+    public Id(T value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class Id<T> implements App<Id.t, T>{
         return (Id<A>) app;
     }
 
-    public static <A> App<Id.t, A> inj(A value) {
+    public static <A> App<Id.t, A> newA(A value) {
         return new Id<>(value);
     }
 }
