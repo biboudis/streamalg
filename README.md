@@ -17,6 +17,7 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 * [Lightweight Higher-Kinded Polymorphism](https://ocamllabs.github.io/higher/lightweight-higher-kinded-polymorphism.pdf) ([extended](http://www.lpw25.net/flops2014.pdf))
 * [Generics of a Higher Kind](https://lirias.kuleuven.be/bitstream/123456789/186940/4/tcpoly.pdf)
 * [Adding Type Constructor Parameterization to Java](http://www.jot.fm/issues/issue_2008_06/article2.pdf) ([code](http://lampwww.epfl.ch/~cremet/FGJ-omega/index.html))
+* [highj-Haskell-style type classes in Java](https://code.google.com/p/highj/)
 
 ### 4. Object Algebras
 * [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
