@@ -4,17 +4,20 @@ package gadt;
  * Created by bibou on 12/5/14.
  */
 
-// In Haskell with GADTs
+// This is the universal visitor of http://www.jot.fm/issues/issue_2008_06/article2.pdf#page=8&zoom=180,-4,376
+// In Haskell with GADTs this could have been:
+/*
+data Expr a where
+      IntLit      :: Int  -> Expr Int
+      BoolLit     :: Bool -> Expr Bool
+      Plus        :: Expr Int -> Expr Int -> Expr Int
+      If          :: Expr Bool -> Expr Y -> Expr Y
+*/
 
-//  data Expr a where
-//      IntLit      :: Int  -> Expr Int
-//      BoolLit     :: Bool -> Expr Bool
-//      Plus        :: Expr Int -> Expr Int -> Expr Int
-//      If          :: Expr Bool -> Expr Y -> Expr Y
-
+//interface Visitor<R<_>>
 public interface Visitor<C> {
-    App<C, Integer> caseIntLit (IntLit expr);
-    App<C, Boolean> caseBoolLit (BoolLit expr);
-    App<C, Integer> casePlus (Plus expr);
-    <T> App<C, T> caseIf (If<T> expr);
+    /*R<Integer>*/ App<C, Integer> caseIntLit (IntLit expr);
+    /*R<Boolean>*/ App<C, Boolean> caseBoolLit (BoolLit expr);
+    /*R<Integer>*/ App<C, Integer> casePlus (Plus expr);
+    /*<Y>R<Y>*/    <T> App<C, T> caseIf (If<T> expr);
 }

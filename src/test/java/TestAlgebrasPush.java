@@ -3,7 +3,6 @@ import org.junit.Test;
 import streams.*;
 
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 import static org.junit.Assert.assertEquals;
 
