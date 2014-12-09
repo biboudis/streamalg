@@ -1,5 +1,7 @@
 ## Defunctionalizing Streams for Java
 
+Paper (WIP) at [https://github.com/biboudis/defunctionalizing-streams-paper](https://github.com/biboudis/defunctionalizing-streams-paper)
+
 ## Motivation
 In this project our motivation is to provide a new library design for Stream APIs that enable extensibility of Stream
 libraries in 2 dimensions: open to both new combinators and new traversal methods.
