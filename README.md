@@ -14,7 +14,8 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 ### 2. External vs Internal Visitors
 * [The Visitor Pattern as a Reusable‚ Generic‚ Type−Safe Component](http://www.cs.ox.ac.uk/jeremy.gibbons/publications/visitor.pdf)
 
-### 3. GADTs in Java
+### 3. GADTs
+* [Haskell/GADT](http://en.wikibooks.org/wiki/Haskell/GADT)
 * [Generalized Algebraic Data Types and Object-Oriented Programming](http://research.microsoft.com/apps/pubs/default.aspx?id=64040)
 * [Lightweight Higher-Kinded Polymorphism](https://ocamllabs.github.io/higher/lightweight-higher-kinded-polymorphism.pdf) ([extended](http://www.lpw25.net/flops2014.pdf))
 * [Generics of a Higher Kind](https://lirias.kuleuven.be/bitstream/123456789/186940/4/tcpoly.pdf)
