@@ -58,6 +58,7 @@ b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    2
 * [Nessos/Streams](https://github.com/nessos/Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
 * [sml-streams](https://github.com/biboudis/sml-streams) in SML/MLton
+* [scala-streams](https://github.com/biboudis/scala-streams) in SML/MLton
 * [Iterator combinators](http://mlton.org/ForLoops) in SML/MLton
 
 ## Dependencies
