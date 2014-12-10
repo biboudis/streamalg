@@ -23,10 +23,10 @@ public class TestGADTEvaluator {
 
     @Test
     public void testIf() {
-        If expression = new If(new BoolLit(true),
+        If<Integer> expression = new If<>(new BoolLit(true),
                 new Plus(new IntLit(1), new Plus(new IntLit(1), new IntLit(1))),
                 new Plus(new IntLit(5), new Plus(new IntLit(5), new IntLit(5))));
 
-        assertEquals(3, Id.prj(expression.accept(new EvalVisitor())).value);
+        assertEquals(3, Id.prj(expression.accept(new EvalVisitor())).value.intValue());
     }
 }

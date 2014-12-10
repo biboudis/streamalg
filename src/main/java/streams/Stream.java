@@ -8,28 +8,19 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 10/14/14.
  */
-public abstract class Stream<T> implements App<Stream.t, T> {
-
-    static class t {
-
-    }
-
-    static <A> Stream<A> prj(App<t, A> app) {
-        return (Stream) app;
-    };
-
-    long temp = 0L;
+public abstract class Stream<T>  {
 
     public <R> Stream<R> map(Function<T, R> mapper) {
-        return new Map(mapper, this);
-    };
-
-    public Stream<T> filter(Predicate<T> predicate) {
-        return new Filter(predicate, this);
+        return new Map<>(mapper, this);
     }
 
-    public <R> Stream<Stream<R>> flatMap(Function<T, Stream<R>> mapper) { return new FlatMap(mapper, this);}
+    public Stream<T> filter(Predicate<T> predicate) {
+        return new Filter<>(predicate, this);
+    }
 
+    public <R> Stream<R> flatMap(Function<T, Stream<R>> mapper) { return new FlatMap<T, R>(mapper, this);}
+
+    long temp = 0L;
     public long count(){
         temp = 0;
 

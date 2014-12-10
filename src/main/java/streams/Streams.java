@@ -5,6 +5,6 @@ package streams;
  */
 public class Streams {
     public static <T> Stream<T> of(T[] src) {
-        return new Source(src);
+        return new Source<T>(src);
     }
 }
