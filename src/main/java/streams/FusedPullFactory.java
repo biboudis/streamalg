@@ -10,41 +10,43 @@ import java.util.function.Predicate;
 public class FusedPullFactory extends PullFactory implements FusedPullAlg {
 
     interface FusibleFilterPull<T> extends Pull<T> {
-        void combineWith(Predicate<T> other);
+        Predicate<T> combineWith(Predicate<T> other);
+        Pull<T> getSource();
     }
 
     interface FusibleMapPull<T, R> extends Pull<R> {
-        <M> void combineWith(Function<R, M> other);
+        <M> Function<T, M> combineWith(Function<R, M> other);
+        Pull<T> getSource();
     }
 
     @Override
     public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
 
-        boolean isFusible = self instanceof FusibleFilterPull;
-
-        if (isFusible) {
+        if (self instanceof FusibleFilterPull) {
             FusibleFilterPull<T> coerced = (FusibleFilterPull<T>) self;
 
-            coerced.combineWith(filter);
+            Predicate<T> composed = coerced.combineWith(filter);
 
-            return self;
-        } else {
             return new FusibleFilterPull<T>() {
                 T next = null;
-                Predicate<T> predicate;
 
                 @Override
-                public void combineWith(Predicate<T> other) {
-                    predicate = t -> filter.test(t) && predicate.test(t);
+                public Pull<T> getSource() {
+                    return coerced.getSource();
+                }
+
+                @Override
+                public Predicate<T> combineWith(Predicate<T> other) {
+                    return t -> filter.test(t) && other.test(t);
                 }
 
                 @Override
                 public boolean hasNext() {
-                    while (self.hasNext()) {
-                        T current = self.next();
+                    while (getSource().hasNext()) {
+                        T current = getSource().next();
 
-                        if (predicate.test(current)) {
+                        if (composed.test(current)) {
                             next = current;
                             return true;
                         }
@@ -62,7 +64,43 @@ public class FusedPullFactory extends PullFactory implements FusedPullAlg {
                     throw new NoSuchElementException();
                 }
             };
-        }
+        } else
+            return new FusibleFilterPull<T>() {
+                T next = null;
+
+                public Pull<T> getSource() {
+                    return self;
+                }
+
+                @Override
+                public Predicate<T> combineWith(Predicate<T> other) {
+                    return t -> filter.test(t) && other.test(t);
+                }
+
+                @Override
+                public boolean hasNext() {
+                    Pull<T> source = getSource();
+                    while (source.hasNext()) {
+                        T current = source.next();
+
+                        if (filter.test(current)) {
+                            next = current;
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                @Override
+                public T next() {
+                    if (next != null || this.hasNext()) {
+                        T temp = this.next;
+                        this.next = null;
+                        return temp;
+                    }
+                    throw new NoSuchElementException();
+                }
+            };
     }
 
     @Override
@@ -72,27 +110,64 @@ public class FusedPullFactory extends PullFactory implements FusedPullAlg {
         if (self instanceof FusibleMapPull) {
             FusibleMapPull<Object, T> coerced = (FusibleMapPull<Object, T>) self;
 
-            coerced.combineWith(mapper);
+            Function<Object, R> composed = coerced.combineWith(mapper);
 
-            return (Pull<R>) coerced;
-        }
-        else {
             return new FusibleMapPull<T, R>() {
 
-                Function<T, Object> combined;
+                @Override
+                public <M> Function<T, M> combineWith(Function<R, M> other) {
+                    return x -> other.apply(composed.apply(x));
+                }
 
                 @Override
-                public <M> void combineWith(Function<R, M> other) {
-                    combined = x -> other.apply((R) combined.apply(x));
+                public Pull<T> getSource() {
+                    return (Pull<T>) coerced.getSource();
                 }
 
                 R next = null;
 
                 @Override
                 public boolean hasNext() {
-                    while (self.hasNext()) {
-                        T current = self.next();
-                        next = (R) combined.apply(current);
+                    Pull<T> source = getSource();
+                    while (source.hasNext()) {
+                        T current = source.next();
+                        next = composed.apply(current);
+                        return true;
+                    }
+
+                    return self.hasNext();
+                }
+
+                @Override
+                public R next() {
+                    if (next != null || this.hasNext()) {
+                        R temp = this.next;
+                        this.next = null;
+                        return temp;
+                    }
+                    throw new NoSuchElementException();
+                }
+            };
+        }
+        else {
+            return new FusibleMapPull<T, R>() {
+
+                public Pull<T> getSource() {
+                    return self;
+                }
+
+                @Override
+                public <M> Function<T, M> combineWith(Function<R, M> other) {
+                    return x -> other.apply(mapper.apply(x));
+                }
+
+                R next = null;
+
+                @Override
+                public boolean hasNext() {
+                    while (getSource().hasNext()) {
+                        T current = getSource().next();
+                        next = mapper.apply(current);
                         return true;
                     }
 

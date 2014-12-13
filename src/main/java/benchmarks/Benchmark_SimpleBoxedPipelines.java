@@ -81,7 +81,7 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long filter_count_AlgebrasPush() {
+    public Long filter_count_Algebras_Push() {
         PushFactory alg = new PushFactory();
 
         Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
@@ -90,7 +90,7 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long cart_AlgebrasPush() {
+    public Long cart_Algebras_Push() {
 
         PushFactory alg = new PushFactory();
 
@@ -103,7 +103,7 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long filter_count_AlgebrasPull() {
+    public Long filter_count_Algebras_Pull() {
         PullFactory alg = new PullFactory();
 
         Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
@@ -112,7 +112,7 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long cart_AlgebrasPull() {
+    public Long cart_Algebras_Pull() {
 
         PullFactory alg = new PullFactory();
 
@@ -125,32 +125,60 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long filters_AlgebrasPull() {
+    public Long filters_Algebras_NotFusedPull() {
         PullFactory alg = new PullFactory();
 
         Long value = alg.count(
-                alg.filter(x -> x > 15,
-                        alg.filter(x -> x > 14,
-                                alg.filter(x -> x > 13,
-                                        alg.filter(x -> x > 12,
-                                                alg.filter(x -> x > 11,
-                                                        alg.filter(x -> x > 10, alg.source(v))))))));
+            alg.filter(x -> x > 15,
+            alg.filter(x -> x > 14,
+            alg.filter(x -> x > 13,
+            alg.filter(x -> x > 12,
+            alg.filter(x -> x > 11,
+            alg.filter(x -> x > 10, alg.source(v))))))));
 
         return value;
     }
 
 
     @Benchmark
-    public Long filters_AlgebrasFusedPull() {
+    public Long filters_Algebras_FusedPull() {
         FusedPullFactory alg = new FusedPullFactory();
 
         Long value = alg.count(
-                alg.filter(x -> x > 15,
-                        alg.filter(x -> x > 14,
-                                alg.filter(x -> x > 13,
-                                        alg.filter(x -> x > 12,
-                                                alg.filter(x -> x > 11,
-                                                        alg.filter(x -> x > 10, alg.source(v))))))));
+            alg.filter(x -> x > 15,
+            alg.filter(x -> x > 14,
+            alg.filter(x -> x > 13,
+            alg.filter(x -> x > 12,
+            alg.filter(x -> x > 11,
+            alg.filter(x -> x > 10, alg.source(v))))))));
+
+        return value;
+    }
+
+    @Benchmark
+    public Long maps_Algebras_NotFusedPull() {
+        PullFactory alg = new PullFactory();
+
+        Long value = alg.reduce(0L, Long::sum,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1, alg.source(v)))))));
+
+        return value;
+    }
+
+    @Benchmark
+    public Long maps_Algebras_FusedPull() {
+        FusedPullFactory alg = new FusedPullFactory();
+
+        Long value = alg.reduce(0L, Long::sum,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1,
+            alg.<Long, Long>map(x -> x + 1, alg.source(v)))))));
 
         return value;
     }
