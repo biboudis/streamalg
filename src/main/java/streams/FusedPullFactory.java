@@ -13,9 +13,8 @@ public class FusedPullFactory extends PullFactory implements FusedPullAlg {
         void combineWith(Predicate<T> other);
     }
 
-    interface FusibleMapPull<T, M, R> extends Pull<R> {
-        Function<T, R> combineWith(Function<T, M> mapper1, Function<M, R> mapper2);
-        Function<T, M> getMapper();
+    interface FusibleMapPull<T, R> extends Pull<R> {
+        <M> void combineWith(Function<R, M> other);
     }
 
     @Override
@@ -68,6 +67,48 @@ public class FusedPullFactory extends PullFactory implements FusedPullAlg {
 
     @Override
     public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
-        return super.map(mapper, app);
+        Pull<T> self = Pull.prj(app);
+
+        if (self instanceof FusibleMapPull) {
+            FusibleMapPull<Object, T> coerced = (FusibleMapPull<Object, T>) self;
+
+            coerced.combineWith(mapper);
+
+            return (Pull<R>) coerced;
+        }
+        else {
+            return new FusibleMapPull<T, R>() {
+
+                Function<T, Object> combined;
+
+                @Override
+                public <M> void combineWith(Function<R, M> other) {
+                    combined = x -> other.apply((R) combined.apply(x));
+                }
+
+                R next = null;
+
+                @Override
+                public boolean hasNext() {
+                    while (self.hasNext()) {
+                        T current = self.next();
+                        next = (R) combined.apply(current);
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                @Override
+                public R next() {
+                    if (next != null || this.hasNext()) {
+                        R temp = this.next;
+                        this.next = null;
+                        return temp;
+                    }
+                    throw new NoSuchElementException();
+                }
+            };
+        }
     }
 }
