@@ -1,7 +1,9 @@
 package streams;
 
 /**
- * Created by bibou on 12/13/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public interface FusedPullAlg extends StreamAlg<Pull.t> {
 

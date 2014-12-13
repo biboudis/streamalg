@@ -1,7 +1,9 @@
 package streams;
 
 /**
- * Created by bibou on 11/1/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public interface App<C, T> {
 }

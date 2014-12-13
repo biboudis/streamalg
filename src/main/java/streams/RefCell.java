@@ -1,6 +1,8 @@
 package streams;
 /**
- * Created by bibou on 9/21/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class RefCell<T> {
     public T value;

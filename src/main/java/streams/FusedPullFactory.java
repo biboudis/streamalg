@@ -5,7 +5,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Created by bibou on 12/13/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class FusedPullFactory extends PullFactory implements FusedPullAlg {
 
@@ -121,6 +123,7 @@ public class FusedPullFactory extends PullFactory implements FusedPullAlg {
 
                 @Override
                 public Pull<T> getSource() {
+                    //noinspection unchecked
                     return (Pull<T>) coerced.getSource();
                 }
 

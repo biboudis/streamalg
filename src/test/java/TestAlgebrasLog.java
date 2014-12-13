@@ -15,8 +15,8 @@ public class TestAlgebrasLog {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> new Long(i)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> new Long(i)).toArray(Long[]::new);
+        v = IntStream.range(0, 10).mapToObj(Long::new).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
     }
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

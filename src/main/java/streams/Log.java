@@ -3,7 +3,9 @@ package streams;
 import java.util.Iterator;
 
 /**
- * Created by bibou on 11/1/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public interface Log<T> extends App<Log.t, T>, Iterator<T> {
 
@@ -13,5 +15,5 @@ public interface Log<T> extends App<Log.t, T>, Iterator<T> {
 
     static <A> Log<A> prj(App<Log.t, A> app) {
         return (Log<A>) app;
-    };
+    }
 }

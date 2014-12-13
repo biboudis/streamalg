@@ -1,10 +1,12 @@
 package streams;
 
 /**
- * Created by bibou on 10/14/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class Streams {
     public static <T> Stream<T> of(T[] src) {
-        return new Source<T>(src);
+        return new Source<>(src);
     }
 }

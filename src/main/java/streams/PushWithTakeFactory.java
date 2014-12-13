@@ -1,7 +1,9 @@
 package streams;
 
 /**
- * Created by bibou on 12/7/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class PushWithTakeFactory extends PushFactory implements TakeStreamAlg<Push.t> {
 

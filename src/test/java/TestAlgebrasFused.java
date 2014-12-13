@@ -1,18 +1,20 @@
 import org.junit.Before;
 import org.junit.Test;
 import streams.FusedPullFactory;
-import streams.PullFactory;
 
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by bibou on 12/13/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
+@SuppressWarnings("Convert2MethodRef")
 public class TestAlgebrasFused {
 
-    public Long[] v, v_inner;
+    public Long[] v;
 
     @Before
     public void setUp() {
