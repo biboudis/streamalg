@@ -129,12 +129,14 @@ public class Benchmark_SimpleBoxedPipelines {
         PullFactory alg = new PullFactory();
 
         Long value = alg.count(
-            alg.filter(x -> x > 15,
-            alg.filter(x -> x > 14,
-            alg.filter(x -> x > 13,
-            alg.filter(x -> x > 12,
-            alg.filter(x -> x > 11,
-            alg.filter(x -> x > 10, alg.source(v))))))));
+                alg.filter(x -> x > 7,
+                        alg.filter(x -> x > 6,
+                                alg.filter(x -> x > 5,
+                                        alg.filter(x -> x > 4,
+                                                alg.filter(x -> x > 3,
+                                                        alg.filter(x -> x > 2,
+                                                                alg.filter(x -> x > 1,
+                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))));
 
         return value;
     }
@@ -145,12 +147,14 @@ public class Benchmark_SimpleBoxedPipelines {
         FusedPullFactory alg = new FusedPullFactory();
 
         Long value = alg.count(
-            alg.filter(x -> x > 15,
-            alg.filter(x -> x > 14,
-            alg.filter(x -> x > 13,
-            alg.filter(x -> x > 12,
-            alg.filter(x -> x > 11,
-            alg.filter(x -> x > 10, alg.source(v))))))));
+                alg.filter(x -> x > 7,
+                        alg.filter(x -> x > 6,
+                                alg.filter(x -> x > 5,
+                                        alg.filter(x -> x > 4,
+                                                alg.filter(x -> x > 3,
+                                                        alg.filter(x -> x > 2,
+                                                                alg.filter(x -> x > 1,
+                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))));
 
         return value;
     }
@@ -160,11 +164,13 @@ public class Benchmark_SimpleBoxedPipelines {
         PullFactory alg = new PullFactory();
 
         Long value = alg.reduce(0L, Long::sum,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1, alg.source(v)))))));
+                alg.<Long, Long>map(x -> x + 1,
+                        alg.<Long, Long>map(x -> x + 1,
+                                alg.<Long, Long>map(x -> x + 1,
+                                        alg.<Long, Long>map(x -> x + 1,
+                                                alg.<Long, Long>map(x -> x + 1,
+                                                        alg.<Long, Long>map(x -> x + 1,
+                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))));
 
         return value;
     }
@@ -174,11 +180,13 @@ public class Benchmark_SimpleBoxedPipelines {
         FusedPullFactory alg = new FusedPullFactory();
 
         Long value = alg.reduce(0L, Long::sum,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1,
-            alg.<Long, Long>map(x -> x + 1, alg.source(v)))))));
+                alg.<Long, Long>map(x -> x + 1,
+                        alg.<Long, Long>map(x -> x + 1,
+                                alg.<Long, Long>map(x -> x + 1,
+                                        alg.<Long, Long>map(x -> x + 1,
+                                                alg.<Long, Long>map(x -> x + 1,
+                                                        alg.<Long, Long>map(x -> x + 1,
+                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))));
 
         return value;
     }

@@ -27,12 +27,14 @@ public class TestAlgebrasFused {
         FusedPullFactory alg = new FusedPullFactory();
 
         Long actual = alg.count(
+                alg.filter(x -> x > 7,
+                alg.filter(x -> x > 6,
                 alg.filter(x -> x > 5,
                 alg.filter(x -> x > 4,
                 alg.filter(x -> x > 3,
                 alg.filter(x -> x > 2,
                 alg.filter(x -> x > 1,
-                alg.filter(x -> x > 0, alg.source(v))))))));
+                alg.filter(x -> x > 0, alg.source(v))))))))));
 
         Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x > 0)
@@ -41,6 +43,8 @@ public class TestAlgebrasFused {
                 .filter(x -> x > 3)
                 .filter(x -> x > 4)
                 .filter(x -> x > 5)
+                .filter(x -> x > 6)
+                .filter(x -> x > 7)
                 .count();
 
         assertEquals(expected, actual);
@@ -56,9 +60,13 @@ public class TestAlgebrasFused {
                 alg.<Long, Long>map(x -> x + 1,
                 alg.<Long, Long>map(x -> x + 1,
                 alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))));
+                alg.<Long, Long>map(x -> x + 1,
+                alg.<Long, Long>map(x -> x + 1,
+                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))));
 
         Long expected = java.util.stream.Stream.of(v)
+                .map(x -> x + 1)
+                .map(x -> x + 1)
                 .map(x -> x + 1)
                 .map(x -> x + 1)
                 .map(x -> x + 1)
@@ -68,6 +76,4 @@ public class TestAlgebrasFused {
 
         assertEquals(expected, actual);
     }
-
-
 }
