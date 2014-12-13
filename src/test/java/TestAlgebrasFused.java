@@ -36,6 +36,7 @@ public class TestAlgebrasFused {
                 .filter(x -> x > 0)
                 .filter(x -> x > 1)
                 .filter(x -> x > 2)
+                .filter(x -> x > 3)
                 .filter(x -> x > 4)
                 .filter(x -> x > 5)
                 .count();
