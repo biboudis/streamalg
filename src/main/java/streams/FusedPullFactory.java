@@ -36,7 +36,7 @@ public class FusedPullFactory extends PullFactory implements FusedPullAlg {
 
                 @Override
                 public void combineWith(Predicate<T> other) {
-                    predicate = t -> filter.test(t) && other.test(t);
+                    predicate = t -> filter.test(t) && predicate.test(t);
                 }
 
                 @Override
