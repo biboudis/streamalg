@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogAlg extends PushAlg implements LogPushAlg {
+public class LogFactory extends PushFactory implements LogPushFactory {
 
     @Override
     public <T, R> App<Push.t, R> flatMap(Function<T, App<Push.t, R>> mapper, App<Push.t, T> app) {

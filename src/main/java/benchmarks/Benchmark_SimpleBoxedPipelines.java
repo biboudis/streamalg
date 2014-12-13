@@ -1,12 +1,10 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
-import streams.App;
-import streams.PullAlg;
-import streams.Push;
-import streams.PushAlg;
+import streams.FusedPullFactory;
+import streams.PullFactory;
+import streams.PushFactory;
 
-import java.util.function.LongBinaryOperator;
 import java.util.stream.Stream;
 
 @State(Scope.Thread)
@@ -84,9 +82,9 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long filter_count_AlgebrasPush() {
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
-        Long value = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
+        Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
         return value;
     }
@@ -94,10 +92,10 @@ public class Benchmark_SimpleBoxedPipelines {
     @Benchmark
     public Long cart_AlgebrasPush() {
 
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long value =  alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            PushAlg inner = new PushAlg();
+            PushFactory inner = new PushFactory();
             return inner.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)));
 
@@ -106,7 +104,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long filter_count_AlgebrasPull() {
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
@@ -116,12 +114,43 @@ public class Benchmark_SimpleBoxedPipelines {
     @Benchmark
     public Long cart_AlgebrasPull() {
 
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         Long value = alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            PullAlg inner = new PullAlg();
+            PullFactory inner = new PullFactory();
             return inner.<Long, Long>map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)));
+
+        return value;
+    }
+
+    @Benchmark
+    public Long filters_AlgebrasPull() {
+        PullFactory alg = new PullFactory();
+
+        Long value = alg.count(
+                alg.filter(x -> x > 15,
+                        alg.filter(x -> x > 14,
+                                alg.filter(x -> x > 13,
+                                        alg.filter(x -> x > 12,
+                                                alg.filter(x -> x > 11,
+                                                        alg.filter(x -> x > 10, alg.source(v))))))));
+
+        return value;
+    }
+
+
+    @Benchmark
+    public Long filters_AlgebrasFusedPull() {
+        FusedPullFactory alg = new FusedPullFactory();
+
+        Long value = alg.count(
+                alg.filter(x -> x > 15,
+                        alg.filter(x -> x > 14,
+                                alg.filter(x -> x > 13,
+                                        alg.filter(x -> x > 12,
+                                                alg.filter(x -> x > 11,
+                                                        alg.filter(x -> x > 10, alg.source(v))))))));
 
         return value;
     }

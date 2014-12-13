@@ -17,23 +17,9 @@ public class TestAlgebrasPull {
     }
 
     @Test
-    public void testFilterCountPush(){
-
-        PushAlg alg = new PushAlg();
-
-        long actual = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
-
-        long expected = java.util.stream.Stream.of(v)
-                .filter(x -> x % 2L == 0L)
-                .count();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void testFilterCountPull(){
 
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         long actual = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
@@ -46,7 +32,7 @@ public class TestAlgebrasPull {
 
     @Test
     public void testMapPull(){
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         long actual = alg.count(alg.map(x -> x ^ 2, alg.source(v)));
 
@@ -59,11 +45,11 @@ public class TestAlgebrasPull {
 
     @Test
     public void testFlatMapPull(){
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         long actual = alg.count(alg.flatMap(x -> {
-            PullAlg inner = new PullAlg();
-            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
+            PullFactory inner = new PullFactory();
+            return inner.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v)));
 
         long expected = java.util.stream.Stream.of(v)
@@ -75,7 +61,7 @@ public class TestAlgebrasPull {
 
     @Test
     public void testReducePull(){
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         long actual = alg.reduce(0L, Long::sum, alg.map(x -> x^2, alg.source(v)));
 

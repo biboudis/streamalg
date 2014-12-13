@@ -3,7 +3,7 @@ package streams;
 /**
  * Created by bibou on 12/7/14.
  */
-public class PushWithTakeAlg extends PushAlg implements TakeStreamAlg<Push.t> {
+public class PushWithTakeFactory extends PushFactory implements TakeStreamAlg<Push.t> {
 
     long count = 0L;
     @Override

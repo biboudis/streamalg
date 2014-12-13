@@ -26,13 +26,13 @@ public abstract class Stream<T>  {
 
         Consumer<T> k = i -> this.temp ++;
 
-        Push.prj(this.fold(new PushAlg())).invoke(k);
+        Push.prj(this.fold(new PushFactory())).invoke(k);
 
         return temp;
     }
 
     public Iterator<T> iterator() {
-        return streams.Pull.prj(this.fold(new streams.PullAlg()));
+        return streams.Pull.prj(this.fold(new PullFactory()));
     }
 
     abstract <C> App<C, T> fold(StreamAlg<C> algebra);

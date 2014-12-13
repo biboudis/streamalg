@@ -19,9 +19,9 @@ public class TestAlgebrasPush {
     @Test
     public void testFilterCountPush(){
 
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
-        Long actual = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
+        Long actual = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
 
         Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
@@ -32,9 +32,9 @@ public class TestAlgebrasPush {
 
     @Test
     public void testMapPush(){
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
-        Long actual = alg.count(alg.map(x -> (long) x ^ 2, alg.source(v)));
+        Long actual = alg.count(alg.map(x -> x ^ 2, alg.source(v)));
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
@@ -45,11 +45,11 @@ public class TestAlgebrasPush {
 
     @Test
     public void testFlatMapPush(){
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long actual = alg.count(alg.flatMap(x -> {
-            PushAlg inner = new PushAlg();
-            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
+            PushFactory inner = new PushFactory();
+            return inner.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v)));
 
         Long expected = java.util.stream.Stream.of(v)
@@ -61,9 +61,9 @@ public class TestAlgebrasPush {
 
     @Test
     public void testReducePush(){
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
-        Long actual = (Long) alg.<Long>reduce(0L, (a,x)-> (long) a+ (long) x, alg.map(x -> (long) x ^ 2, alg.source(v)));
+        Long actual = alg.<Long>reduce(0L,  Long::sum, alg.map(x -> x ^ 2, alg.source(v)));
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
@@ -74,7 +74,7 @@ public class TestAlgebrasPush {
 
     @Test
     public void testTakePush(){
-        PushWithTakeAlg alg = new PushWithTakeAlg();
+        PushWithTakeFactory alg = new PushWithTakeFactory();
 
         Long actual = alg.count(alg.take(5, alg.source(v)));
 

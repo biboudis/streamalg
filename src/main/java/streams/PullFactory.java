@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 /**
 * Created by bibou on 11/1/14.
 */
-public class PullAlg implements StreamAlg<Pull.t> {
+public class PullFactory implements StreamAlg<Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> source(T[] array) {
@@ -37,7 +37,6 @@ public class PullAlg implements StreamAlg<Pull.t> {
     @Override
     public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
-
         Pull<R> f = new Pull<R>() {
             R next = null;
 
@@ -106,7 +105,7 @@ public class PullAlg implements StreamAlg<Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
-        final Pull<T> self = Pull.prj(app);
+        Pull<T> self = Pull.prj(app);
 
         Pull<T> f = new Pull<T>() {
             T next = null;
