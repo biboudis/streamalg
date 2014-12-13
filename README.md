@@ -1,4 +1,5 @@
 ## Defunctionalizing Streams for Java
+[![Build Status](https://magnum.travis-ci.com/biboudis/defunctionalizing-streams.svg?token=EYsxboxiFVSqpFARwkTX&branch=master)](https://magnum.travis-ci.com/biboudis/defunctionalizing-streams)
 
 Paper (WIP) at [https://github.com/biboudis/defunctionalizing-streams-paper](https://github.com/biboudis/defunctionalizing-streams-paper)
 
