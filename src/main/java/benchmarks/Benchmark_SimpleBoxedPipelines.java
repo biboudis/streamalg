@@ -1,6 +1,7 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
+import streams.FusedPullFactory;
 import streams.Id;
 import streams.PullFactory;
 import streams.PushFactory;
@@ -120,6 +121,73 @@ public class Benchmark_SimpleBoxedPipelines {
             PullFactory inner = new PullFactory();
             return inner.<Long, Long>map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)))).value;
+
+        return value;
+    }
+
+    @Benchmark
+    public Long filters_Algebras_NotFusedPull() {
+        PullFactory alg = new PullFactory();
+
+        Long value = Id.prj(alg.count(
+                alg.filter(x -> x > 7,
+                        alg.filter(x -> x > 6,
+                                alg.filter(x -> x > 5,
+                                        alg.filter(x -> x > 4,
+                                                alg.filter(x -> x > 3,
+                                                        alg.filter(x -> x > 2,
+                                                                alg.filter(x -> x > 1,
+                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))))).value;
+
+        return value;
+    }
+
+
+    @Benchmark
+    public Long filters_Algebras_FusedPull() {
+        FusedPullFactory alg = new FusedPullFactory();
+
+        Long value = Id.prj(alg.count(
+                alg.filter(x -> x > 7,
+                        alg.filter(x -> x > 6,
+                                alg.filter(x -> x > 5,
+                                        alg.filter(x -> x > 4,
+                                                alg.filter(x -> x > 3,
+                                                        alg.filter(x -> x > 2,
+                                                                alg.filter(x -> x > 1,
+                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))))).value;
+
+        return value;
+    }
+
+    @Benchmark
+    public Long maps_Algebras_NotFusedPull() {
+        PullFactory alg = new PullFactory();
+
+        Long value = Id.prj(alg.reduce(0L, Long::sum,
+                alg.<Long, Long>map(x -> x + 1,
+                        alg.<Long, Long>map(x -> x + 1,
+                                alg.<Long, Long>map(x -> x + 1,
+                                        alg.<Long, Long>map(x -> x + 1,
+                                                alg.<Long, Long>map(x -> x + 1,
+                                                        alg.<Long, Long>map(x -> x + 1,
+                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))))).value;
+
+        return value;
+    }
+
+    @Benchmark
+    public Long maps_Algebras_FusedPull() {
+        FusedPullFactory alg = new FusedPullFactory();
+
+        Long value = Id.prj(alg.reduce(0L, Long::sum,
+                alg.<Long, Long>map(x -> x + 1,
+                        alg.<Long, Long>map(x -> x + 1,
+                                alg.<Long, Long>map(x -> x + 1,
+                                        alg.<Long, Long>map(x -> x + 1,
+                                                alg.<Long, Long>map(x -> x + 1,
+                                                        alg.<Long, Long>map(x -> x + 1,
+                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))))).value;
 
         return value;
     }
