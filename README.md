@@ -40,20 +40,6 @@ mvn clean package -Dskiptests
 java -Xmx2g -Xms2g -XX:-TieredCompilation -Dbenchmark.N=1000000 -Dbenchmark.F=3000000 -Dbenchmark.N_outer=1000000 -Dbenchmark.N_inner=10 -jar target/microbenchmarks.jar -wi 5 -i 5 -f 1 -gc true -tu ms ".*"
 ```
 
-## Preliminary Measurements
-```
-Benchmark                                                     Mode  Samples    Score    Error  Units
-b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPull            avgt        5  154.066 ± 35.864  ms/op
-b.Benchmark_SimpleBoxedPipelines.cart_AlgebrasPush            avgt        5  150.490 ± 18.222  ms/op
-b.Benchmark_SimpleBoxedPipelines.cart_Baseline                avgt        5   60.792 ±  7.264  ms/op
-b.Benchmark_SimpleBoxedPipelines.cart_Java8Streams            avgt        5  165.766 ± 74.355  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPull    avgt        5    3.791 ±  0.384  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_AlgebrasPush    avgt        5    2.645 ±  0.120  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_Baseline        avgt        5    4.904 ±  0.068  ms/op
-b.Benchmark_SimpleBoxedPipelines.filter_count_Java8Streams    avgt        5    2.791 ±  0.141  ms/op
-
-```
-
 ## Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
 * [Nessos/Streams](https://github.com/nessos/Streams) in F#
