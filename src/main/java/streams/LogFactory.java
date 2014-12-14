@@ -4,11 +4,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Created by bibou on 11/1/14.
  */
-public class LogFactory extends PushFactory implements LogPushFactory {
+public class LogAlg extends PushAlg implements StreamTerminalAlg<Id.t, Push.t> {
 
     @Override
     public <T, R> App<Push.t, R> flatMap(Function<T, App<Push.t, R>> mapper, App<Push.t, T> app) {

@@ -10,11 +10,9 @@ import java.util.function.Predicate;
  *      Nick Palladinos (@NickPalladinos)
  */
 public interface StreamAlg<C> {
-    <T> App<C, T> source(T[] array);
+    <T>    App<C, T> source(T[] array);
     <T, R> App<C, R> map(Function<T, R> f, App<C, T> app);
     <T, R> App<C, R> flatMap(Function<T, App<C, R>> f, App<C, T> app);
-    <T> App<C, T> filter(Predicate<T> f, App<C, T> app);
-    <T> long count(App<C, T> app);
-    <T> T reduce(T identity, BinaryOperator<T> accumulator, App<C, T> app);
+    <T>    App<C, T> filter(Predicate<T> f, App<C, T> app);
 }
 

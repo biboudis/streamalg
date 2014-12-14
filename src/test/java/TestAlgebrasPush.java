@@ -19,9 +19,9 @@ public class TestAlgebrasPush {
     @Test
     public void testFilterCountPush(){
 
-        PushFactory alg = new PushFactory();
+        PushAlg alg = new PushAlg();
 
-        Long actual = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
+        Long actual = Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
@@ -32,9 +32,9 @@ public class TestAlgebrasPush {
 
     @Test
     public void testMapPush(){
-        PushFactory alg = new PushFactory();
+        PushAlg alg = new PushAlg();
 
-        Long actual = alg.count(alg.map(x -> x ^ 2, alg.source(v)));
+        Long actual = Id.prj(alg.count(alg.map(x -> (long) x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
@@ -45,12 +45,12 @@ public class TestAlgebrasPush {
 
     @Test
     public void testFlatMapPush(){
-        PushFactory alg = new PushFactory();
+        PushAlg alg = new PushAlg();
 
-        Long actual = alg.count(alg.flatMap(x -> {
-            PushFactory inner = new PushFactory();
+        Long actual = Id.prj(alg.count(alg.flatMap(x -> {
+            PushAlg inner = new PushAlg();
             return inner.map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v)));
+        }, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
@@ -61,9 +61,9 @@ public class TestAlgebrasPush {
 
     @Test
     public void testReducePush(){
-        PushFactory alg = new PushFactory();
+        PushAlg alg = new PushAlg();
 
-        Long actual = alg.<Long>reduce(0L,  Long::sum, alg.map(x -> x ^ 2, alg.source(v)));
+        Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
@@ -74,9 +74,9 @@ public class TestAlgebrasPush {
 
     @Test
     public void testTakePush(){
-        PushWithTakeFactory alg = new PushWithTakeFactory();
+        PushWithTakeAlg alg = new PushWithTakeAlg();
 
-        Long actual = alg.count(alg.take(5, alg.source(v)));
+        Long actual =  Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .limit(5)

@@ -15,8 +15,8 @@ public class TestAlgebrasLog {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(Long::new).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
+        v = IntStream.range(0, 10).mapToObj(i -> new Long(i)).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 5).mapToObj(i -> new Long(i)).toArray(Long[]::new);
     }
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -36,7 +36,7 @@ public class TestAlgebrasLog {
 
     @Test
     public void testLog(){
-        LogPushFactory alg = new LogFactory();
+        LogAlg alg = new LogAlg();
 
         alg.<Long>count(alg.map(x -> x + 2, alg.log(alg.source(v))));
 
@@ -56,9 +56,9 @@ public class TestAlgebrasLog {
 
     @Test
     public void testLogLength() {
-        LogPushFactory alg = new LogFactory();
+        LogAlg alg = new LogAlg();
 
-        long actual = alg.<Long>count(alg.log(alg.source(v)));
+        long actual = Id.prj(alg.<Long>count(alg.log(alg.source(v)))).value;
 
         long expected = java.util.stream.Stream.of(v)
                 .count();

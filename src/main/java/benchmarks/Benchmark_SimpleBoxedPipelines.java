@@ -1,10 +1,9 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
-import streams.FusedPullFactory;
-import streams.PullFactory;
-import streams.PushFactory;
+import streams.*;
 
+import java.util.function.LongBinaryOperator;
 import java.util.stream.Stream;
 
 @State(Scope.Thread)
@@ -81,112 +80,45 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long filter_count_Algebras_Push() {
-        PushFactory alg = new PushFactory();
+    public Long filter_count_AlgebrasPush() {
+        PushAlg alg = new PushAlg();
 
-        Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
+        Long value =  Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
 
     @Benchmark
-    public Long cart_Algebras_Push() {
+    public Long cart_AlgebrasPush() {
 
-        PushFactory alg = new PushFactory();
+        PushAlg alg = new PushAlg();
 
-        Long value =  alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            PushFactory inner = new PushFactory();
+        Long value =   Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
+            PushAlg inner = new PushAlg();
             return inner.map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v_outer)));
+        }, alg.source(v_outer)))).value;
 
         return value;
     }
 
     @Benchmark
-    public Long filter_count_Algebras_Pull() {
-        PullFactory alg = new PullFactory();
+    public Long filter_count_AlgebrasPull() {
+        PullAlg alg = new PullAlg();
 
-        Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
+        Long value =  Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
 
     @Benchmark
-    public Long cart_Algebras_Pull() {
+    public Long cart_AlgebrasPull() {
 
-        PullFactory alg = new PullFactory();
+        PullAlg alg = new PullAlg();
 
-        Long value = alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            PullFactory inner = new PullFactory();
+        Long value =  Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
+            PullAlg inner = new PullAlg();
             return inner.<Long, Long>map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v_outer)));
-
-        return value;
-    }
-
-    @Benchmark
-    public Long filters_Algebras_NotFusedPull() {
-        PullFactory alg = new PullFactory();
-
-        Long value = alg.count(
-                alg.filter(x -> x > 7,
-                        alg.filter(x -> x > 6,
-                                alg.filter(x -> x > 5,
-                                        alg.filter(x -> x > 4,
-                                                alg.filter(x -> x > 3,
-                                                        alg.filter(x -> x > 2,
-                                                                alg.filter(x -> x > 1,
-                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))));
-
-        return value;
-    }
-
-
-    @Benchmark
-    public Long filters_Algebras_FusedPull() {
-        FusedPullFactory alg = new FusedPullFactory();
-
-        Long value = alg.count(
-                alg.filter(x -> x > 7,
-                        alg.filter(x -> x > 6,
-                                alg.filter(x -> x > 5,
-                                        alg.filter(x -> x > 4,
-                                                alg.filter(x -> x > 3,
-                                                        alg.filter(x -> x > 2,
-                                                                alg.filter(x -> x > 1,
-                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))));
-
-        return value;
-    }
-
-    @Benchmark
-    public Long maps_Algebras_NotFusedPull() {
-        PullFactory alg = new PullFactory();
-
-        Long value = alg.reduce(0L, Long::sum,
-                alg.<Long, Long>map(x -> x + 1,
-                        alg.<Long, Long>map(x -> x + 1,
-                                alg.<Long, Long>map(x -> x + 1,
-                                        alg.<Long, Long>map(x -> x + 1,
-                                                alg.<Long, Long>map(x -> x + 1,
-                                                        alg.<Long, Long>map(x -> x + 1,
-                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))));
-
-        return value;
-    }
-
-    @Benchmark
-    public Long maps_Algebras_FusedPull() {
-        FusedPullFactory alg = new FusedPullFactory();
-
-        Long value = alg.reduce(0L, Long::sum,
-                alg.<Long, Long>map(x -> x + 1,
-                        alg.<Long, Long>map(x -> x + 1,
-                                alg.<Long, Long>map(x -> x + 1,
-                                        alg.<Long, Long>map(x -> x + 1,
-                                                alg.<Long, Long>map(x -> x + 1,
-                                                        alg.<Long, Long>map(x -> x + 1,
-                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))));
+        }, alg.source(v_outer)))).value;
 
         return value;
     }
