@@ -1,49 +1,63 @@
 package streams;
 
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogFactory extends PushFactory implements LogPushAlg {
+public class LogFactory<C> implements LogAlg<C> {
+    
+    private final StreamTerminalAlg<Id.t, C> alg;
 
-    @Override
-    public <T, R> App<Push.t, R> flatMap(Function<T, App<Push.t, R>> mapper, App<Push.t, T> app) {
-        Push<R> f = k -> Push.prj(app).invoke(i -> {
-            System.out.print("flatMap : " + i.toString());
-            Push<R> result = Push.prj(mapper.apply(i));
-            System.out.println(" -> " + result.toString());
-            result.invoke(k);
-        });
-        return f;
+    public LogFactory(StreamTerminalAlg<Id.t, C> alg) {
+        this.alg = alg;
     }
 
     @Override
-    public <T, R> App<Push.t, R> map(Function<T, R> mapper, App<Push.t, T> app) {
-        Push<R> f = k -> Push.prj(app).invoke(i -> {
+    public <T, R> App<C, R> flatMap(Function<T, App<C, R>> mapper, App<C, T> app) {
+        return alg.flatMap(i -> {
+            System.out.print("flatMap : " + i.toString());
+            App<C, R> result = mapper.apply(i);
+            System.out.println(" -> " + i.toString());
+            return result;
+        }, app);
+    }
+
+    @Override
+    public <T> App<C, T> source(T[] array) {
+        System.out.println("Starting Execution: ");
+        return alg.source(array);
+    }
+
+    @Override
+    public <T, R> App<C, R> map(Function<T, R> mapper, App<C, T> app) {
+        return alg.map(i -> {
             System.out.print("map: " + i.toString());
             R result = mapper.apply(i);
             System.out.println(" -> " + result.toString());
-            k.accept(result);
-        });
-        return f;
+            return result;
+        }, app);
     }
 
     @Override
-    public <T> App<Push.t, T> filter(Predicate<T> predicate, App<Push.t, T> app) {
-        Push<T> f = k -> Push.prj(app).invoke(i -> {
+    public <T> App<C, T> filter(Predicate<T> predicate, App<C, T> app) {
+        return alg.<T>filter(i -> {
             System.out.println("filter: " + i.toString());
-            if(predicate.test(i))
-                k.accept(i);
+            Boolean result = predicate.test(i);
             System.out.println(" -> " + i.toString());
-        });
-        return f;
+            return result;
+        }, app);
     }
 
-    public <T> App<Push.t, T> log(App<Push.t, T> app) {
-        Push<T> f = k -> Push.prj(app).invoke(k);
+    @Override
+    public <T> App<Id.t, Long> count(App<C, T> app) {
+        return alg.count(app);
+    }
 
-        return f;
+    @Override
+    public <T> App<Id.t, T> reduce(T identity, BinaryOperator<T> accumulator, App<C, T> app) {
+        return reduce(identity, accumulator, app);
     }
 }

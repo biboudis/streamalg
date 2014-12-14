@@ -35,12 +35,13 @@ public class TestAlgebrasLog {
     }
 
     @Test
-    public void testLog(){
-        LogFactory alg = new LogFactory();
+    public void testPushLog(){
+        LogFactory<Push.t> alg = new LogFactory<>(new PushFactory());
 
-        alg.<Long>count(alg.map(x -> x + 2, alg.log(alg.source(v))));
+        alg.<Long>count(alg.map(x -> x + 2, alg.source(v)));
 
         assertEquals(
+                "Starting Execution: \n" +
                 "map: 0 -> 2\n" +
                 "map: 1 -> 3\n" +
                 "map: 2 -> 4\n" +
@@ -55,14 +56,23 @@ public class TestAlgebrasLog {
     }
 
     @Test
-    public void testLogLength() {
-        LogFactory alg = new LogFactory();
+    public void testPullLog(){
+        LogFactory<Pull.t> alg = new LogFactory<>(new PullFactory());
 
-        long actual = Id.prj(alg.<Long>count(alg.log(alg.source(v)))).value;
+        alg.<Long>count(alg.map(x -> x + 2, alg.source(v)));
 
-        long expected = java.util.stream.Stream.of(v)
-                .count();
-
-        assertEquals(expected, actual);
+        assertEquals(
+                "Starting Execution: \n" +
+                        "map: 0 -> 2\n" +
+                        "map: 1 -> 3\n" +
+                        "map: 2 -> 4\n" +
+                        "map: 3 -> 5\n" +
+                        "map: 4 -> 6\n" +
+                        "map: 5 -> 7\n" +
+                        "map: 6 -> 8\n" +
+                        "map: 7 -> 9\n" +
+                        "map: 8 -> 10\n" +
+                        "map: 9 -> 11\n",
+                outContent.toString());
     }
 }
