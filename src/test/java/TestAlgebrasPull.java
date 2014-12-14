@@ -21,9 +21,9 @@ public class TestAlgebrasPull {
 
         PushAlg alg = new PushAlg();
 
-        long actual = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
+        Long actual = Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
@@ -35,9 +35,9 @@ public class TestAlgebrasPull {
 
         PullAlg alg = new PullAlg();
 
-        long actual = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
+        Long actual = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
@@ -48,9 +48,9 @@ public class TestAlgebrasPull {
     public void testMapPull(){
         PullAlg alg = new PullAlg();
 
-        long actual = alg.count(alg.map(x -> x ^ 2, alg.source(v)));
+        Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
                 .count();
 
@@ -61,12 +61,12 @@ public class TestAlgebrasPull {
     public void testFlatMapPull(){
         PullAlg alg = new PullAlg();
 
-        long actual = alg.count(alg.flatMap(x -> {
+        Long actual = Id.prj(alg.count(alg.flatMap(x -> {
             PullAlg inner = new PullAlg();
             return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
-        }, alg.source(v)));
+        }, alg.source(v)))).value;
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
                 .count();
 
@@ -77,9 +77,9 @@ public class TestAlgebrasPull {
     public void testReducePull(){
         PullAlg alg = new PullAlg();
 
-        long actual = alg.reduce(0L, Long::sum, alg.map(x -> x^2, alg.source(v)));
+        Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 
-        long expected = java.util.stream.Stream.of(v)
+        Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)
                 .reduce(0L, Long::sum);
 
