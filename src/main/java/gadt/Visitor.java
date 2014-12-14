@@ -1,9 +1,10 @@
 package gadt;
 
 /**
- * Created by bibou on 12/5/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
-
 // This is the universal visitor of http://www.jot.fm/issues/issue_2008_06/article2.pdf#page=8&zoom=180,-4,376
 // In Haskell with GADTs this could have been:
 /*

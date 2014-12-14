@@ -1,8 +1,11 @@
 package gadt;
 
 /**
- * Created by bibou on 12/5/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
+
 public class BoolLit extends Expr<Boolean> {
     Boolean value;
 

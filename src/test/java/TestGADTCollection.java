@@ -4,7 +4,9 @@ import collection.List;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by bibou on 12/9/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class TestGADTCollection {
 

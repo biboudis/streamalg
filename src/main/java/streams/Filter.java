@@ -3,7 +3,9 @@ package streams;
 import java.util.function.Predicate;
 
 /**
- * Created by bibou on 10/14/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class Filter<T> extends Stream<T> {
 

@@ -1,18 +1,14 @@
 import gadt.*;
-import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by bibou on 12/7/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class TestGADTEvaluator {
-
-    @Before
-    public void setUp() {
-
-    }
 
     @Test
     public void testPlus() {

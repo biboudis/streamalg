@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 /**
- * Created by bibou on 12/9/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class List<T> extends Iterable<List.t, T> implements App<List.t, T>{
 
@@ -33,6 +35,7 @@ public class List<T> extends Iterable<List.t, T> implements App<List.t, T>{
 
     @Override
     App<t, T> filter(Predicate<T> predicate) {
+        //noinspection unchecked
         T[] results = (T[]) internal.stream().filter(predicate).toArray();
 
         return new List<>(results);

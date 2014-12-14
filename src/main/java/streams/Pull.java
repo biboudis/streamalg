@@ -3,7 +3,9 @@ package streams;
 import java.util.Iterator;
 
 /**
- * Created by bibou on 11/1/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public interface Pull<T> extends App<Pull.t, T>, Iterator<T> {
 
@@ -13,5 +15,5 @@ public interface Pull<T> extends App<Pull.t, T>, Iterator<T> {
 
     static <A> Pull<A> prj(App<Pull.t, A> app) {
         return (Pull<A>) app;
-    };
+    }
 }

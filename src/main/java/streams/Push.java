@@ -3,7 +3,9 @@ package streams;
 import java.util.function.Consumer;
 
 /**
- * Created by bibou on 11/1/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public interface Push<T> extends App<Push.t, T> {
 
@@ -13,7 +15,7 @@ public interface Push<T> extends App<Push.t, T> {
 
     static <A> Push<A> prj(App<Push.t, A> app) {
         return (Push<A>) app;
-    };
+    }
 
     void invoke(Consumer<T> k);
 }

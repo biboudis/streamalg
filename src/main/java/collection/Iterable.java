@@ -3,9 +3,10 @@ package collection;
 import java.util.function.Predicate;
 
 /**
- * Created by bibou on 12/9/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
-
 class Iterable<Container, T> {
     App<Container, T> filter(Predicate<T> predicate) {
         throw new NoSuchMethodError();

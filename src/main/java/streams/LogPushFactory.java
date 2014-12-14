@@ -5,5 +5,6 @@ package streams;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public interface App<C, T> {
+public interface LogPushFactory extends StreamAlg<Push.t> {
+    <T> App<Push.t, T> log(App<Push.t, T> app);
 }
