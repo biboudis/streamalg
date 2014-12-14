@@ -1,10 +1,7 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
-import streams.App;
-import streams.PullAlg;
-import streams.Push;
-import streams.PushAlg;
+import streams.*;
 
 import java.util.function.LongBinaryOperator;
 import java.util.stream.Stream;
@@ -86,7 +83,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long filter_count_AlgebrasPush() {
         PushAlg alg = new PushAlg();
 
-        Long value = alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)));
+        Long value =  Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
@@ -96,10 +93,10 @@ public class Benchmark_SimpleBoxedPipelines {
 
         PushAlg alg = new PushAlg();
 
-        Long value =  alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
+        Long value =   Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
             PushAlg inner = new PushAlg();
             return inner.map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v_outer)));
+        }, alg.source(v_outer)))).value;
 
         return value;
     }
@@ -108,7 +105,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long filter_count_AlgebrasPull() {
         PullAlg alg = new PullAlg();
 
-        Long value = alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)));
+        Long value =  Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
@@ -118,10 +115,10 @@ public class Benchmark_SimpleBoxedPipelines {
 
         PullAlg alg = new PullAlg();
 
-        Long value = alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
+        Long value =  Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
             PullAlg inner = new PullAlg();
             return inner.<Long, Long>map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v_outer)));
+        }, alg.source(v_outer)))).value;
 
         return value;
     }
