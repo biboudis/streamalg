@@ -81,7 +81,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long filter_count_AlgebrasPush() {
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long value =  Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
@@ -91,10 +91,10 @@ public class Benchmark_SimpleBoxedPipelines {
     @Benchmark
     public Long cart_AlgebrasPush() {
 
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long value =   Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            PushAlg inner = new PushAlg();
+            PushFactory inner = new PushFactory();
             return inner.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)))).value;
 
@@ -103,7 +103,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long filter_count_AlgebrasPull() {
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         Long value =  Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
@@ -113,10 +113,10 @@ public class Benchmark_SimpleBoxedPipelines {
     @Benchmark
     public Long cart_AlgebrasPull() {
 
-        PullAlg alg = new PullAlg();
+        PullFactory alg = new PullFactory();
 
         Long value =  Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            PullAlg inner = new PullAlg();
+            PullFactory inner = new PullFactory();
             return inner.<Long, Long>map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)))).value;
 

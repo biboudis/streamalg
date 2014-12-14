@@ -19,7 +19,7 @@ public class TestAlgebrasPush {
     @Test
     public void testFilterCountPush(){
 
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
@@ -32,7 +32,7 @@ public class TestAlgebrasPush {
 
     @Test
     public void testMapPush(){
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> (long) x ^ 2, alg.source(v)))).value;
 
@@ -45,10 +45,10 @@ public class TestAlgebrasPush {
 
     @Test
     public void testFlatMapPush(){
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
-            PushAlg inner = new PushAlg();
+            PushFactory inner = new PushFactory();
             return inner.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v)))).value;
 
@@ -61,7 +61,7 @@ public class TestAlgebrasPush {
 
     @Test
     public void testReducePush(){
-        PushAlg alg = new PushAlg();
+        PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 
@@ -74,7 +74,7 @@ public class TestAlgebrasPush {
 
     @Test
     public void testTakePush(){
-        PushWithTakeAlg alg = new PushWithTakeAlg();
+        PushWithTakeFactory alg = new PushWithTakeFactory();
 
         Long actual =  Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
 

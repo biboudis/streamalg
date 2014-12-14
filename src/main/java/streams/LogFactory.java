@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/1/14.
  */
-public class LogAlg extends PushAlg implements StreamTerminalAlg<Id.t, Push.t> {
+public class LogFactory extends PushFactory implements StreamTerminalAlg<Id.t, Push.t> {
 
     @Override
     public <T, R> App<Push.t, R> flatMap(Function<T, App<Push.t, R>> mapper, App<Push.t, T> app) {

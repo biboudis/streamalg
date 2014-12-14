@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 /**
  * Created by bibou on 11/3/14.
  */
-public class PushAlg implements StreamTerminalAlg<Id.t, Push.t> {
+public class PushFactory implements StreamTerminalAlg<Id.t, Push.t> {
 
     @Override
     public <T> App<Push.t, T> source(T[] array) {
@@ -46,7 +46,7 @@ public class PushAlg implements StreamTerminalAlg<Id.t, Push.t> {
 
     long temp = 0L;
     @Override
-    public <T> long count(App<Push.t, T> app) {
+    public <T> App<Id.t, Long> count(App<Push.t, T> app) {
         temp = 0L;
         Push.prj(app).invoke(i -> {
             this.temp++;

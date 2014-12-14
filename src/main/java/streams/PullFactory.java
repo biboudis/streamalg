@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 /**
 * Created by bibou on 11/1/14.
 */
-public class PullAlg implements StreamTerminalAlg<Id.t, Pull.t> {
+public class PullFactory implements StreamTerminalAlg<Id.t, Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> source(T[] array) {
