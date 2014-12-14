@@ -7,8 +7,9 @@ package gadt;
  */
 public class If<T> extends Expr<T>
 {
-    Expr<Boolean> x;
-    Expr<T> y,z;
+    final Expr<Boolean> x;
+    final Expr<T> y;
+    final Expr<T> z;
 
     public If(Expr <Boolean> test, Expr<T> thenExpr, Expr<T> elseExpr) {
         x = test;

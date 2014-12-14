@@ -1,9 +1,10 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
-import streams.*;
+import streams.Id;
+import streams.PullFactory;
+import streams.PushFactory;
 
-import java.util.function.LongBinaryOperator;
 import java.util.stream.Stream;
 
 @State(Scope.Thread)
@@ -11,12 +12,12 @@ import java.util.stream.Stream;
 public class Benchmark_SimpleBoxedPipelines {
 
     // For map, count, operations
-    private static int N =  Integer.getInteger("benchmark.N", 1000);
+    private static final int N =  Integer.getInteger("benchmark.N", 1000);
     // For filtering operations
-    private static int F =  Integer.getInteger("benchmark.F", 1000);
+    private static final int F =  Integer.getInteger("benchmark.F", 1000);
     // For cartesian product operations
-    private static int N_outer =  Integer.getInteger("benchmark.N_outer", 100);
-    private static int N_inner =  Integer.getInteger("benchmark.N_inner", 10);
+    private static final int N_outer =  Integer.getInteger("benchmark.N_outer", 100);
+    private static final int N_inner =  Integer.getInteger("benchmark.N_inner", 10);
 
     public Long[] v, v_outer, v_inner, v_forSorting_Baseline ,v_forSorting_Algebras, v_forSorting_Java8Streams;
     public Long[] v_for_megamorphic_filter;

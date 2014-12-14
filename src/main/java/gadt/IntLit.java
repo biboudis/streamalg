@@ -6,7 +6,7 @@ package gadt;
  *      Nick Palladinos (@NickPalladinos)
  */
 public class IntLit extends Expr<Integer>  {
-    public Integer value;
+    public final Integer value;
 
     public IntLit(Integer i) {
         this.value = i;

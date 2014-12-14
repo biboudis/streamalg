@@ -1,5 +1,5 @@
-import org.junit.Test;
 import collection.List;
+import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 

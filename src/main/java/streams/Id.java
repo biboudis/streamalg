@@ -1,11 +1,13 @@
 package streams;
 
 /**
- * Created by bibou on 12/8/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class Id<T> implements App<Id.t, T> {
 
-    public T value;
+    public final T value;
 
     public Id(T value) {
         this.value = value;

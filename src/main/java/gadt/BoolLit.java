@@ -7,7 +7,7 @@ package gadt;
  */
 
 public class BoolLit extends Expr<Boolean> {
-    Boolean value;
+    final Boolean value;
 
     public BoolLit(Boolean i) {
         this.value = i;

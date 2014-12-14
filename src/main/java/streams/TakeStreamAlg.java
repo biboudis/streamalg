@@ -1,10 +1,11 @@
 package streams;
 
-import java.util.function.Predicate;
-
 /**
- * Created by bibou on 12/7/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
+
 public interface TakeStreamAlg<C> extends StreamTerminalAlg<Id.t, C> {
     <T> App<C, T> take(int n, App<Push.t, T> app);
 }

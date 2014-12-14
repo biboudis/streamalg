@@ -15,7 +15,7 @@ public class TestVisitors {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 100).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 100).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
     }
 
     @Test

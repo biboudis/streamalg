@@ -6,7 +6,8 @@ package gadt;
  *      Nick Palladinos (@NickPalladinos)
  */
 public class Plus extends Expr<Integer> {
-    Expr<Integer> left, right;
+    final Expr<Integer> left;
+    final Expr<Integer> right;
 
     public Plus(Expr<Integer> left, Expr<Integer> right) {
         this.left = left;

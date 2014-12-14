@@ -5,7 +5,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Created by bibou on 11/1/14.
+ * Authors:
+ *      Aggelos Biboudis (@biboudis)
+ *      Nick Palladinos (@NickPalladinos)
  */
 public class LogFactory<C> implements LogAlg<C> {
     
@@ -58,6 +60,6 @@ public class LogFactory<C> implements LogAlg<C> {
 
     @Override
     public <T> App<Id.t, T> reduce(T identity, BinaryOperator<T> accumulator, App<C, T> app) {
-        return reduce(identity, accumulator, app);
+        return alg.reduce(identity, accumulator, app);
     }
 }

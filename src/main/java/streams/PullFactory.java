@@ -15,7 +15,7 @@ public class PullFactory implements StreamTerminalAlg<Id.t, Pull.t> {
         Pull<T> f = new Pull<T>() {
 
             int cursor = 0;
-            int size = array.length;
+            final int size = array.length;
 
             @Override
             public boolean hasNext() {

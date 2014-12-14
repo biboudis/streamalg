@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
-import streams.*;
+import streams.Id;
+import streams.PushFactory;
+import streams.PushWithTakeFactory;
 
 import java.util.stream.IntStream;
 
@@ -12,8 +14,8 @@ public class TestAlgebrasPush {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 10).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
     }
 
     @Test
@@ -21,7 +23,7 @@ public class TestAlgebrasPush {
 
         PushFactory alg = new PushFactory();
 
-        Long actual = Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
+        Long actual = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
@@ -34,7 +36,7 @@ public class TestAlgebrasPush {
     public void testMapPush(){
         PushFactory alg = new PushFactory();
 
-        Long actual = Id.prj(alg.count(alg.map(x -> (long) x ^ 2, alg.source(v)))).value;
+        Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x^2)

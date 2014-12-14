@@ -7,7 +7,7 @@ package gadt;
  */
 public class Id<T> implements App<Id.t, T>{
 
-    public T value;
+    public final T value;
 
     public Id(T value) {
         this.value = value;

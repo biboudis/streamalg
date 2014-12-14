@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
-import streams.*;
+import streams.Id;
+import streams.PullFactory;
 
 import java.util.stream.IntStream;
 
@@ -12,8 +13,8 @@ public class TestAlgebrasPull {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> new Long(i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 10).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
     }
 
     @Test
@@ -49,7 +50,7 @@ public class TestAlgebrasPull {
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
             PullFactory inner = new PullFactory();
-            return inner.map(y -> (long) x * (long) y, alg.source(v_inner));
+            return inner.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)

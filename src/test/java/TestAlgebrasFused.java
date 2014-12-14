@@ -18,7 +18,7 @@ public class TestAlgebrasFused {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> new Long(i)).toArray(Long[]::new);
+        v = IntStream.range(0, 10).mapToObj(Long::new).toArray(Long[]::new);
     }
 
     @Test
