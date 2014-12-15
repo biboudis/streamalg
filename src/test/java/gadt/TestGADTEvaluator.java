@@ -1,3 +1,5 @@
+package gadt;
+
 import gadt.*;
 import org.junit.Test;
 

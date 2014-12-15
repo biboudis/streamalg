@@ -1,3 +1,7 @@
+package algebras;
+
+import base.TestBase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import streams.*;
@@ -44,7 +48,7 @@ public class TestAlgebrasFlatMapAlgebras extends TestBase {
 
         System.out.println(prj.next());
 
-        assertEquals(
+        Assert.assertEquals(
                 "inner: 0\n" +
                         "0\n",
                 outContent.toString());
@@ -64,7 +68,7 @@ public class TestAlgebrasFlatMapAlgebras extends TestBase {
 
         System.out.println(iterator.next());
 
-        assertEquals(
+        Assert.assertEquals(
                 "inner: 0\n" +
                         "inner: 1\n" +
                         "inner: 2\n" +

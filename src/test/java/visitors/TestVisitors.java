@@ -1,3 +1,5 @@
+package visitors;
+
 import com.google.common.collect.Iterators;
 import org.junit.Before;
 import org.junit.Test;
