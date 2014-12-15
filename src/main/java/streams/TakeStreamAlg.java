@@ -7,5 +7,5 @@ package streams;
  */
 
 public interface TakeStreamAlg<C> extends StreamTerminalAlg<Id.t, C> {
-    <T> App<C, T> take(int n, App<Push.t, T> app);
+    <T> App<C, T> take(int n, App<C, T> app);
 }

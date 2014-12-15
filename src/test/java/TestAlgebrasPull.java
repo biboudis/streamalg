@@ -32,7 +32,7 @@ public class TestAlgebrasPull {
     }
 
     @Test
-    public void testMapPull(){
+    public void testMapCountPull(){
         PullFactory alg = new PullFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
@@ -45,7 +45,7 @@ public class TestAlgebrasPull {
     }
 
     @Test
-    public void testFlatMapPull(){
+    public void testFlatMapCountPull(){
         PullFactory alg = new PullFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {

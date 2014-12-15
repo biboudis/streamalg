@@ -1,8 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-import streams.Id;
-import streams.PushFactory;
-import streams.PushWithTakeFactory;
+import streams.*;
 
 import java.util.stream.IntStream;
 
@@ -33,7 +31,7 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testMapPush(){
+    public void testMapCountPush(){
         PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
@@ -46,7 +44,7 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testFlatMapPush(){
+    public void testFlatMapCountPush(){
         PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
