@@ -50,8 +50,7 @@ public class TestAlgebrasPush {
         PushFactory alg = new PushFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
-            PushFactory inner = new PushFactory();
-            return inner.map(y -> x * y, alg.source(v_inner));
+            return alg.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)

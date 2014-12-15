@@ -49,8 +49,7 @@ public class TestAlgebrasPull {
         PullFactory alg = new PullFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
-            PullFactory inner = new PullFactory();
-            return inner.map(y -> x * y, alg.source(v_inner));
+            return alg.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)

@@ -99,10 +99,10 @@ public class TestVisitors {
 
 //    @Test
 //    public void testLog(){
-//        Streams.of(v)
+//        Streams.of(v_outer)
 //                .map(x -> x + 1)
 //                .filter(x -> x % 2L==0)
-//                .flatMap(x -> Streams.of(v).map(y -> x * y).log())
+//                .flatMap(x -> Streams.of(v_outer).map(y -> x * y).log())
 //                .log()
 //                .count();
 //

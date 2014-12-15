@@ -13,7 +13,7 @@ public class Id<T> implements App<Id.t, T> {
         this.value = value;
     }
 
-    static class t {}
+    public static class t {}
 
     public static <A> Id<A> prj(App<Id.t, A> app) {
         return (Id<A>) app;
