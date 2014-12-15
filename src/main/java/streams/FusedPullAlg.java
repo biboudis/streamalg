@@ -5,6 +5,6 @@ package streams;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public interface FusedPullAlg extends StreamTerminalAlg<Id.t, Pull.t> {
+public interface FusedPullAlg extends ExecStreamAlg<Id.t, Pull.t> {
 
 }

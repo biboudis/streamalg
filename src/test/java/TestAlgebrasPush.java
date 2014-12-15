@@ -1,8 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-import streams.Id;
-import streams.PushFactory;
-import streams.PushWithTakeFactory;
+import streams.*;
 
 import java.util.stream.IntStream;
 
@@ -21,7 +19,7 @@ public class TestAlgebrasPush {
     @Test
     public void testFilterCountPush(){
 
-        PushFactory alg = new PushFactory();
+        ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
@@ -33,8 +31,8 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testMapPush(){
-        PushFactory alg = new PushFactory();
+    public void testMapCountPush(){
+        ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
 
@@ -46,8 +44,8 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testFlatMapPush(){
-        PushFactory alg = new PushFactory();
+    public void testFlatMapCountPush(){
+        ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
             return alg.map(y -> x * y, alg.source(v_inner));
@@ -62,7 +60,7 @@ public class TestAlgebrasPush {
 
     @Test
     public void testReducePush(){
-        PushFactory alg = new PushFactory();
+        ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 
