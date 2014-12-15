@@ -18,26 +18,10 @@ public class TestAlgebrasFlatMapAlgebras {
     public Long[] v_outer, v_inner;
     public Long expected;
 
-    private <C> Long query(StreamTerminalAlg<Id.t, C> algebra){
-        Long value = Id.prj(
-                algebra.<Long>count(
-                        algebra.flatMap(x -> {
-                            System.out.print("outer ");
-                            return algebra.<Long, Long>map(y -> {
-                                System.out.print("inner ");
-                                return x * y;
-                            }, algebra.source(v_inner));
-                        },  algebra.source(v_outer)))).value;
-
-        System.out.println();
-
-        return value;
-    }
-
     @Before
     public void setUp() {
         v_outer = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 2).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
+        v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
         expected = java.util.stream.Stream.of(v_outer)
                 .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
                 .count();
@@ -47,53 +31,32 @@ public class TestAlgebrasFlatMapAlgebras {
     public void testPull(){
         PullFactory algebra = new PullFactory();
 
-        Long actual = query(algebra);
+        App<Pull.t, Long> map = algebra.map(y -> {
+            System.out.println("inner: " + y);
+            return (long) 10 * (long) y;
+        }, algebra.source(v_inner));
 
-        assertEquals(expected, actual);
-    }
+        App<Pull.t, Long> flatMap = algebra.flatMap(y -> map, algebra.source(v_outer));
 
-    @Test
-    public void testPush(){
-        PushFactory algebra = new PushFactory();
+        Pull<Long> prj = Pull.prj(flatMap);
 
-        Long actual = query(algebra);
+        prj.hasNext();
 
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testJava8StreamsPush(){
-        Long actual = java.util.stream.Stream.of(v_outer)
-                .flatMap(x -> {
-                    System.out.print("outer ");
-                    return java.util.stream.Stream.of(v_inner).map(y -> {
-                        System.out.print("inner ");
-                        return x * y;
-                    });
-                })
-                .count();
-
-        assertEquals(expected, actual);
+        System.out.println(prj.next());
     }
 
     @Test
     public void testJava8StreamsPushWithPull(){
-        Long actual = 0L;
-
         Iterator<Long> iterator = Stream.of(v_outer)
                 .flatMap(x -> {
-                    System.out.print("outer ");
                     return Stream.of(v_inner).map(y -> {
-                        System.out.print("inner ");
+                        System.out.println("inner: " + y);
                         return x * y;
                     });
                 }).iterator();
 
-        while(iterator.hasNext()){
-            actual++;
-            iterator.next();
-        }
+        iterator.hasNext();
 
-        assertEquals(expected, actual);
+        System.out.println(iterator.next());
     }
 }
