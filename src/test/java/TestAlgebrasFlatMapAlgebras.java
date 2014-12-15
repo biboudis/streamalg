@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class TestAlgebrasFlatMapAlgebras {
+public class TestAlgebrasFlatMapAlgebras extends TestBase {
 
     public Long[] v_outer, v_inner;
     public Long expected;
@@ -33,7 +33,7 @@ public class TestAlgebrasFlatMapAlgebras {
 
         App<Pull.t, Long> map = algebra.map(y -> {
             System.out.println("inner: " + y);
-            return (long) 10 * (long) y;
+            return (long) 10 * y;
         }, algebra.source(v_inner));
 
         App<Pull.t, Long> flatMap = algebra.flatMap(y -> map, algebra.source(v_outer));
@@ -43,6 +43,11 @@ public class TestAlgebrasFlatMapAlgebras {
         prj.hasNext();
 
         System.out.println(prj.next());
+
+        assertEquals(
+                "inner: 0\n" +
+                        "0\n",
+                outContent.toString());
     }
 
     @Test
@@ -58,5 +63,14 @@ public class TestAlgebrasFlatMapAlgebras {
         iterator.hasNext();
 
         System.out.println(iterator.next());
+
+        assertEquals(
+                "inner: 0\n" +
+                        "inner: 1\n" +
+                        "inner: 2\n" +
+                        "inner: 3\n" +
+                        "inner: 4\n" +
+                        "0\n",
+                outContent.toString());
     }
 }
