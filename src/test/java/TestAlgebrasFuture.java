@@ -1,7 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
+import streams.ExecPullFactory;
 import streams.Future;
-import streams.FuturePullFactory;
+import streams.FutureFactory;
 
 import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
@@ -25,7 +26,7 @@ public class TestAlgebrasFuture {
     @Test
     public void testFilterCountPull() throws ExecutionException, InterruptedException {
 
-        FuturePullFactory alg = new FuturePullFactory();
+        FutureFactory alg = new FutureFactory(new ExecPullFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v))));
 
@@ -38,7 +39,7 @@ public class TestAlgebrasFuture {
 
     @Test
     public void testMapCountPull() throws ExecutionException, InterruptedException {
-        FuturePullFactory alg = new FuturePullFactory();
+        FutureFactory alg = new FutureFactory(new ExecPullFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v))));
 

@@ -5,9 +5,10 @@ package streams;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public class PushWithTakeFactory extends PushFactory implements TakeStreamAlg<Push.t> {
+public class PushWithTakeFactory extends ExecPushFactory implements TakeStreamAlg<Push.t> {
 
     long count = 0L;
+
     @Override
     public <T> App<Push.t, T> take(int n, App<Push.t, T> app) {
         count = 0L;

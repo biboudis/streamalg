@@ -9,7 +9,7 @@ import java.util.function.Predicate;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public class FusedPullFactory extends PullFactory implements FusedPullAlg {
+public class FusedPullFactory extends ExecPullFactory implements FusedPullAlg {
 
     interface FusibleFilterPull<T> extends Pull<T> {
         Predicate<T> combineWith(Predicate<T> other);

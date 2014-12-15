@@ -6,6 +6,6 @@ package streams;
  *      Nick Palladinos (@NickPalladinos)
  */
 
-public interface TakeStreamAlg<C> extends StreamTerminalAlg<Id.t, C> {
+public interface TakeStreamAlg<C> extends ExecStreamAlg<Id.t, C> {
     <T> App<C, T> take(int n, App<C, T> app);
 }

@@ -11,9 +11,9 @@ import java.util.function.Predicate;
  */
 public class LogFactory<C> implements LogAlg<C> {
     
-    private final StreamTerminalAlg<Id.t, C> alg;
+    private final ExecStreamAlg<Id.t, C> alg;
 
-    public LogFactory(StreamTerminalAlg<Id.t, C> alg) {
+    public LogFactory(ExecStreamAlg<Id.t, C> alg) {
         this.alg = alg;
     }
 

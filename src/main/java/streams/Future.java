@@ -9,14 +9,10 @@ import java.util.concurrent.RunnableFuture;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class Future<T> extends FutureTask implements App<Future.t, T> {
+public class Future<T> extends FutureTask<T> implements App<Future.t, T> {
 
-    public Future(Callable callable) {
+    public Future(Callable<T> callable) {
         super(callable);
-    }
-
-    public Future(Runnable runnable, Object result) {
-        super(runnable, result);
     }
 
     static class t {}

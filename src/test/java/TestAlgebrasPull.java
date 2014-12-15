@@ -1,5 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
+import streams.ExecPullFactory;
 import streams.Id;
 import streams.PullFactory;
 
@@ -20,7 +21,7 @@ public class TestAlgebrasPull {
     @Test
     public void testFilterCountPull(){
 
-        PullFactory alg = new PullFactory();
+        ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
@@ -33,7 +34,7 @@ public class TestAlgebrasPull {
 
     @Test
     public void testMapCountPull(){
-        PullFactory alg = new PullFactory();
+        ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
 
@@ -46,7 +47,7 @@ public class TestAlgebrasPull {
 
     @Test
     public void testFlatMapCountPull(){
-        PullFactory alg = new PullFactory();
+        ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
             PullFactory inner = new PullFactory();
@@ -62,7 +63,7 @@ public class TestAlgebrasPull {
 
     @Test
     public void testReducePull(){
-        PullFactory alg = new PullFactory();
+        ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 

@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 /**
 * Created by bibou on 11/1/14.
 */
-public class PullFactory implements StreamTerminalAlg<Id.t, Pull.t> {
+public class PullFactory implements StreamAlg<Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> source(T[] array) {
@@ -134,31 +134,5 @@ public class PullFactory implements StreamTerminalAlg<Id.t, Pull.t> {
             }
         };
         return f;
-    }
-
-    long temp = 0L;
-    @Override
-    public <T> App<Id.t, Long> count(App<Pull.t, T> app) {
-        Pull<T> self = Pull.prj(app);
-
-        temp = 0L;
-
-        while(self.hasNext()){
-            this.temp++;
-        }
-        return Id.newA(temp);
-    }
-
-    @Override
-    public <T> App<Id.t, T> reduce(T identity, BinaryOperator<T> accumulator, App<Pull.t, T> app) {
-        Pull<T> self = Pull.prj(app);
-
-        T state = identity;
-
-        while(self.hasNext()){
-            state = accumulator.apply(state, self.next());
-        }
-
-        return Id.newA(state);
     }
 }
