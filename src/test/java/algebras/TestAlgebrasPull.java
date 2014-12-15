@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import streams.ExecPullFactory;
 import streams.Id;
-import streams.PullFactory;
 
 import java.util.stream.IntStream;
 

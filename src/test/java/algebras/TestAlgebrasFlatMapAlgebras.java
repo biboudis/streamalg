@@ -10,8 +10,6 @@ import java.util.Iterator;
 import java.util.stream.*;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Authors:
  * Aggelos Biboudis (@biboudis)
@@ -20,15 +18,11 @@ import static org.junit.Assert.assertEquals;
 public class TestAlgebrasFlatMapAlgebras extends TestBase {
 
     public Long[] v_outer, v_inner;
-    public Long expected;
 
     @Before
     public void setUp() {
         v_outer = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
         v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
-        expected = java.util.stream.Stream.of(v_outer)
-                .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
-                .count();
     }
 
     @Test

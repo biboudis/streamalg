@@ -8,8 +8,6 @@ import streams.*;
 
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertEquals;
-
 public class TestAlgebrasLog extends TestBase {
 
     public Long[] v, v_inner;
