@@ -5,6 +5,6 @@ package streams;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public interface LogAlg<C> extends ExecStreamAlg<Id.t, C> {
+public interface LogAlg<E, C> extends ExecStreamAlg<E, C> {
 
 }

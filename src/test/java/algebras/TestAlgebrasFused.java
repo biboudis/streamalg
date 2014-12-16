@@ -2,8 +2,10 @@ package algebras;
 
 import org.junit.Before;
 import org.junit.Test;
+import streams.ExecStreamAlg;
 import streams.FusedPullFactory;
 import streams.Id;
+import streams.Pull;
 
 import java.util.stream.IntStream;
 
@@ -26,7 +28,7 @@ public class TestAlgebrasFused {
     @Test
     public void testMultipleFilterFusedPull(){
 
-        FusedPullFactory alg = new FusedPullFactory();
+        ExecStreamAlg<Id.t, Pull.t> alg = new FusedPullFactory();
 
         Long actual = Id.prj(alg.count(
                 alg.filter(x -> x > 7,
@@ -55,7 +57,7 @@ public class TestAlgebrasFused {
     @Test
     public void testMultipleMapFusedPull(){
 
-        FusedPullFactory alg = new FusedPullFactory();
+        ExecStreamAlg<Id.t, Pull.t> alg = new FusedPullFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum,
                 alg.<Long, Long>map(x -> x + 1,

@@ -18,9 +18,7 @@ public class FutureFactory extends PullFactory implements ExecStreamAlg<Future.t
     @Override
     public <T> App<Future.t, Long> count(App<Pull.t, T> app) {
         Future<Long> future = new Future<>(() -> Id.prj(alg.count(app)).value);
-
         future.run();
-
         return future;
     }
 

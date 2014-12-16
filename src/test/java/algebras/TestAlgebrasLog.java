@@ -11,18 +11,22 @@ import java.util.stream.IntStream;
 public class TestAlgebrasLog extends TestBase {
 
     public Long[] v, v_inner;
+    Long expected;
 
     @Before
     public void setUp() {
         v = IntStream.range(0, 10).mapToObj(Long::new).toArray(Long[]::new);
         v_inner = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
+        expected = java.util.stream.Stream.of(v)
+                .map(x -> x + 2)
+                .reduce(0L, Long::sum);
     }
 
     @Test
     public void testPushLog(){
-        LogFactory<Push.t> alg = new LogFactory<>(new ExecPushFactory());
+        ExecStreamAlg<Id.t, Push.t> alg = new LogFactory<>(new ExecPushFactory());
 
-        alg.<Long>count(alg.map(x -> x + 2, alg.source(v)));
+        Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x + 2, alg.source(v)))).value;
 
         Assert.assertEquals(
                 "Starting Execution: \n" +
@@ -37,13 +41,15 @@ public class TestAlgebrasLog extends TestBase {
                         "map: 8 -> 10\n" +
                         "map: 9 -> 11\n",
                 outContent.toString());
+
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testPullLog(){
-        LogFactory<Push.t> alg = new LogFactory<>(new ExecPushFactory());
+        ExecStreamAlg<Id.t, Pull.t> alg = new LogFactory<>(new ExecPullFactory());
 
-        alg.<Long>count(alg.map(x -> x + 2, alg.source(v)));
+        Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x + 2, alg.source(v)))).value;
 
         Assert.assertEquals(
                 "Starting Execution: \n" +
@@ -58,5 +64,7 @@ public class TestAlgebrasLog extends TestBase {
                         "map: 8 -> 10\n" +
                         "map: 9 -> 11\n",
                 outContent.toString());
+
+        Assert.assertEquals(expected, actual);
     }
 }

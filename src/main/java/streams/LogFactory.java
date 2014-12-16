@@ -9,11 +9,11 @@ import java.util.function.Predicate;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public class LogFactory<C> implements LogAlg<C> {
+public class LogFactory<E, C> implements LogAlg<E, C> {
     
-    private final ExecStreamAlg<Id.t, C> alg;
+    private final ExecStreamAlg<E, C> alg;
 
-    public LogFactory(ExecStreamAlg<Id.t, C> alg) {
+    public LogFactory(ExecStreamAlg<E, C> alg) {
         this.alg = alg;
     }
 
@@ -54,12 +54,12 @@ public class LogFactory<C> implements LogAlg<C> {
     }
 
     @Override
-    public <T> App<Id.t, Long> count(App<C, T> app) {
+    public <T> App<E, Long> count(App<C, T> app) {
         return alg.count(app);
     }
 
     @Override
-    public <T> App<Id.t, T> reduce(T identity, BinaryOperator<T> accumulator, App<C, T> app) {
+    public <T> App<E, T> reduce(T identity, BinaryOperator<T> accumulator, App<C, T> app) {
         return alg.reduce(identity, accumulator, app);
     }
 }
