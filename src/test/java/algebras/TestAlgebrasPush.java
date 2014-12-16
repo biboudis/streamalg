@@ -75,7 +75,7 @@ public class TestAlgebrasPush {
 
     @Test
     public void testTakePush(){
-        PushWithTakeFactory alg = new PushWithTakeFactory();
+        ExecTakeStreamAlg<Id.t, Push.t> alg = new ExecPushWithTakeFactory<>(new ExecPushFactory());
 
         Long actual =  Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
 

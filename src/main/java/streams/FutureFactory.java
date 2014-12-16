@@ -9,9 +9,9 @@ import java.util.function.BinaryOperator;
  */
 public class FutureFactory extends PullFactory implements ExecStreamAlg<Future.t, Pull.t> {
 
-    private final ExecPullFactory alg;
+    private final ExecStreamAlg<Id.t, Pull.t> alg;
 
-    public FutureFactory(ExecPullFactory alg) {
+    public FutureFactory(ExecStreamAlg<Id.t, Pull.t> alg) {
         this.alg = alg;
     }
 
