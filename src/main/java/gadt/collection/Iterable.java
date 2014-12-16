@@ -1,4 +1,6 @@
-package collection;
+package gadt.collection;
+
+import gadt.App;
 
 import java.util.function.Predicate;
 

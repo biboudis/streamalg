@@ -1,4 +1,6 @@
-package gadt;
+package gadt.evaluator;
+
+import gadt.App;
 
 /**
  * Authors:

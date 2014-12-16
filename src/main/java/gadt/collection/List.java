@@ -1,4 +1,6 @@
-package collection;
+package gadt.collection;
+
+import gadt.App;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +11,7 @@ import java.util.function.Predicate;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public class List<T> extends Iterable<List.t, T> implements App<List.t, T>{
+public class List<T> extends Iterable<List.t, T> implements App<List.t, T> {
 
     java.util.List<T> internal = new ArrayList<>();
 

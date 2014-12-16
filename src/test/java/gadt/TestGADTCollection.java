@@ -1,6 +1,6 @@
 package gadt;
 
-import collection.List;
+import gadt.collection.List;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

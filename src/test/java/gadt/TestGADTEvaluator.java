@@ -1,6 +1,6 @@
 package gadt;
 
-import gadt.*;
+import gadt.evaluator.*;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

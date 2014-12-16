@@ -1,11 +1,13 @@
-package gadt;
+package gadt.evaluator;
+
+import gadt.App;
 
 /**
  * Authors:
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public class Id<T> implements App<Id.t, T>{
+public class Id<T> implements App<Id.t, T> {
 
     public final T value;
 
