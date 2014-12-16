@@ -11,7 +11,7 @@ import java.io.PrintStream;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class TestBase {
+public class BaseTest {
     protected final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     protected final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 

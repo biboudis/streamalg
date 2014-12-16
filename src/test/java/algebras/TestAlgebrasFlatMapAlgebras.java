@@ -1,6 +1,6 @@
 package algebras;
 
-import base.TestBase;
+import base.BaseTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class TestAlgebrasFlatMapAlgebras extends TestBase {
+public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
     public Long[] v_outer, v_inner;
 

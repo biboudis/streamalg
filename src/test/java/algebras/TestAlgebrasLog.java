@@ -1,6 +1,6 @@
 package algebras;
 
-import base.TestBase;
+import base.BaseTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import streams.higher.Push;
 
 import java.util.stream.IntStream;
 
-public class TestAlgebrasLog extends TestBase {
+public class TestAlgebrasLog extends BaseTest {
 
     public Long[] v, v_inner;
     Long expected;
