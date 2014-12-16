@@ -2,7 +2,11 @@ package algebras;
 
 import org.junit.Before;
 import org.junit.Test;
-import streams.*;
+import streams.algebras.ExecTakeStreamAlg;
+import streams.factories.ExecPushFactory;
+import streams.factories.ExecPushWithTakeFactory;
+import streams.higher.Id;
+import streams.higher.Push;
 
 import java.util.stream.IntStream;
 

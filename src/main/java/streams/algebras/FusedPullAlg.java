@@ -1,4 +1,7 @@
-package streams;
+package streams.algebras;
+
+import streams.higher.Id;
+import streams.higher.Pull;
 
 /**
  * Authors:

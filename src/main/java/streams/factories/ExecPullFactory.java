@@ -1,4 +1,9 @@
-package streams;
+package streams.factories;
+
+import streams.higher.App;
+import streams.algebras.ExecStreamAlg;
+import streams.higher.Id;
+import streams.higher.Pull;
 
 import java.util.function.BinaryOperator;
 

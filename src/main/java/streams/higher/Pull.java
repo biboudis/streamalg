@@ -1,4 +1,4 @@
-package streams;
+package streams.higher;
 
 import java.util.Iterator;
 

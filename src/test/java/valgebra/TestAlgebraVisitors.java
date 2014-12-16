@@ -1,9 +1,9 @@
-package visitors;
+package valgebra;
 
 import com.google.common.collect.Iterators;
 import org.junit.Before;
 import org.junit.Test;
-import streams.Streams;
+import streams.valgebra.Streams;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestVisitors {
+public class TestAlgebraVisitors {
 
     public Long[] v;
 

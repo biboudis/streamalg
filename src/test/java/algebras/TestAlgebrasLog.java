@@ -4,7 +4,13 @@ import base.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import streams.*;
+import streams.algebras.ExecStreamAlg;
+import streams.factories.ExecPullFactory;
+import streams.factories.ExecPushFactory;
+import streams.factories.LogFactory;
+import streams.higher.Id;
+import streams.higher.Pull;
+import streams.higher.Push;
 
 import java.util.stream.IntStream;
 

@@ -1,4 +1,9 @@
-package streams;
+package streams.factories;
+
+import streams.algebras.ExecStreamAlg;
+import streams.higher.App;
+import streams.higher.Id;
+import streams.higher.Push;
 
 import java.util.function.BinaryOperator;
 
@@ -7,7 +12,7 @@ import java.util.function.BinaryOperator;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class ExecPushFactory extends PushFactory implements ExecStreamAlg<Id.t, Push.t>  {
+public class ExecPushFactory extends PushFactory implements ExecStreamAlg<Id.t, Push.t> {
 
     long temp = 0L;
     @Override

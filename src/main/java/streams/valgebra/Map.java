@@ -1,4 +1,7 @@
-package streams;
+package streams.valgebra;
+
+import streams.algebras.StreamAlg;
+import streams.higher.App;
 
 import java.util.function.Function;
 

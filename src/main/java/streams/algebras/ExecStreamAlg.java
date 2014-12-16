@@ -1,4 +1,6 @@
-package streams;
+package streams.algebras;
+
+import streams.higher.App;
 
 import java.util.function.BinaryOperator;
 

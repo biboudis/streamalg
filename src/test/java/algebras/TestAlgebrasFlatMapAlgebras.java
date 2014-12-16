@@ -4,7 +4,9 @@ import base.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import streams.*;
+import streams.factories.PullFactory;
+import streams.higher.App;
+import streams.higher.Pull;
 
 import java.util.Iterator;
 import java.util.stream.*;

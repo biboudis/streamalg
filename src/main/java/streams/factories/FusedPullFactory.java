@@ -1,4 +1,8 @@
-package streams;
+package streams.factories;
+
+import streams.higher.App;
+import streams.algebras.FusedPullAlg;
+import streams.higher.Pull;
 
 import java.util.NoSuchElementException;
 import java.util.function.Function;

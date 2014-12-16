@@ -1,4 +1,11 @@
-package streams;
+package streams.valgebra;
+
+import streams.algebras.StreamAlg;
+import streams.factories.PullFactory;
+import streams.factories.PushFactory;
+import streams.higher.App;
+import streams.higher.Pull;
+import streams.higher.Push;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
@@ -34,7 +41,7 @@ public abstract class Stream<T>  {
     }
 
     public Iterator<T> iterator() {
-        return streams.Pull.prj(this.fold(new PullFactory()));
+        return Pull.prj(this.fold(new PullFactory()));
     }
 
     abstract <C> App<C, T> fold(StreamAlg<C> algebra);

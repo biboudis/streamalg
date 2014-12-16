@@ -1,4 +1,4 @@
-package streams;
+package streams.factories;
 /**
  * Authors:
  *      Aggelos Biboudis (@biboudis)
@@ -6,7 +6,7 @@ package streams;
  */
 public class RefCell<T> {
     public T value;
-    RefCell(T value) {
+    public RefCell(T value) {
         this.value = value;
     }
 }

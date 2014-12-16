@@ -1,8 +1,11 @@
-package streams;
+package streams.factories;
+
+import streams.higher.App;
+import streams.algebras.ExecStreamAlg;
+import streams.algebras.ExecTakeStreamAlg;
+import streams.higher.Push;
 
 import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Authors:

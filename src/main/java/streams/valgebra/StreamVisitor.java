@@ -1,4 +1,6 @@
-package streams;
+package streams.valgebra;
+
+import streams.higher.App;
 
 /**
  * Authors:
