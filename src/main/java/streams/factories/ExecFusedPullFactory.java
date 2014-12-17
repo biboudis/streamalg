@@ -122,6 +122,4 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
             return new FusibleMapPull<>(self, mapper);
         }
     }
-
-
 }

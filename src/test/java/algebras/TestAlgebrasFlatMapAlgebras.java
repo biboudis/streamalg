@@ -7,8 +7,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import streams.algebras.ExecIterateStreamAlg;
+import streams.factories.ExecPullFactory;
+import streams.factories.ExecPullWithIterateFactory;
 import streams.factories.PullFactory;
 import streams.higher.App;
+import streams.higher.Id;
 import streams.higher.Pull;
 
 import java.util.Iterator;
@@ -105,5 +109,26 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         });
 
         result.get(1000, TimeUnit.MILLISECONDS);
+    }
+
+    @Test
+    public void testPullAlgebraWithInfinite() {
+        ExecIterateStreamAlg<Id.t, Pull.t> algebra = new ExecPullWithIterateFactory<>(new ExecPullFactory());
+
+        App<Pull.t, Long> flatMap = algebra.flatMap(x -> algebra.map(y -> {
+                    System.out.println("inner: " + y);
+                    return  x * y;
+                }, algebra.iterate(0L, i -> i + 2)), algebra.source(v_outer));
+
+        Pull<Long> prj = Pull.prj(flatMap);
+
+        prj.hasNext();
+
+        System.out.println(prj.next());
+
+        Assert.assertEquals(
+                "inner: 0\n" +
+                "0\n",
+                outContent.toString());
     }
 }
