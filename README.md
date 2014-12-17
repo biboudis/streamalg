@@ -33,7 +33,3 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
 * [sml-streams](https://github.com/biboudis/sml-streams) in SML/MLton
 * [scala-streams](https://github.com/biboudis/scala-streams) in Scala
-
-## Dependencies
-* [JMH](http://openjdk.java.net/projects/code-tools/jmh/)
-* [junit](http://junit.org/)

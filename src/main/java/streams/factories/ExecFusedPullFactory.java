@@ -66,13 +66,9 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
             this.mapper = mapper;
         }
 
-        public Pull<T> getSource() {
-            return source;
-        }
-
         @Override
         public <S> FusePull<S> Compose(Function<R, S> other) {
-            return new FusibleMapPull<T, S>(source, x -> other.apply(mapper.apply(x)));
+            return new FusibleMapPull<>(source, x -> other.apply(mapper.apply(x)));
         }
 
         @Override
@@ -103,7 +99,7 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
 
         if (self instanceof FusibleFilterPull) {
             FusibleFilterPull<T> previousSelf = (FusibleFilterPull<T>)self;
-            return new FusibleFilterPull<T>(previousSelf.source, previousSelf.predicate.and(filter)) {};
+            return new FusibleFilterPull<T>(previousSelf.source, previousSelf.predicate.and(filter));
         } else {
             return new FusibleFilterPull<T>(self, filter) {};
         }
