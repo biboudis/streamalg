@@ -13,11 +13,11 @@ import java.util.function.BinaryOperator;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class FutureFactory extends PullFactory implements ExecStreamAlg<Future.t, Pull.t> {
+public class ExecFutureFactory extends PullFactory implements ExecStreamAlg<Future.t, Pull.t> {
 
     private final ExecStreamAlg<Id.t, Pull.t> alg;
 
-    public FutureFactory(ExecStreamAlg<Id.t, Pull.t> alg) {
+    public ExecFutureFactory(ExecStreamAlg<Id.t, Pull.t> alg) {
         this.alg = alg;
     }
 

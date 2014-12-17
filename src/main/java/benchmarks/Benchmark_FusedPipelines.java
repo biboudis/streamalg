@@ -2,7 +2,7 @@ package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
 import streams.factories.ExecPullFactory;
-import streams.factories.FusedPullFactory;
+import streams.factories.ExecFusedPullFactory;
 import streams.higher.Id;
 
 @State(Scope.Thread)
@@ -47,7 +47,7 @@ public class Benchmark_FusedPipelines {
 
     @Benchmark
     public Long filters_Algebras_FusedPull() {
-        FusedPullFactory alg = new FusedPullFactory();
+        ExecFusedPullFactory alg = new ExecFusedPullFactory();
 
         Long value = Id.prj(alg.count(
                 alg.filter(x -> x > 7,
@@ -80,7 +80,7 @@ public class Benchmark_FusedPipelines {
 
     @Benchmark
     public Long maps_Algebras_FusedPull() {
-        FusedPullFactory alg = new FusedPullFactory();
+        ExecFusedPullFactory alg = new ExecFusedPullFactory();
 
         Long value = Id.prj(alg.reduce(0L, Long::sum,
                 alg.<Long, Long>map(x -> x + 1,

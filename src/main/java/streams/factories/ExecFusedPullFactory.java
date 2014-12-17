@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  *      Aggelos Biboudis (@biboudis)
  *      Nick Palladinos (@NickPalladinos)
  */
-public class FusedPullFactory extends ExecPullFactory implements FusedPullAlg {
+public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAlg {
 
     //TODO: can pull up to PullFactory.
     class FusibleFilterPull<T> implements Pull<T> {

@@ -3,7 +3,6 @@ package benchmarks;
 import org.openjdk.jmh.annotations.*;
 import streams.factories.ExecPullFactory;
 import streams.factories.ExecPushFactory;
-import streams.factories.FusedPullFactory;
 import streams.higher.Id;
 
 import java.util.stream.Stream;
