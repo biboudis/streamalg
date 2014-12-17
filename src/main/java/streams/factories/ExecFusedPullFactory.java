@@ -93,7 +93,9 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         }
     }
 
-    private <T, M, R> FusibleMapPull<M, R> createComposedFusibleMapPull(Function<T, R> mapper, FusibleMapPull<M, T> previousSelf) {
+    private <T, M, R> FusibleMapPull<M, R> createComposedFusibleMapPull(Function<T, R> mapper, Pull<T> self) {
+        FusibleMapPull<M,T> previousSelf = (FusibleMapPull<M,T>) self;
+
         return new FusibleMapPull<>(
                 previousSelf.source,
                 previousSelf.getMapper().andThen(mapper));
@@ -116,8 +118,7 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         Pull<T> self = Pull.prj(app);
 
         if (self instanceof FusibleMapPull) {
-            FusibleMapPull<?,T> previousSelf = (FusibleMapPull<?,T>) self;
-            return createComposedFusibleMapPull(mapper, previousSelf);
+            return createComposedFusibleMapPull(mapper, self);
         } else {
             return new FusibleMapPull<>(self, mapper);
         }
