@@ -15,6 +15,10 @@ import java.util.function.Predicate;
  */
 public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAlg {
 
+    interface FusePull<T> extends Pull<T> {
+        <S> Pull<S> Compose(Function<T, S> other);
+    }
+
     //TODO: can pull up to PullFactory.
     class FusibleFilterPull<T> implements Pull<T> {
 
@@ -51,7 +55,7 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         }
     }
 
-    class FusibleMapPull<T, R> implements Pull<R> {
+    class FusibleMapPull<T, R> implements FusePull<R> {
 
         private final Pull<T> source;
         private final Function<T, R> mapper;
@@ -62,13 +66,13 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
             this.mapper = mapper;
         }
 
-        public Function<T, R> getMapper() {
-            return mapper;
-        }
-
-
         public Pull<T> getSource() {
             return source;
+        }
+
+        @Override
+        public <S> FusePull<S> Compose(Function<R, S> other) {
+            return new FusibleMapPull<T, S>(source, x -> other.apply(mapper.apply(x)));
         }
 
         @Override
@@ -93,14 +97,6 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         }
     }
 
-    private <T, M, R> FusibleMapPull<M, R> createComposedFusibleMapPull(Function<T, R> mapper, Pull<T> self) {
-        FusibleMapPull<M,T> previousSelf = (FusibleMapPull<M,T>) self;
-
-        return new FusibleMapPull<>(
-                previousSelf.source,
-                previousSelf.getMapper().andThen(mapper));
-    }
-
     @Override
     public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
@@ -117,8 +113,8 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
     public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
 
-        if (self instanceof FusibleMapPull) {
-            return createComposedFusibleMapPull(mapper, self);
+        if (self instanceof FusePull) {
+            return ((FusePull<T>)self).Compose(mapper);
         } else {
             return new FusibleMapPull<>(self, mapper);
         }
