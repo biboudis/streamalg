@@ -14,32 +14,20 @@ public class Benchmark_SimpleBoxedPipelines {
 
     // For map, count, operations
     private static final int N =  Integer.getInteger("benchmark.N", 1000);
-    // For filtering operations
-    private static final int F =  Integer.getInteger("benchmark.F", 1000);
     // For cartesian product operations
     private static final int N_outer =  Integer.getInteger("benchmark.N_outer", 100);
     private static final int N_inner =  Integer.getInteger("benchmark.N_inner", 10);
 
     public Long[] v, v_outer, v_inner, v_forSorting_Baseline ,v_forSorting_Algebras, v_forSorting_Java8Streams;
-    public Long[] v_for_megamorphic_filter;
-
-    public Long[] fillArray(int range){
-        Long[] array = new Long[range];
-        for (int i = 0; i < range; i++) {
-            array[i] = i % 1000L;
-        }
-        return array;
-    }
 
     @Setup
     public void setUp() {
-        v  = fillArray(N);
-        v_outer = fillArray(N_outer);
-        v_inner = fillArray(N_inner);
-        v_forSorting_Baseline = fillArray(N);
-        v_forSorting_Java8Streams = fillArray(N);
-        v_forSorting_Algebras = fillArray(N);
-        v_for_megamorphic_filter = fillArray(F);
+        v  = Helper.fillArray(N);
+        v_outer = Helper.fillArray(N_outer);
+        v_inner = Helper.fillArray(N_inner);
+        v_forSorting_Baseline = Helper.fillArray(N);
+        v_forSorting_Java8Streams = Helper.fillArray(N);
+        v_forSorting_Algebras = Helper.fillArray(N);
     }
 
     @Benchmark
@@ -92,7 +80,6 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long cart_AlgebrasPush() {
-
         ExecPushFactory alg = new ExecPushFactory();
 
         Long value =   Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
@@ -113,79 +100,11 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long cart_AlgebrasPull() {
-
         ExecPullFactory alg = new ExecPullFactory();
 
         Long value =  Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
             return alg.<Long, Long>map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)))).value;
-
-        return value;
-    }
-
-    @Benchmark
-    public Long filters_Algebras_NotFusedPull() {
-        ExecPullFactory alg = new ExecPullFactory();
-
-        Long value = Id.prj(alg.count(
-                alg.filter(x -> x > 7,
-                        alg.filter(x -> x > 6,
-                                alg.filter(x -> x > 5,
-                                        alg.filter(x -> x > 4,
-                                                alg.filter(x -> x > 3,
-                                                        alg.filter(x -> x > 2,
-                                                                alg.filter(x -> x > 1,
-                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))))).value;
-
-        return value;
-    }
-
-
-    @Benchmark
-    public Long filters_Algebras_FusedPull() {
-        FusedPullFactory alg = new FusedPullFactory();
-
-        Long value = Id.prj(alg.count(
-                alg.filter(x -> x > 7,
-                        alg.filter(x -> x > 6,
-                                alg.filter(x -> x > 5,
-                                        alg.filter(x -> x > 4,
-                                                alg.filter(x -> x > 3,
-                                                        alg.filter(x -> x > 2,
-                                                                alg.filter(x -> x > 1,
-                                                                        alg.filter(x -> x > 0, alg.source(v_for_megamorphic_filter))))))))))).value;
-
-        return value;
-    }
-
-    @Benchmark
-    public Long maps_Algebras_NotFusedPull() {
-        ExecPullFactory alg = new ExecPullFactory();
-
-        Long value = Id.prj(alg.reduce(0L, Long::sum,
-                alg.<Long, Long>map(x -> x + 1,
-                        alg.<Long, Long>map(x -> x + 1,
-                                alg.<Long, Long>map(x -> x + 1,
-                                        alg.<Long, Long>map(x -> x + 1,
-                                                alg.<Long, Long>map(x -> x + 1,
-                                                        alg.<Long, Long>map(x -> x + 1,
-                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))))).value;
-
-        return value;
-    }
-
-    @Benchmark
-    public Long maps_Algebras_FusedPull() {
-        FusedPullFactory alg = new FusedPullFactory();
-
-        Long value = Id.prj(alg.reduce(0L, Long::sum,
-                alg.<Long, Long>map(x -> x + 1,
-                        alg.<Long, Long>map(x -> x + 1,
-                                alg.<Long, Long>map(x -> x + 1,
-                                        alg.<Long, Long>map(x -> x + 1,
-                                                alg.<Long, Long>map(x -> x + 1,
-                                                        alg.<Long, Long>map(x -> x + 1,
-                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))))).value;
 
         return value;
     }
