@@ -16,7 +16,7 @@ import java.util.function.Predicate;
 public class FusedPullFactory extends ExecPullFactory implements FusedPullAlg {
 
     //TODO: can pull up to PullFactory.
-    abstract class FusibleFilterPull<T> implements Pull<T> {
+    class FusibleFilterPull<T> implements Pull<T> {
 
         private final Pull<T> source;
         private final Predicate<T> predicate;
@@ -51,17 +51,26 @@ public class FusedPullFactory extends ExecPullFactory implements FusedPullAlg {
         }
     }
 
-    abstract class FusibleMapPull<T, R> implements Pull<R> {
+    class FusibleMapPull<T, R> implements Pull<R> {
 
         private final Pull<T> source;
-        public final Function<T, R> mapper;
+        private final Function<T, R> mapper;
+        private R next = null;
 
         public FusibleMapPull(Pull<T> source, Function<T, R> mapper) {
             this.source = source;
             this.mapper = mapper;
         }
 
-        R next = null;
+        public Function<T, R> getMapper() {
+            return mapper;
+        }
+
+
+        public Pull<T> getSource() {
+            return source;
+        }
+
         @Override
         public boolean hasNext() {
             while (source.hasNext()) {
@@ -84,6 +93,12 @@ public class FusedPullFactory extends ExecPullFactory implements FusedPullAlg {
         }
     }
 
+    private <T, M, R> FusibleMapPull<M, R> createComposedFusibleMapPull(Function<T, R> mapper, FusibleMapPull<M, T> previousSelf) {
+        return new FusibleMapPull<>(
+                previousSelf.source,
+                previousSelf.getMapper().andThen(mapper));
+    }
+
     @Override
     public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
@@ -101,14 +116,12 @@ public class FusedPullFactory extends ExecPullFactory implements FusedPullAlg {
         Pull<T> self = Pull.prj(app);
 
         if (self instanceof FusibleMapPull) {
-            FusibleMapPull previousSelf = (FusibleMapPull)self;
-            //TODO: introduce generic parameters
-            return new FusibleMapPull<T, R>(previousSelf.source, previousSelf.mapper.andThen(mapper)) {};
+            FusibleMapPull<?,T> previousSelf = (FusibleMapPull<?,T>) self;
+            return createComposedFusibleMapPull(mapper, previousSelf);
         } else {
-            // If self is not a fusible map, it means that some other
-            // combinator was the passed app, so this is the first 
-            // fusible map of the pipeline.
-            return new FusibleMapPull<T, R>(self, mapper) {};
+            return new FusibleMapPull<>(self, mapper);
         }
     }
+
+
 }
