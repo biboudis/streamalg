@@ -83,23 +83,16 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
     public void testJava8StreamsPushWithInfinite() throws ExecutionException, InterruptedException, TimeoutException {
         ExecutorService service = Executors.newSingleThreadExecutor();
         Future<Long> result = service.submit(() -> {
-            Stream<Long> longStream = Stream.iterate(0L, i -> i + 2);
+            Stream<Long> longStream = Stream
+                    .iterate(0L, i -> i + 2);
 
             Iterator<Long> iterator = Stream.of(v_outer)
-                    .flatMap(x -> {
-                        return longStream.map(y -> {
-                            System.out.println("inner: " + y);
-                            return x * y;
-                        });
-                    }).iterator();
+                    .flatMap(x -> longStream.map(y -> x * y))
+                    .iterator();
 
             iterator.hasNext();
 
-            Long value = iterator.next();
-
-            System.out.println(value);
-
-            return value;
+            return iterator.next();
         });
 
         result.get(1000, TimeUnit.MILLISECONDS);
