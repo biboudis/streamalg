@@ -1,16 +1,23 @@
 package algebras;
 
 import base.BaseTest;
+import jdk.nashorn.internal.runtime.ECMAException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import streams.factories.PullFactory;
 import streams.higher.App;
 import streams.higher.Pull;
 
 import java.util.Iterator;
+import java.util.concurrent.*;
 import java.util.stream.*;
 import java.util.stream.Stream;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Authors:
@@ -72,5 +79,31 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
                         "inner: 4\n" +
                         "0\n",
                 outContent.toString());
+    }
+
+    @Test(expected = TimeoutException.class)
+    public void testJava8StreamsPushWithInfinite() throws ExecutionException, InterruptedException, TimeoutException {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        Future<Long> result = service.submit(() -> {
+            Stream<Long> longStream = Stream.iterate(0L, i -> i + 2);
+
+            Iterator<Long> iterator = Stream.of(v_outer)
+                    .flatMap(x -> {
+                        return longStream.map(y -> {
+                            System.out.println("inner: " + y);
+                            return x * y;
+                        });
+                    }).iterator();
+
+            iterator.hasNext();
+
+            Long value = iterator.next();
+
+            System.out.println(value);
+
+            return value;
+        });
+
+        result.get(1000, TimeUnit.MILLISECONDS);
     }
 }
