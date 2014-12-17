@@ -27,28 +27,13 @@ libraries in 2 dimensions: open to both new combinators and new traversal method
 * [Extensibility for the Masses](https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
 * [Feature-Oriented Programming with Object Algebras](http://www.cs.utexas.edu/~wcook/Drafts/2012/FOPwOA.pdf)
 
-## Running benchmarks
-
-```shell
-# run unit tests
-mvn -q test
-
-# build benchmarks über-jar
-mvn clean package -Dskiptests
-
-# run benchmarks
-java -Xmx2g -Xms2g -XX:-TieredCompilation -Dbenchmark.N=1000000 -Dbenchmark.F=3000000 -Dbenchmark.N_outer=1000000 -Dbenchmark.N_inner=10 -jar target/microbenchmarks.jar -wi 5 -i 5 -f 1 -gc true -tu ms ".*"
-```
-
 ## Streams-Zoo
 * [Clash of the Lambdas](http://biboudis.github.io/clashofthelambdas/)
 * [Nessos/Streams](https://github.com/nessos/Streams) in F#
 * [lightweight-streams](https://github.com/biboudis/lightweight-streams) in Java (reimplemented with lambdas only)
 * [sml-streams](https://github.com/biboudis/sml-streams) in SML/MLton
 * [scala-streams](https://github.com/biboudis/scala-streams) in Scala
-* [Iterator combinators](http://mlton.org/ForLoops) in SML/MLton
 
 ## Dependencies
 * [JMH](http://openjdk.java.net/projects/code-tools/jmh/)
 * [junit](http://junit.org/)
-* [Guava](https://code.google.com/p/guava-libraries/)
