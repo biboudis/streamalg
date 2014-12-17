@@ -3,8 +3,8 @@ package algebras;
 import org.junit.Before;
 import org.junit.Test;
 import streams.algebras.ExecStreamAlg;
-import streams.factories.ExecPullFactory;
 import streams.factories.ExecFutureFactory;
+import streams.factories.ExecPullFactory;
 import streams.higher.Future;
 import streams.higher.Pull;
 

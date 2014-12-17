@@ -1,8 +1,8 @@
 package streams.factories;
 
+import streams.algebras.StreamAlg;
 import streams.higher.App;
 import streams.higher.Pull;
-import streams.algebras.StreamAlg;
 
 import java.util.NoSuchElementException;
 import java.util.function.Function;

@@ -1,8 +1,8 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
-import streams.factories.ExecPullFactory;
 import streams.factories.ExecFusedPullFactory;
+import streams.factories.ExecPullFactory;
 import streams.higher.Id;
 
 @State(Scope.Thread)

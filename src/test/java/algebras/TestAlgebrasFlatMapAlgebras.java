@@ -1,12 +1,9 @@
 package algebras;
 
 import base.BaseTest;
-import jdk.nashorn.internal.runtime.ECMAException;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import streams.algebras.ExecIterateStreamAlg;
 import streams.factories.ExecPullFactory;
 import streams.factories.ExecPullWithIterateFactory;
@@ -17,11 +14,8 @@ import streams.higher.Pull;
 
 import java.util.Iterator;
 import java.util.concurrent.*;
-import java.util.stream.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Authors:
@@ -57,7 +51,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         Assert.assertEquals(
                 "inner: 0\n" +
-                        "0\n",
+                "0\n",
                 outContent.toString());
     }
 
@@ -77,11 +71,11 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         Assert.assertEquals(
                 "inner: 0\n" +
-                        "inner: 1\n" +
-                        "inner: 2\n" +
-                        "inner: 3\n" +
-                        "inner: 4\n" +
-                        "0\n",
+                "inner: 1\n" +
+                "inner: 2\n" +
+                "inner: 3\n" +
+                "inner: 4\n" +
+                "0\n",
                 outContent.toString());
     }
 

@@ -3,11 +3,8 @@ package streams.factories;
 import streams.algebras.ExecIterateStreamAlg;
 import streams.algebras.ExecStreamAlg;
 import streams.higher.App;
-import streams.higher.Id;
 import streams.higher.Pull;
-import streams.higher.Push;
 
-import java.util.NoSuchElementException;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 

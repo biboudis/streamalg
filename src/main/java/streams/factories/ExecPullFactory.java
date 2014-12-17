@@ -1,7 +1,7 @@
 package streams.factories;
 
-import streams.higher.App;
 import streams.algebras.ExecStreamAlg;
+import streams.higher.App;
 import streams.higher.Id;
 import streams.higher.Pull;
 

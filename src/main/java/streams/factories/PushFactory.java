@@ -1,8 +1,8 @@
 package streams.factories;
 
+import streams.algebras.StreamAlg;
 import streams.higher.App;
 import streams.higher.Push;
-import streams.algebras.StreamAlg;
 
 import java.util.function.Function;
 import java.util.function.Predicate;

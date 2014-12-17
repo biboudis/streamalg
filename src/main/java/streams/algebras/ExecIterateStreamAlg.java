@@ -1,8 +1,6 @@
 package streams.algebras;
 
 import streams.higher.App;
-import streams.higher.Id;
-import streams.higher.Pull;
 
 import java.util.function.UnaryOperator;
 
