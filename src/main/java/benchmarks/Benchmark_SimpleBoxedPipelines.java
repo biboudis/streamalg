@@ -27,6 +27,7 @@ public class Benchmark_SimpleBoxedPipelines {
         v_inner = Helper.fillArray(N_inner);
     }
 
+    // Baseline Benchmarks
     @Benchmark
     public Long filter_count_Baseline() {
         Long value = 0L;
@@ -48,6 +49,7 @@ public class Benchmark_SimpleBoxedPipelines {
         return value;
     }
 
+    // Java 8 Benchmarks
     @Benchmark
     public Long filter_count_Java8Streams() {
         Long value = java.util.stream.Stream.of(v)
@@ -66,11 +68,12 @@ public class Benchmark_SimpleBoxedPipelines {
         return value;
     }
 
+    // Push Factory Benchmarks
     @Benchmark
     public Long filter_count_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
 
-        Long value = Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
+        Long value = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
@@ -79,13 +82,12 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long cart_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
 
-        Long value = Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            return alg.map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v_outer)))).value;
+        Long value = Id.prj(alg.reduce(0L, Long::sum, alg.flatMap(x -> alg.map(y -> x * y, alg.source(v_inner)), alg.source(v_outer)))).value;
 
         return value;
     }
 
+    // Pull Factory Benchmarks
     @Benchmark
     public Long filter_count_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
@@ -99,9 +101,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long cart_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
 
-        Long value = Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
-            return alg.<Long, Long>map(y -> x * y, alg.source(v_inner));
-        }, alg.source(v_outer)))).value;
+        Long value = Id.prj(alg.reduce(0L, Long::sum, alg.flatMap(x -> alg.map(y -> x * y, alg.source(v_inner)), alg.source(v_outer)))).value;
 
         return value;
     }
