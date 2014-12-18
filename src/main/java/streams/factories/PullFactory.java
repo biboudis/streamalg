@@ -9,16 +9,18 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
-* Created by bibou on 11/1/14.
-*/
+ * Authors:
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
+ */
 public class PullFactory implements StreamAlg<Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> source(T[] array) {
         Pull<T> f = new Pull<T>() {
 
-            int cursor = 0;
             final int size = array.length;
+            int cursor = 0;
 
             @Override
             public boolean hasNext() {
@@ -80,7 +82,7 @@ public class PullFactory implements StreamAlg<Pull.t> {
             @Override
             public boolean hasNext() {
 
-                while(true) {
+                while (true) {
                     while (current != null && current.hasNext()) {
                         next = current.next();
                         return true;
@@ -93,6 +95,7 @@ public class PullFactory implements StreamAlg<Pull.t> {
                 }
 
             }
+
             @Override
             public R next() {
                 if (current != null || this.hasNext()) {

@@ -10,10 +10,34 @@ import java.util.function.Predicate;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAlg {
+
+    @Override
+    public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
+        Pull<T> self = Pull.prj(app);
+
+        if (self instanceof FusibleFilterPull) {
+            FusibleFilterPull<T> previousSelf = (FusibleFilterPull<T>) self;
+            return new FusibleFilterPull<T>(previousSelf.source, previousSelf.predicate.and(filter));
+        } else {
+            return new FusibleFilterPull<T>(self, filter) {
+            };
+        }
+    }
+
+    @Override
+    public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
+        Pull<T> self = Pull.prj(app);
+
+        if (self instanceof FusePull) {
+            return ((FusePull<T>) self).Compose(mapper);
+        } else {
+            return new FusibleMapPull<>(self, mapper);
+        }
+    }
 
     interface FusePull<T> extends Pull<T> {
         <S> Pull<S> Compose(Function<T, S> other);
@@ -24,13 +48,12 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
 
         private final Pull<T> source;
         private final Predicate<T> predicate;
+        T next = null;
 
         public FusibleFilterPull(Pull<T> source, Predicate<T> predicate) {
             this.source = source;
             this.predicate = predicate;
         }
-
-        T next = null;
 
         @Override
         public boolean hasNext() {
@@ -90,29 +113,6 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
                 return temp;
             }
             throw new NoSuchElementException();
-        }
-    }
-
-    @Override
-    public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
-        Pull<T> self = Pull.prj(app);
-
-        if (self instanceof FusibleFilterPull) {
-            FusibleFilterPull<T> previousSelf = (FusibleFilterPull<T>)self;
-            return new FusibleFilterPull<T>(previousSelf.source, previousSelf.predicate.and(filter));
-        } else {
-            return new FusibleFilterPull<T>(self, filter) {};
-        }
-    }
-
-    @Override
-    public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
-        Pull<T> self = Pull.prj(app);
-
-        if (self instanceof FusePull) {
-            return ((FusePull<T>)self).Compose(mapper);
-        } else {
-            return new FusibleMapPull<>(self, mapper);
         }
     }
 }

@@ -4,12 +4,12 @@ import gadt.App;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class EvalVisitor implements Visitor<Id.t> {
 
-    <T> Id<T> eval(Expr<T> e){
+    <T> Id<T> eval(Expr<T> e) {
         return Id.prj(e.accept(this));
     }
 
@@ -36,6 +36,6 @@ public class EvalVisitor implements Visitor<Id.t> {
     public <T> App<Id.t, T> caseIf(If<T> expr) {
         Id<Boolean> test = Id.prj(eval(expr.x));
 
-        return test.value ? eval(expr.y): eval(expr.z);
+        return test.value ? eval(expr.y) : eval(expr.z);
     }
 }

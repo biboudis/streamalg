@@ -15,8 +15,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class TestAlgebrasFuture {
 

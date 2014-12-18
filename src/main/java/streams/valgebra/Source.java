@@ -5,8 +5,8 @@ import streams.higher.App;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class Source<T> extends Stream<T> {
 

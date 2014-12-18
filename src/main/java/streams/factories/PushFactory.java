@@ -9,15 +9,15 @@ import java.util.function.Predicate;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class PushFactory implements StreamAlg<Push.t> {
 
     @Override
     public <T> App<Push.t, T> source(T[] array) {
         Push<T> f = k -> {
-            for(int i=0 ; i < array.length ; i++){
+            for (int i = 0; i < array.length; i++) {
                 k.accept(array[i]);
             }
         };

@@ -26,7 +26,7 @@ public class TestAlgebrasPull {
     }
 
     @Test
-    public void testFilterCountPull(){
+    public void testFilterCountPull() {
 
         ExecPullFactory alg = new ExecPullFactory();
 
@@ -40,20 +40,20 @@ public class TestAlgebrasPull {
     }
 
     @Test
-    public void testMapCountPull(){
+    public void testMapCountPull() {
         ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .map(x -> x^2)
+                .map(x -> x ^ 2)
                 .count();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testFlatMapCountPull(){
+    public void testFlatMapCountPull() {
         ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
@@ -68,20 +68,20 @@ public class TestAlgebrasPull {
     }
 
     @Test
-    public void testReducePull(){
+    public void testReducePull() {
         ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .map(x -> x^2)
+                .map(x -> x ^ 2)
                 .reduce(0L, Long::sum);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testIteratePull(){
+    public void testIteratePull() {
 
         ExecIterateStreamAlg<Id.t, Pull.t> algebra = new ExecPullWithIterateFactory<>(new ExecPullFactory());
 
@@ -91,7 +91,7 @@ public class TestAlgebrasPull {
 
         boolean assertFlag = false;
         int iterations = 100;
-        while(result.hasNext() && expected.hasNext() && iterations-- > 0){
+        while (result.hasNext() && expected.hasNext() && iterations-- > 0) {
             assertFlag = result.next().equals(expected.next());
         }
 

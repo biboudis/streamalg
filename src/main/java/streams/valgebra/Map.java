@@ -7,12 +7,12 @@ import java.util.function.Function;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
-public class Map<T,R> extends Stream<R> {
+public class Map<T, R> extends Stream<R> {
 
-    final Function<T,R> mapper;
+    final Function<T, R> mapper;
     final Stream<T> stream;
 
     public Map(Function<T, R> mapper, Stream<T> stream) {

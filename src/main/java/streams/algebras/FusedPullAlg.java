@@ -5,8 +5,8 @@ import streams.higher.Pull;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public interface FusedPullAlg extends ExecStreamAlg<Id.t, Pull.t> {
 

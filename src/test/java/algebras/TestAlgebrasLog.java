@@ -29,7 +29,7 @@ public class TestAlgebrasLog extends BaseTest {
     }
 
     @Test
-    public void testPushLog(){
+    public void testPushLog() {
         ExecStreamAlg<Id.t, Push.t> alg = new LogFactory<>(new ExecPushFactory());
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x + 2, alg.source(v)))).value;
@@ -52,7 +52,7 @@ public class TestAlgebrasLog extends BaseTest {
     }
 
     @Test
-    public void testPullLog(){
+    public void testPullLog() {
         ExecStreamAlg<Id.t, Pull.t> alg = new LogFactory<>(new ExecPullFactory());
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x + 2, alg.source(v)))).value;

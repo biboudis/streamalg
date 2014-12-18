@@ -13,8 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class TestAlgebrasFused {
 
@@ -26,19 +26,19 @@ public class TestAlgebrasFused {
     }
 
     @Test
-    public void testMultipleFilterFusedPull(){
+    public void testMultipleFilterFusedPull() {
 
         ExecStreamAlg<Id.t, Pull.t> alg = new ExecFusedPullFactory();
 
         Long actual = Id.prj(alg.count(
                 alg.filter(x -> x > 7,
-                alg.filter(x -> x > 6,
-                alg.filter(x -> x > 5,
-                alg.filter(x -> x > 4,
-                alg.filter(x -> x > 3,
-                alg.filter(x -> x > 2,
-                alg.filter(x -> x > 1,
-                alg.filter(x -> x > 0, alg.source(v))))))))))).value;
+                        alg.filter(x -> x > 6,
+                                alg.filter(x -> x > 5,
+                                        alg.filter(x -> x > 4,
+                                                alg.filter(x -> x > 3,
+                                                        alg.filter(x -> x > 2,
+                                                                alg.filter(x -> x > 1,
+                                                                        alg.filter(x -> x > 0, alg.source(v))))))))))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .filter(x -> x > 0)
@@ -55,18 +55,18 @@ public class TestAlgebrasFused {
     }
 
     @Test
-    public void testMultipleMapFusedPull(){
+    public void testMultipleMapFusedPull() {
 
         ExecStreamAlg<Id.t, Pull.t> alg = new ExecFusedPullFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum,
                 alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1,
-                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))))).value;
+                        alg.<Long, Long>map(x -> x + 1,
+                                alg.<Long, Long>map(x -> x + 1,
+                                        alg.<Long, Long>map(x -> x + 1,
+                                                alg.<Long, Long>map(x -> x + 1,
+                                                        alg.<Long, Long>map(x -> x + 1,
+                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v)))))))))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .map(x -> x + 1)

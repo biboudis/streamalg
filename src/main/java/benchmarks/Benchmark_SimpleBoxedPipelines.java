@@ -12,29 +12,27 @@ import java.util.stream.Stream;
 public class Benchmark_SimpleBoxedPipelines {
 
     // For map, count, operations
-    private static final int N =  Integer.getInteger("benchmark.N", 1000);
-    // For cartesian product operations
-    private static final int N_outer =  Integer.getInteger("benchmark.N_outer", 100);
-    private static final int N_inner =  Integer.getInteger("benchmark.N_inner", 10);
+    private static final int N = Integer.getInteger("benchmark.N", 1000);
 
-    public Long[] v, v_outer, v_inner, v_forSorting_Baseline ,v_forSorting_Algebras, v_forSorting_Java8Streams;
+    // For cartesian product operations
+    private static final int N_outer = Integer.getInteger("benchmark.N_outer", 100);
+    private static final int N_inner = Integer.getInteger("benchmark.N_inner", 10);
+
+    private Long[] v, v_outer, v_inner;
 
     @Setup
     public void setUp() {
-        v  = Helper.fillArray(N);
+        v = Helper.fillArray(N);
         v_outer = Helper.fillArray(N_outer);
         v_inner = Helper.fillArray(N_inner);
-        v_forSorting_Baseline = Helper.fillArray(N);
-        v_forSorting_Java8Streams = Helper.fillArray(N);
-        v_forSorting_Algebras = Helper.fillArray(N);
     }
 
     @Benchmark
     public Long filter_count_Baseline() {
         Long value = 0L;
-        for (int i =0 ; i < v.length ; i++) {
+        for (int i = 0; i < v.length; i++) {
             if (v[i] % 2L == 0L)
-                value ++;
+                value++;
         }
         return value;
     }
@@ -42,8 +40,8 @@ public class Benchmark_SimpleBoxedPipelines {
     @Benchmark
     public Long cart_Baseline() {
         Long value = 0L;
-        for (int d = 0 ; d < v_outer.length ; d++) {
-            for (int dp = 0 ; dp < v_inner.length ; dp++){
+        for (int d = 0; d < v_outer.length; d++) {
+            for (int dp = 0; dp < v_inner.length; dp++) {
                 value += v_outer[d] * v_inner[dp];
             }
         }
@@ -72,7 +70,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long filter_count_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
 
-        Long value =  Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
+        Long value = Id.prj(alg.count(alg.filter(x -> (long) x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
@@ -81,7 +79,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long cart_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
 
-        Long value =   Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
+        Long value = Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
             return alg.map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)))).value;
 
@@ -92,7 +90,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long filter_count_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
 
-        Long value =  Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
+        Long value = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
 
         return value;
     }
@@ -101,7 +99,7 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long cart_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
 
-        Long value =  Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
+        Long value = Id.prj(alg.<Long>reduce(0L, Long::sum, alg.flatMap(x -> {
             return alg.<Long, Long>map(y -> x * y, alg.source(v_inner));
         }, alg.source(v_outer)))).value;
 

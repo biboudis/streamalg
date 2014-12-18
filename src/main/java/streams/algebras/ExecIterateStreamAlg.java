@@ -6,8 +6,8 @@ import java.util.function.UnaryOperator;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 
 public interface ExecIterateStreamAlg<E, C> extends ExecStreamAlg<E, C> {

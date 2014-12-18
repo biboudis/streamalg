@@ -7,8 +7,8 @@ import java.util.function.Predicate;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class Filter<T> extends Stream<T> {
 

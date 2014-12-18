@@ -15,13 +15,14 @@ import java.util.function.BinaryOperator;
 public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, Pull.t> {
 
     long temp = 0L;
+
     @Override
     public <T> App<Id.t, Long> count(App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
 
         temp = 0L;
 
-        while(self.hasNext()){
+        while (self.hasNext()) {
             this.temp++;
         }
         return Id.newA(temp);
@@ -33,7 +34,7 @@ public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, 
 
         T state = identity;
 
-        while(self.hasNext()){
+        while (self.hasNext()) {
             state = accumulator.apply(state, self.next());
         }
 

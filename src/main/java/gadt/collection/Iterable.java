@@ -6,8 +6,8 @@ import java.util.function.Predicate;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 class Iterable<Container, T> {
     App<Container, T> filter(Predicate<T> predicate) {

@@ -10,17 +10,9 @@ import streams.higher.Id;
 public class Benchmark_FusedPipelines {
 
     // For fusion operations
-    private static final int F =  Integer.getInteger("benchmark.F", 1000);
+    private static final int F = Integer.getInteger("benchmark.F", 1000);
 
     public Long[] v_for_fused_map, v_for_fused_filter;
-
-    public Long[] fillArray(int range){
-        Long[] array = new Long[range];
-        for (int i = 0; i < range; i++) {
-            array[i] = i % 1000L;
-        }
-        return array;
-    }
 
     @Setup
     public void setUp() {

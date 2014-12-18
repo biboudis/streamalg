@@ -14,9 +14,10 @@ public class Future<T> extends FutureTask<T> implements App<Future.t, T> {
         super(callable);
     }
 
-    public static class t {}
-
     public static <A> Future<A> prj(App<Future.t, A> app) {
         return (Future<A>) app;
+    }
+
+    public static class t {
     }
 }

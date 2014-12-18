@@ -10,11 +10,11 @@ import java.util.function.Predicate;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class LogFactory<E, C> implements LogAlg<E, C> {
-    
+
     private final ExecStreamAlg<E, C> alg;
 
     public LogFactory(ExecStreamAlg<E, C> alg) {

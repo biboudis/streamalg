@@ -4,10 +4,10 @@ import gadt.App;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
-public class IntLit extends Expr<Integer>  {
+public class IntLit extends Expr<Integer> {
     public final Integer value;
 
     public IntLit(Integer i) {

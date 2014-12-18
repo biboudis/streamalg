@@ -4,16 +4,15 @@ import gadt.App;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
-public class If<T> extends Expr<T>
-{
+public class If<T> extends Expr<T> {
     final Expr<Boolean> x;
     final Expr<T> y;
     final Expr<T> z;
 
-    public If(Expr <Boolean> test, Expr<T> thenExpr, Expr<T> elseExpr) {
+    public If(Expr<Boolean> test, Expr<T> thenExpr, Expr<T> elseExpr) {
         x = test;
         y = thenExpr;
         z = elseExpr;

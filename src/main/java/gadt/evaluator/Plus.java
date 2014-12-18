@@ -4,8 +4,8 @@ import gadt.App;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class Plus extends Expr<Integer> {
     final Expr<Integer> left;

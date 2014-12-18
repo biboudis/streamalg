@@ -33,7 +33,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
     }
 
     @Test
-    public void testPull(){
+    public void testPull() {
         PullFactory algebra = new PullFactory();
 
         App<Pull.t, Long> map = algebra.map(y -> {
@@ -51,12 +51,12 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         Assert.assertEquals(
                 "inner: 0\n" +
-                "0\n",
+                        "0\n",
                 outContent.toString());
     }
 
     @Test
-    public void testJava8StreamsPushWithPull(){
+    public void testJava8StreamsPushWithPull() {
         Iterator<Long> iterator = Stream.of(v_outer)
                 .flatMap(x -> {
                     return Stream.of(v_inner).map(y -> {
@@ -71,11 +71,11 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         Assert.assertEquals(
                 "inner: 0\n" +
-                "inner: 1\n" +
-                "inner: 2\n" +
-                "inner: 3\n" +
-                "inner: 4\n" +
-                "0\n",
+                        "inner: 1\n" +
+                        "inner: 2\n" +
+                        "inner: 3\n" +
+                        "inner: 4\n" +
+                        "0\n",
                 outContent.toString());
     }
 
@@ -103,9 +103,9 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         ExecIterateStreamAlg<Id.t, Pull.t> algebra = new ExecPullWithIterateFactory<>(new ExecPullFactory());
 
         App<Pull.t, Long> flatMap = algebra.flatMap(x -> algebra.map(y -> {
-                    System.out.println("inner: " + y);
-                    return  x * y;
-                }, algebra.iterate(0L, i -> i + 2)), algebra.source(v_outer));
+            System.out.println("inner: " + y);
+            return x * y;
+        }, algebra.iterate(0L, i -> i + 2)), algebra.source(v_outer));
 
         Pull<Long> prj = Pull.prj(flatMap);
 
@@ -115,7 +115,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         Assert.assertEquals(
                 "inner: 0\n" +
-                "0\n",
+                        "0\n",
                 outContent.toString());
     }
 }

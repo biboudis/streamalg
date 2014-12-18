@@ -9,8 +9,8 @@ import java.util.function.BinaryOperator;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class ExecPushWithTakeFactory<E> extends PushFactory implements ExecTakeStreamAlg<E, Push.t> {
 
@@ -42,6 +42,6 @@ public class ExecPushWithTakeFactory<E> extends PushFactory implements ExecTakeS
 
     @Override
     public <T> App<E, T> reduce(T identity, BinaryOperator<T> accumulator, App<Push.t, T> app) {
-        return alg.reduce(identity,accumulator, app);
+        return alg.reduce(identity, accumulator, app);
     }
 }

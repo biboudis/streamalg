@@ -21,7 +21,7 @@ public class TestAlgebraVisitors {
     }
 
     @Test
-    public void testFilterPush(){
+    public void testFilterPush() {
         long size = Streams.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
@@ -30,11 +30,11 @@ public class TestAlgebraVisitors {
                 .filter(x -> x % 2L == 0L)
                 .count();
 
-        assert size==size2;
+        assert size == size2;
     }
 
     @Test
-    public void testMapPush(){
+    public void testMapPush() {
 
         long size = Streams.of(v)
                 .map(x -> x + 1L)
@@ -44,11 +44,11 @@ public class TestAlgebraVisitors {
                 .map(x -> x + 1L)
                 .count();
 
-        assert size==size2;
+        assert size == size2;
     }
 
     @Test
-    public void testFilterPull(){
+    public void testFilterPull() {
         Iterator<Long> it1 = Streams.of(v)
                 .filter(x -> x % 2L == 0L)
                 .iterator();
@@ -63,11 +63,11 @@ public class TestAlgebraVisitors {
         Iterators.addAll(l1, it1);
         Iterators.addAll(l2, it2);
 
-        assertEquals(l1, l2) ;
+        assertEquals(l1, l2);
     }
 
     @Test
-    public void testMapPull(){
+    public void testMapPull() {
         Iterator<Long> it1 = Streams.of(v)
                 .map(x -> x + 1)
                 .iterator();
@@ -82,11 +82,11 @@ public class TestAlgebraVisitors {
         Iterators.addAll(l1, it1);
         Iterators.addAll(l2, it2);
 
-        assertEquals(l1, l2) ;
+        assertEquals(l1, l2);
     }
 
     @Test
-    public void testFlatMapPush(){
+    public void testFlatMapPush() {
 
         long size = Streams.of(v)
                 .flatMap(x -> Streams.of(v).map(y -> x * y))
@@ -96,7 +96,7 @@ public class TestAlgebraVisitors {
                 .flatMap(x -> java.util.stream.Stream.of(v).map(y -> x * y))
                 .count();
 
-        assert size==size2;
+        assert size == size2;
     }
 
 //    @Test

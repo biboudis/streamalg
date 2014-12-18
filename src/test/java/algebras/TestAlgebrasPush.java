@@ -23,7 +23,7 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testFilterCountPush(){
+    public void testFilterCountPush() {
 
         ExecPushFactory alg = new ExecPushFactory();
 
@@ -37,20 +37,20 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testMapCountPush(){
+    public void testMapCountPush() {
         ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .map(x -> x^2)
+                .map(x -> x ^ 2)
                 .count();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testFlatMapCountPush(){
+    public void testFlatMapCountPush() {
         ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
@@ -65,23 +65,23 @@ public class TestAlgebrasPush {
     }
 
     @Test
-    public void testReducePush(){
+    public void testReducePush() {
         ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x ^ 2, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .map(x -> x^2)
+                .map(x -> x ^ 2)
                 .reduce(0L, Long::sum);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testTakePush(){
+    public void testTakePush() {
         ExecTakeStreamAlg<Id.t, Push.t> alg = new ExecPushWithTakeFactory<>(new ExecPushFactory());
 
-        Long actual =  Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
+        Long actual = Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
                 .limit(5)

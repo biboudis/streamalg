@@ -7,10 +7,10 @@ import java.util.function.Function;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
-public class FlatMap<T,R> extends Stream<R> {
+public class FlatMap<T, R> extends Stream<R> {
 
     final Function<T, Stream<R>> mapper;
     final Stream<T> stream;

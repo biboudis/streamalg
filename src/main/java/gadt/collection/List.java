@@ -8,19 +8,22 @@ import java.util.function.Predicate;
 
 /**
  * Authors:
- *      Aggelos Biboudis (@biboudis)
- *      Nick Palladinos (@NickPalladinos)
+ * Aggelos Biboudis (@biboudis)
+ * Nick Palladinos (@NickPalladinos)
  */
 public class List<T> extends Iterable<List.t, T> implements App<List.t, T> {
 
     java.util.List<T> internal = new ArrayList<>();
 
-    static class t {}
-
-    public List() {}
+    public List() {
+    }
 
     public List(T[] array) {
         this.internal = Arrays.asList(array);
+    }
+
+    public static <A> List<A> prj(App<List.t, A> app) {
+        return (List<A>) app;
     }
 
     public void add(T t) {
@@ -43,7 +46,6 @@ public class List<T> extends Iterable<List.t, T> implements App<List.t, T> {
         return new List<>(results);
     }
 
-    public static <A> List<A> prj(App<List.t, A> app) {
-        return (List<A>) app;
+    static class t {
     }
 }
