@@ -20,11 +20,9 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         Pull<T> self = Pull.prj(app);
 
         if (self instanceof FusibleFilterPull) {
-            FusibleFilterPull<T> previousSelf = (FusibleFilterPull<T>) self;
-            return new FusibleFilterPull<T>(previousSelf.source, previousSelf.predicate.and(filter));
+            return ((FuseFilterPull<T>) self).compose(filter);
         } else {
-            return new FusibleFilterPull<T>(self, filter) {
-            };
+            return new FusibleFilterPull<T>(self, filter);
         }
     }
 
@@ -32,19 +30,22 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
     public <T, R> App<Pull.t, R> map(Function<T, R> mapper, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
 
-        if (self instanceof FusePull) {
-            return ((FusePull<T>) self).Compose(mapper);
+        if (self instanceof FuseMapPull) {
+            return ((FuseMapPull<T>) self).compose(mapper);
         } else {
             return new FusibleMapPull<>(self, mapper);
         }
     }
 
-    interface FusePull<T> extends Pull<T> {
-        <S> Pull<S> Compose(Function<T, S> other);
+    interface FuseMapPull<T> extends Pull<T> {
+        <S> Pull<S> compose(Function<T, S> other);
     }
 
-    //TODO: can pull up to PullFactory.
-    class FusibleFilterPull<T> implements Pull<T> {
+    interface FuseFilterPull<T> extends Pull<T> {
+        Pull<T> compose(Predicate<T> other);
+    }
+
+    class FusibleFilterPull<T> implements FuseFilterPull<T> {
 
         private final Pull<T> source;
         private final Predicate<T> predicate;
@@ -53,6 +54,11 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         public FusibleFilterPull(Pull<T> source, Predicate<T> predicate) {
             this.source = source;
             this.predicate = predicate;
+        }
+
+        @Override
+        public Pull<T> compose(Predicate<T> other) {
+            return new FusibleFilterPull<>(source, other.and(predicate));
         }
 
         @Override
@@ -78,7 +84,7 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         }
     }
 
-    class FusibleMapPull<T, R> implements FusePull<R> {
+    class FusibleMapPull<T, R> implements FuseMapPull<R> {
 
         private final Pull<T> source;
         private final Function<T, R> mapper;
@@ -90,8 +96,8 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         }
 
         @Override
-        public <S> FusePull<S> Compose(Function<R, S> other) {
-            return new FusibleMapPull<>(source, x -> other.apply(mapper.apply(x)));
+        public <S> FuseMapPull<S> compose(Function<R, S> other) {
+            return new FusibleMapPull<>(source, other.compose(mapper));
         }
 
         @Override

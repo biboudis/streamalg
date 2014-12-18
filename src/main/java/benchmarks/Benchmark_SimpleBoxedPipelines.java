@@ -32,8 +32,18 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long filter_count_Baseline() {
         Long value = 0L;
         for (int i = 0; i < v.length; i++) {
-            if (v[i] % 2L == 0L)
-                value++;
+            if (v[i] % 2 == 0)
+                value += v[i];
+        }
+        return value;
+    }
+
+    @Benchmark
+    public Long filter_map_reduce_Baseline() {
+        Long value = 0L;
+        for (int i = 0; i < v.length; i++) {
+            if (v[i] % 2 == 0)
+                value += v[i] * v[i];
         }
         return value;
     }
@@ -54,8 +64,16 @@ public class Benchmark_SimpleBoxedPipelines {
     public Long filter_count_Java8Streams() {
         Long value = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
-                .count();
+                .reduce(0L, Long::sum);
+        return value;
+    }
 
+    @Benchmark
+    public Long filter_map_reduce_Java8Streams() {
+        Long value = Stream.of(v)
+                .filter(x -> x % 2L == 0L)
+                .map(d -> d * d)
+                .reduce(0L, Long::sum);
         return value;
     }
 
@@ -64,45 +82,74 @@ public class Benchmark_SimpleBoxedPipelines {
         Long value = Stream.of(v_outer)
                 .flatMap(d -> Stream.of(v_inner).map(dP -> dP * d))
                 .reduce(0L, Long::sum);
-
         return value;
     }
 
     // Push Factory Benchmarks
     @Benchmark
-    public Long filter_count_AlgebrasPush() {
+    public Long filter_reduce_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.filter(x -> x % 2L == 0L,
+                                alg.source(v)))).value;
+        return value;
+    }
 
-        Long value = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
-
+    @Benchmark
+    public Long filter_map_reduce_AlgebrasPush() {
+        ExecPushFactory alg = new ExecPushFactory();
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.filter(x -> x % 2L == 0L,
+                                alg.map(d -> d * d,
+                                        alg.source(v))))).value;
         return value;
     }
 
     @Benchmark
     public Long cart_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
-
-        Long value = Id.prj(alg.reduce(0L, Long::sum, alg.flatMap(x -> alg.map(y -> x * y, alg.source(v_inner)), alg.source(v_outer)))).value;
-
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.flatMap(x ->
+                                        alg.map(y -> x * y,
+                                                alg.source(v_inner)),
+                                alg.source(v_outer)))).value;
         return value;
     }
 
     // Pull Factory Benchmarks
     @Benchmark
-    public Long filter_count_AlgebrasPull() {
+    public Long filter_reduce_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.filter(x -> x % 2L == 0L,
+                                alg.source(v)))).value;
+        return value;
+    }
 
-        Long value = Id.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v)))).value;
-
+    @Benchmark
+    public Long filter_map_reduce_AlgebrasPull() {
+        ExecPullFactory alg = new ExecPullFactory();
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.filter(x -> x % 2L == 0L,
+                                alg.map(d -> d * d,
+                                        alg.source(v))))).value;
         return value;
     }
 
     @Benchmark
     public Long cart_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
-
-        Long value = Id.prj(alg.reduce(0L, Long::sum, alg.flatMap(x -> alg.map(y -> x * y, alg.source(v_inner)), alg.source(v_outer)))).value;
-
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.flatMap(x ->
+                                        alg.map(y -> x * y,
+                                                alg.source(v_inner)),
+                                alg.source(v_outer)))).value;
         return value;
     }
 }
