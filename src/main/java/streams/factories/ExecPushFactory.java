@@ -13,7 +13,6 @@ import java.util.function.BinaryOperator;
  * Nick Palladinos (@NickPalladinos)
  */
 public class ExecPushFactory extends PushFactory implements ExecStreamAlg<Id.t, Push.t> {
-
     @Override
     public <T> App<Id.t, Long> count(App<Push.t, T> app) {
         RefCell<Long> temp = new RefCell<>(0L);

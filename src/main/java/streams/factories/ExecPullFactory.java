@@ -17,9 +17,7 @@ public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, 
     @Override
     public <T> App<Id.t, Long> count(App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
-
         long temp = 0L;
-
         while (self.hasNext()) {
             temp++;
         }
@@ -29,13 +27,10 @@ public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, 
     @Override
     public <T> App<Id.t, T> reduce(T identity, BinaryOperator<T> accumulator, App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
-
         T state = identity;
-
         while (self.hasNext()) {
             state = accumulator.apply(state, self.next());
         }
-
         return Id.newA(state);
     }
 }
