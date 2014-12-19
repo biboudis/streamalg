@@ -36,5 +36,4 @@
 # Crashlytics plugin (for Android Studio and IntelliJ)
 target/
 
-*.ods#
-
+jmh-result.csv
