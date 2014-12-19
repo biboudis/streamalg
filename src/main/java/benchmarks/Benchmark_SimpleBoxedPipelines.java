@@ -29,7 +29,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
     // Baseline Benchmarks
     @Benchmark
-    public Long filter_count_Baseline() {
+    public Long filter_reduce_Baseline() {
         Long value = 0L;
         for (int i = 0; i < v.length; i++) {
             if (v[i] % 2 == 0)
@@ -61,7 +61,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
     // Java 8 Benchmarks
     @Benchmark
-    public Long filter_count_Java8Streams() {
+    public Long filter_reduce_Java8Streams() {
         Long value = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .reduce(0L, Long::sum);
@@ -101,8 +101,8 @@ public class Benchmark_SimpleBoxedPipelines {
         ExecPushFactory alg = new ExecPushFactory();
         Long value = Id.prj(
                 alg.reduce(0L, Long::sum,
-                        alg.filter(x -> x % 2L == 0L,
-                                alg.map(d -> d * d,
+                        alg.map(d -> d * d,
+                                alg.filter(x -> x % 2L == 0L,
                                         alg.source(v))))).value;
         return value;
     }
@@ -135,8 +135,8 @@ public class Benchmark_SimpleBoxedPipelines {
         ExecPullFactory alg = new ExecPullFactory();
         Long value = Id.prj(
                 alg.reduce(0L, Long::sum,
-                        alg.filter(x -> x % 2L == 0L,
-                                alg.map(d -> d * d,
+                        alg.map(d -> d * d,
+                                alg.filter(x -> x % 2L == 0L,
                                         alg.source(v))))).value;
         return value;
     }

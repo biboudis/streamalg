@@ -58,14 +58,15 @@ public class Benchmark_FusedPipelines {
     public Long maps_Algebras_NotFusedPull() {
         ExecPullFactory alg = new ExecPullFactory();
 
-        Long value = Id.prj(alg.reduce(0L, Long::sum,
+        Long value = Id.prj(alg.count(
                 alg.<Long, Long>map(x -> x + 1,
                         alg.<Long, Long>map(x -> x + 1,
                                 alg.<Long, Long>map(x -> x + 1,
                                         alg.<Long, Long>map(x -> x + 1,
                                                 alg.<Long, Long>map(x -> x + 1,
                                                         alg.<Long, Long>map(x -> x + 1,
-                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v_for_fused_map)))))))))).value;
+                                                                alg.<Long, Long>map(x -> x + 1,
+                                                                        alg.<Long, Long>map(x -> x + 1, alg.source(v_for_fused_map))))))))))).value;
 
         return value;
     }
@@ -74,14 +75,15 @@ public class Benchmark_FusedPipelines {
     public Long maps_Algebras_FusedPull() {
         ExecFusedPullFactory alg = new ExecFusedPullFactory();
 
-        Long value = Id.prj(alg.reduce(0L, Long::sum,
+        Long value = Id.prj(alg.count(
                 alg.<Long, Long>map(x -> x + 1,
                         alg.<Long, Long>map(x -> x + 1,
                                 alg.<Long, Long>map(x -> x + 1,
                                         alg.<Long, Long>map(x -> x + 1,
                                                 alg.<Long, Long>map(x -> x + 1,
                                                         alg.<Long, Long>map(x -> x + 1,
-                                                                alg.<Long, Long>map(x -> x + 1, alg.source(v_for_fused_map)))))))))).value;
+                                                                alg.<Long, Long>map(x -> x + 1,
+                                                                        alg.<Long, Long>map(x -> x + 1, alg.source(v_for_fused_map))))))))))).value;
 
         return value;
     }
@@ -111,8 +113,8 @@ public class Benchmark_FusedPipelines {
                 .map(x -> x + 1)
                 .map(x -> x + 1)
                 .map(x -> x + 1)
-                .reduce(0L, Long::sum);
-
+                .map(x -> x + 1)
+                .count();
         return value;
     }
 }
