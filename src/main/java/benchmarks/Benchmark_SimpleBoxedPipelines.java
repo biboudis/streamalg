@@ -29,8 +29,17 @@ public class Benchmark_SimpleBoxedPipelines {
 
     // Baseline Benchmarks
     @Benchmark
-    public Long filter_reduce_Baseline() {
-        Long value = 0L;
+    public long reduce_Baseline() {
+        long value = 0L;
+        for (int i = 0; i < v.length; i++) {
+            value += v[i];
+        }
+        return value;
+    }
+
+    @Benchmark
+    public long filter_reduce_Baseline() {
+        long value = 0L;
         for (int i = 0; i < v.length; i++) {
             if (v[i] % 2 == 0)
                 value += v[i];
@@ -39,8 +48,8 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long filter_map_reduce_Baseline() {
-        Long value = 0L;
+    public long filter_map_reduce_Baseline() {
+        long value = 0L;
         for (int i = 0; i < v.length; i++) {
             if (v[i] % 2 == 0)
                 value += v[i] * v[i];
@@ -49,8 +58,8 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long cart_Baseline() {
-        Long value = 0L;
+    public long cart_reduce_Baseline() {
+        long value = 0L;
         for (int d = 0; d < v_outer.length; d++) {
             for (int dp = 0; dp < v_inner.length; dp++) {
                 value += v_outer[d] * v_inner[dp];
@@ -59,7 +68,14 @@ public class Benchmark_SimpleBoxedPipelines {
         return value;
     }
 
-    // Java 8 Benchmarks
+    // Java 8 Benchmarks (fundamentally Push)
+    @Benchmark
+    public Long reduce_Java8Streams() {
+        Long value = java.util.stream.Stream.of(v)
+                .reduce(0L, Long::sum);
+        return value;
+    }
+
     @Benchmark
     public Long filter_reduce_Java8Streams() {
         Long value = java.util.stream.Stream.of(v)
@@ -70,7 +86,7 @@ public class Benchmark_SimpleBoxedPipelines {
 
     @Benchmark
     public Long filter_map_reduce_Java8Streams() {
-        Long value = Stream.of(v)
+        Long value = java.util.stream.Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .map(d -> d * d)
                 .reduce(0L, Long::sum);
@@ -78,14 +94,23 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     @Benchmark
-    public Long cart_Java8Streams() {
-        Long value = Stream.of(v_outer)
+    public Long cart_reduce_Java8Streams() {
+        Long value = java.util.stream.Stream.of(v_outer)
                 .flatMap(d -> Stream.of(v_inner).map(dP -> dP * d))
                 .reduce(0L, Long::sum);
         return value;
     }
 
     // Push Factory Benchmarks
+    @Benchmark
+    public Long reduce_AlgebrasPush() {
+        ExecPushFactory alg = new ExecPushFactory();
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.source(v))).value;
+        return value;
+    }
+
     @Benchmark
     public Long filter_reduce_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
@@ -120,6 +145,15 @@ public class Benchmark_SimpleBoxedPipelines {
     }
 
     // Pull Factory Benchmarks
+    @Benchmark
+    public Long reduce_AlgebrasPull() {
+        ExecPullFactory alg = new ExecPullFactory();
+        Long value = Id.prj(
+                alg.reduce(0L, Long::sum,
+                        alg.source(v))).value;
+        return value;
+    }
+
     @Benchmark
     public Long filter_reduce_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();

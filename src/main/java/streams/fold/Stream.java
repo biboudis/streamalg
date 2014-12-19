@@ -51,5 +51,4 @@ public abstract class Stream<T> {
     }
 
     abstract <C> App<C, T> fold(StreamAlg<C> algebra);
-
 }
