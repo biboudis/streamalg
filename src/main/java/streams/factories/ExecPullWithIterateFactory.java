@@ -16,8 +16,6 @@ import java.util.function.UnaryOperator;
 public class ExecPullWithIterateFactory<E> extends PullFactory implements ExecIterateStreamAlg<E, Pull.t> {
     final ExecStreamAlg<E, Pull.t> alg;
 
-    long count = 0L;
-
     public ExecPullWithIterateFactory(ExecStreamAlg<E, Pull.t> alg) {
         this.alg = alg;
     }

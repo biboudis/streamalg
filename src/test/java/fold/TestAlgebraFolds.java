@@ -1,9 +1,9 @@
-package valgebra;
+package fold;
 
 import com.google.common.collect.Iterators;
 import org.junit.Before;
 import org.junit.Test;
-import streams.valgebra.Streams;
+import streams.fold.Stream;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestAlgebraVisitors {
+public class TestAlgebraFolds {
 
     public Long[] v;
 
@@ -22,7 +22,7 @@ public class TestAlgebraVisitors {
 
     @Test
     public void testFilterPush() {
-        long size = Streams.of(v)
+        long size = Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .count();
 
@@ -36,7 +36,7 @@ public class TestAlgebraVisitors {
     @Test
     public void testMapPush() {
 
-        long size = Streams.of(v)
+        long size = Stream.of(v)
                 .map(x -> x + 1L)
                 .count();
 
@@ -49,7 +49,7 @@ public class TestAlgebraVisitors {
 
     @Test
     public void testFilterPull() {
-        Iterator<Long> it1 = Streams.of(v)
+        Iterator<Long> it1 = Stream.of(v)
                 .filter(x -> x % 2L == 0L)
                 .iterator();
 
@@ -68,7 +68,7 @@ public class TestAlgebraVisitors {
 
     @Test
     public void testMapPull() {
-        Iterator<Long> it1 = Streams.of(v)
+        Iterator<Long> it1 = Stream.of(v)
                 .map(x -> x + 1)
                 .iterator();
 
@@ -88,8 +88,8 @@ public class TestAlgebraVisitors {
     @Test
     public void testFlatMapPush() {
 
-        long size = Streams.of(v)
-                .flatMap(x -> Streams.of(v).map(y -> x * y))
+        long size = Stream.of(v)
+                .flatMap(x -> Stream.of(v).map(y -> x * y))
                 .count();
 
         long size2 = java.util.stream.Stream.of(v)
@@ -98,16 +98,4 @@ public class TestAlgebraVisitors {
 
         assert size == size2;
     }
-
-//    @Test
-//    public void testLog(){
-//        Streams.of(v_outer)
-//                .map(x -> x + 1)
-//                .filter(x -> x % 2L==0)
-//                .flatMap(x -> Streams.of(v_outer).map(y -> x * y).log())
-//                .log()
-//                .count();
-//
-//        assert true;
-//    }
 }

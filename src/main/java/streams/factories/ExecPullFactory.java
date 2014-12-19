@@ -14,16 +14,14 @@ import java.util.function.BinaryOperator;
  */
 public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, Pull.t> {
 
-    long temp = 0L;
-
     @Override
     public <T> App<Id.t, Long> count(App<Pull.t, T> app) {
         Pull<T> self = Pull.prj(app);
 
-        temp = 0L;
+        long temp = 0L;
 
         while (self.hasNext()) {
-            this.temp++;
+            temp++;
         }
         return Id.newA(temp);
     }

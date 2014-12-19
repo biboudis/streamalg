@@ -14,13 +14,11 @@ import java.util.function.BinaryOperator;
  */
 public class ExecPushFactory extends PushFactory implements ExecStreamAlg<Id.t, Push.t> {
 
-    long temp = 0L;
-
     @Override
     public <T> App<Id.t, Long> count(App<Push.t, T> app) {
-        temp = 0L;
-        Push.prj(app).invoke(i -> this.temp++);
-        return Id.newA(temp);
+        RefCell<Long> temp = new RefCell<>(0L);
+        Push.prj(app).invoke(i -> temp.value++);
+        return Id.newA(temp.value);
     }
 
     @Override

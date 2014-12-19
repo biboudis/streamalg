@@ -1,4 +1,4 @@
-package streams.valgebra;
+package streams.fold;
 
 import streams.algebras.StreamAlg;
 import streams.higher.App;
@@ -18,14 +18,6 @@ public class Filter<T> extends Stream<T> {
     public Filter(Predicate<T> predicate, Stream<T> stream) {
         this.predicate = predicate;
         this.stream = stream;
-    }
-
-    public Predicate<T> getPredicate() {
-        return predicate;
-    }
-
-    public Stream<T> getStream() {
-        return stream;
     }
 
     @Override

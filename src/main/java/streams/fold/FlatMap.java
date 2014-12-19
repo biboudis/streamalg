@@ -1,4 +1,4 @@
-package streams.valgebra;
+package streams.fold;
 
 import streams.algebras.StreamAlg;
 import streams.higher.App;
@@ -18,14 +18,6 @@ public class FlatMap<T, R> extends Stream<R> {
     public FlatMap(Function<T, Stream<R>> mapper, Stream<T> stream) {
         this.mapper = mapper;
         this.stream = stream;
-    }
-
-    public Function<T, Stream<R>> getMapper() {
-        return mapper;
-    }
-
-    public Stream<T> getStream() {
-        return stream;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package streams.valgebra;
+package streams.fold;
 
 import streams.algebras.StreamAlg;
 import streams.higher.App;
@@ -14,10 +14,6 @@ public class Source<T> extends Stream<T> {
 
     public Source(T[] array) {
         this.array = array;
-    }
-
-    public T[] getArray() {
-        return array;
     }
 
     @Override

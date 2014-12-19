@@ -16,18 +16,16 @@ public class ExecPushWithTakeFactory<E> extends PushFactory implements ExecTakeS
 
     final ExecStreamAlg<E, Push.t> alg;
 
-    long count = 0L;
-
     public ExecPushWithTakeFactory(ExecStreamAlg<E, Push.t> alg) {
         this.alg = alg;
     }
 
     @Override
     public <T> App<Push.t, T> take(int n, App<Push.t, T> app) {
-        count = 0L;
+        RefCell<Long> count = new RefCell<>(0L);
         Push<T> f = k -> Push.prj(app).invoke(value -> {
-            this.count++;
-            if (count <= n) {
+            count.value++;
+            if (count.value <= n) {
                 k.accept(value);
             }
             // regarding the missing else part: no shortcut, this is just an example.

@@ -1,8 +1,9 @@
-package streams.valgebra;
+package streams.fold;
 
 import streams.algebras.StreamAlg;
 import streams.factories.PullFactory;
 import streams.factories.PushFactory;
+import streams.factories.RefCell;
 import streams.higher.App;
 import streams.higher.Pull;
 import streams.higher.Push;
@@ -19,7 +20,9 @@ import java.util.function.Predicate;
  */
 public abstract class Stream<T> {
 
-    long temp = 0L;
+    public static <T> Stream<T> of(T[] src) {
+        return new Source<>(src);
+    }
 
     public <R> Stream<R> map(Function<T, R> mapper) {
         return new Map<>(mapper, this);
@@ -34,13 +37,13 @@ public abstract class Stream<T> {
     }
 
     public long count() {
-        temp = 0;
+        RefCell<Long> temp = new RefCell<>(0L);
 
-        Consumer<T> k = i -> this.temp++;
+        Consumer<T> k = i -> temp.value++;
 
         Push.prj(this.fold(new PushFactory())).invoke(k);
 
-        return temp;
+        return temp.value;
     }
 
     public Iterator<T> iterator() {
@@ -48,4 +51,5 @@ public abstract class Stream<T> {
     }
 
     abstract <C> App<C, T> fold(StreamAlg<C> algebra);
+
 }

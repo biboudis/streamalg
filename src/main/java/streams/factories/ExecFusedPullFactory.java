@@ -57,7 +57,7 @@ public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAl
         }
 
         @Override
-        public Pull<T> compose(Predicate<T> other) {
+        public FusibleFilterPull<T> compose(Predicate<T> other) {
             return new FusibleFilterPull<>(source, other.and(predicate));
         }
 
