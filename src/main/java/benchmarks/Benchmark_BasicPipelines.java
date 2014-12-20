@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
-public class Benchmark_SimpleBoxedPipelines {
+public class Benchmark_BasicPipelines {
 
     // For map, count, operations
     private static final int N = Integer.getInteger("benchmark.N", 1000);
