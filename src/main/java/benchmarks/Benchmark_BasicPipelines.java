@@ -14,17 +14,15 @@ public class Benchmark_BasicPipelines {
     // For map, count, operations
     private static final int N = Integer.getInteger("benchmark.N", 1000);
 
-    // For cartesian product operations
-    private static final int N_outer = Integer.getInteger("benchmark.N_outer", 100);
-    private static final int N_inner = Integer.getInteger("benchmark.N_inner", 10);
+    // When we need to use different sizes
+    private static final int N_small = Integer.getInteger("benchmark.N_small", 10);
 
-    private Long[] v, v_outer, v_inner;
+    private Long[] v, v_small;
 
     @Setup
     public void setUp() {
         v = Helper.fillArray(N);
-        v_outer = Helper.fillArray(N_outer);
-        v_inner = Helper.fillArray(N_inner);
+        v_small = Helper.fillArray(N_small);
     }
 
     // Baseline Benchmarks
@@ -60,9 +58,9 @@ public class Benchmark_BasicPipelines {
     @Benchmark
     public long cart_reduce_Baseline() {
         long value = 0L;
-        for (int d = 0; d < v_outer.length; d++) {
-            for (int dp = 0; dp < v_inner.length; dp++) {
-                value += v_outer[d] * v_inner[dp];
+        for (int d = 0; d < v.length; d++) {
+            for (int dp = 0; dp < v_small.length; dp++) {
+                value += v[d] * v_small[dp];
             }
         }
         return value;
@@ -95,8 +93,8 @@ public class Benchmark_BasicPipelines {
 
     @Benchmark
     public Long cart_reduce_Java8Streams() {
-        Long value = java.util.stream.Stream.of(v_outer)
-                .flatMap(d -> Stream.of(v_inner).map(dP -> dP * d))
+        Long value = java.util.stream.Stream.of(v)
+                .flatMap(d -> Stream.of(v_small).map(dP -> dP * d))
                 .reduce(0L, Long::sum);
         return value;
     }
@@ -139,8 +137,8 @@ public class Benchmark_BasicPipelines {
                 alg.reduce(0L, Long::sum,
                         alg.flatMap(x ->
                                         alg.map(y -> x * y,
-                                                alg.source(v_inner)),
-                                alg.source(v_outer)))).value;
+                                                alg.source(v_small)),
+                                alg.source(v)))).value;
         return value;
     }
 
@@ -182,8 +180,8 @@ public class Benchmark_BasicPipelines {
                 alg.reduce(0L, Long::sum,
                         alg.flatMap(x ->
                                         alg.map(y -> x * y,
-                                                alg.source(v_inner)),
-                                alg.source(v_outer)))).value;
+                                                alg.source(v_small)),
+                                alg.source(v)))).value;
         return value;
     }
 }

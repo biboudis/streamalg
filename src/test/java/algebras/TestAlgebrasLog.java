@@ -16,13 +16,12 @@ import java.util.stream.IntStream;
 
 public class TestAlgebrasLog extends BaseTest {
 
-    public Long[] v, v_inner;
+    public Long[] v;
     Long expected;
 
     @Before
     public void setUp() {
         v = IntStream.range(0, 10).mapToObj(Long::new).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
         expected = java.util.stream.Stream.of(v)
                 .map(x -> x + 2)
                 .reduce(0L, Long::sum);

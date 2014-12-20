@@ -24,12 +24,12 @@ import java.util.stream.Stream;
  */
 public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
-    public Long[] v_outer, v_inner;
+    public Long[] v, v_small;
 
     @Before
     public void setUp() {
-        v_outer = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 15).mapToObj(Long::new).toArray(Long[]::new);
+        v_small = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
     }
 
     @Test
@@ -39,9 +39,9 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         App<Pull.t, Long> map = algebra.map(y -> {
             System.out.println("inner: " + y);
             return (long) 10 * y;
-        }, algebra.source(v_inner));
+        }, algebra.source(v_small));
 
-        App<Pull.t, Long> flatMap = algebra.flatMap(y -> map, algebra.source(v_outer));
+        App<Pull.t, Long> flatMap = algebra.flatMap(y -> map, algebra.source(v));
 
         Pull<Long> prj = Pull.prj(flatMap);
 
@@ -57,9 +57,9 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
     @Test
     public void testJava8StreamsPushWithPull() {
-        Iterator<Long> iterator = Stream.of(v_outer)
+        Iterator<Long> iterator = Stream.of(v)
                 .flatMap(x -> {
-                    return Stream.of(v_inner).map(y -> {
+                    return Stream.of(v_small).map(y -> {
                         System.out.println("inner: " + y);
                         return x * y;
                     });
@@ -86,7 +86,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
             Stream<Long> longStream = Stream
                     .iterate(0L, i -> i + 2);
 
-            Iterator<Long> iterator = Stream.of(v_outer)
+            Iterator<Long> iterator = Stream.of(v)
                     .flatMap(x -> longStream.map(y -> x * y))
                     .iterator();
 
@@ -105,7 +105,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         App<Pull.t, Long> flatMap = algebra.flatMap(x -> algebra.map(y -> {
             System.out.println("inner: " + y);
             return x * y;
-        }, algebra.iterate(0L, i -> i + 2)), algebra.source(v_outer));
+        }, algebra.iterate(0L, i -> i + 2)), algebra.source(v));
 
         Pull<Long> prj = Pull.prj(flatMap);
 

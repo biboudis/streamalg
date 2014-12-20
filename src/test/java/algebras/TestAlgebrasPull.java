@@ -17,12 +17,12 @@ import static org.junit.Assert.assertTrue;
 
 public class TestAlgebrasPull {
 
-    public Long[] v, v_inner;
+    public Long[] v, v_small;
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 15).mapToObj(Long::new).toArray(Long[]::new);
+        v_small = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
     }
 
     @Test
@@ -57,11 +57,11 @@ public class TestAlgebrasPull {
         ExecPullFactory alg = new ExecPullFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
-            return alg.map(y -> x * y, alg.source(v_inner));
+            return alg.map(y -> x * y, alg.source(v_small));
         }, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
+                .flatMap(x -> java.util.stream.Stream.of(v_small).map(y -> x * y))
                 .count();
 
         assertEquals(expected, actual);

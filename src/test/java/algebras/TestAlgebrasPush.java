@@ -2,11 +2,8 @@ package algebras;
 
 import org.junit.Before;
 import org.junit.Test;
-import streams.algebras.ExecTakeStreamAlg;
 import streams.factories.ExecPushFactory;
-import streams.factories.ExecPushWithTakeFactory;
 import streams.higher.Id;
-import streams.higher.Push;
 
 import java.util.stream.IntStream;
 
@@ -14,12 +11,12 @@ import static org.junit.Assert.assertEquals;
 
 public class TestAlgebrasPush {
 
-    public Long[] v, v_inner;
+    public Long[] v, v_small;
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
-        v_inner = IntStream.range(0, 5).mapToObj(i -> (long) (i % 5)).toArray(Long[]::new);
+        v = IntStream.range(0, 15).mapToObj(Long::new).toArray(Long[]::new);
+        v_small = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
     }
 
     @Test
@@ -54,11 +51,11 @@ public class TestAlgebrasPush {
         ExecPushFactory alg = new ExecPushFactory();
 
         Long actual = Id.prj(alg.count(alg.flatMap(x -> {
-            return alg.map(y -> x * y, alg.source(v_inner));
+            return alg.map(y -> x * y, alg.source(v_small));
         }, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .flatMap(x -> java.util.stream.Stream.of(v_inner).map(y -> x * y))
+                .flatMap(x -> java.util.stream.Stream.of(v_small).map(y -> x * y))
                 .count();
 
         assertEquals(expected, actual);
@@ -77,16 +74,4 @@ public class TestAlgebrasPush {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void testTakePush() {
-        ExecTakeStreamAlg<Id.t, Push.t> alg = new ExecPushWithTakeFactory<>(new ExecPushFactory());
-
-        Long actual = Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
-
-        Long expected = java.util.stream.Stream.of(v)
-                .limit(5)
-                .count();
-
-        assertEquals(expected, actual);
-    }
 }

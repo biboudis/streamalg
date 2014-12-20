@@ -24,8 +24,7 @@ public class ExecPushWithTakeFactory<E> extends PushFactory implements ExecTakeS
     public <T> App<Push.t, T> take(int n, App<Push.t, T> app) {
         RefCell<Long> count = new RefCell<>(0L);
         Push<T> f = k -> Push.prj(app).invoke(value -> {
-            count.value++;
-            if (count.value <= n) {
+            if (count.value++ < n) {
                 k.accept(value);
             }
             // regarding the missing else part: no shortcut, this is just an example.

@@ -22,7 +22,7 @@ public class TestAlgebrasFused {
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 10).mapToObj(Long::new).toArray(Long[]::new);
+        v = IntStream.range(0, 15).mapToObj(Long::new).toArray(Long[]::new);
     }
 
     @Test
