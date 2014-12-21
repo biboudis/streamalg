@@ -80,10 +80,14 @@ public class TestAlgebrasTake {
                         alg.take(15,
                                 alg.flatMap(x -> alg.map(y -> y * x, alg.source(v_small)), alg.source(v))))).value;
 
-
         Long expected = Stream
-                .of(v)
-                .flatMap(x -> Stream.of(v_small).map(y -> y * x))
+                .of(v) // 15
+                .flatMap(x -> Stream
+                        .of(v_small) // 5
+                        .map(y -> {
+                            //System.out.println("y: " + y);
+                            return y;
+                        }))
                 .limit(15)
                 .reduce(0L, Long::sum);
 

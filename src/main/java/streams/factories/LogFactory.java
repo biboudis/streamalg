@@ -1,7 +1,6 @@
 package streams.factories;
 
 import streams.algebras.ExecStreamAlg;
-import streams.algebras.LogAlg;
 import streams.higher.App;
 
 import java.util.function.BinaryOperator;
@@ -13,7 +12,7 @@ import java.util.function.Predicate;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class LogFactory<E, C> implements LogAlg<E, C> {
+public class LogFactory<E, C> implements ExecStreamAlg<E, C> {
 
     private final ExecStreamAlg<E, C> alg;
 
