@@ -20,7 +20,6 @@ public class ExecFutureFactory<C> implements ExecStreamAlg<Future.t, C> {
     private final ExecStreamAlg<Id.t, C> execAlg;
     private final StreamAlg<C> alg;
 
-
     public ExecFutureFactory(ExecStreamAlg<Id.t, C> execAlg, StreamAlg<C> alg) {
         this.alg = alg;
         this.execAlg = execAlg;
