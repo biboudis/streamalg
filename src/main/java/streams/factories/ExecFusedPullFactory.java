@@ -1,6 +1,6 @@
 package streams.factories;
 
-import streams.algebras.FusedPullAlg;
+import streams.algebras.StreamAlg;
 import streams.higher.App;
 import streams.higher.Pull;
 
@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  * Aggelos Biboudis (@biboudis)
  * Nick Palladinos (@NickPalladinos)
  */
-public class ExecFusedPullFactory extends ExecPullFactory implements FusedPullAlg {
+public class ExecFusedPullFactory extends ExecPullFactory implements StreamAlg<Pull.t> {
 
     @Override
     public <T> App<Pull.t, T> filter(Predicate<T> filter, App<Pull.t, T> app) {
