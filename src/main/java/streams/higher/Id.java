@@ -17,8 +17,8 @@ public class Id<T> implements App<Id.t, T> {
         return (Id<A>) app;
     }
 
-    public static <A> App<Id.t, A> newA(A value) {
-        return new Id<>(value);
+    public static <A> App<Id.t, A> inj(Id<A> app) {
+        return (App<Id.t, A>) app;
     }
 
     public static class t {

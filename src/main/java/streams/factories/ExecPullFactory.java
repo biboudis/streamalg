@@ -21,7 +21,7 @@ public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, 
         while (self.hasNext()) {
             temp++;
         }
-        return Id.newA(temp);
+        return Id.inj(new Id<>(temp));
     }
 
     @Override
@@ -31,6 +31,6 @@ public class ExecPullFactory extends PullFactory implements ExecStreamAlg<Id.t, 
         while (self.hasNext()) {
             state = accumulator.apply(state, self.next());
         }
-        return Id.newA(state);
+        return Id.inj(new Id<>(state));
     }
 }
