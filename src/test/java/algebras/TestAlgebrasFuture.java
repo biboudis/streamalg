@@ -3,7 +3,9 @@ package algebras;
 import org.junit.Before;
 import org.junit.Test;
 import streams.algebras.ExecStreamAlg;
-import streams.factories.*;
+import streams.factories.ExecFutureFactory;
+import streams.factories.ExecPullFactory;
+import streams.factories.ExecPushFactory;
 import streams.higher.Future;
 import streams.higher.Pull;
 import streams.higher.Push;
@@ -30,7 +32,7 @@ public class TestAlgebrasFuture {
     @Test
     public void testFilterCountPull() throws ExecutionException, InterruptedException {
 
-        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory<>(new ExecPullFactory(), new PullFactory());
+        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory<>(new ExecPullFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v))));
 
@@ -43,7 +45,7 @@ public class TestAlgebrasFuture {
 
     @Test
     public void testMapCountPull() throws ExecutionException, InterruptedException {
-        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory<>(new ExecPullFactory(), new PullFactory());
+        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory<>(new ExecPullFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v))));
 
@@ -57,7 +59,7 @@ public class TestAlgebrasFuture {
     @Test
     public void testFilterCountPush() throws ExecutionException, InterruptedException {
 
-        ExecStreamAlg<Future.t, Push.t> alg = new ExecFutureFactory<>(new ExecPushFactory(), new PushFactory());
+        ExecStreamAlg<Future.t, Push.t> alg = new ExecFutureFactory<>(new ExecPushFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v))));
 
@@ -70,7 +72,7 @@ public class TestAlgebrasFuture {
 
     @Test
     public void testMapCountPush() throws ExecutionException, InterruptedException {
-        ExecStreamAlg<Future.t, Push.t> alg = new ExecFutureFactory<>(new ExecPushFactory(), new PushFactory());
+        ExecStreamAlg<Future.t, Push.t> alg = new ExecFutureFactory<>(new ExecPushFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v))));
 

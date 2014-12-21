@@ -1,7 +1,6 @@
 package streams.factories;
 
 import streams.algebras.ExecStreamAlg;
-import streams.algebras.StreamAlg;
 import streams.higher.App;
 import streams.higher.Future;
 import streams.higher.Id;
@@ -18,10 +17,8 @@ import java.util.function.Predicate;
 public class ExecFutureFactory<C> implements ExecStreamAlg<Future.t, C> {
 
     private final ExecStreamAlg<Id.t, C> execAlg;
-    private final StreamAlg<C> alg;
 
-    public ExecFutureFactory(ExecStreamAlg<Id.t, C> execAlg, StreamAlg<C> alg) {
-        this.alg = alg;
+    public ExecFutureFactory(ExecStreamAlg<Id.t, C> execAlg) {
         this.execAlg = execAlg;
     }
 
@@ -41,21 +38,21 @@ public class ExecFutureFactory<C> implements ExecStreamAlg<Future.t, C> {
 
     @Override
     public <T> App<C, T> source(T[] array) {
-        return alg.source(array);
+        return execAlg.source(array);
     }
 
     @Override
     public <T, R> App<C, R> map(Function<T, R> f, App<C, T> app) {
-        return alg.map(f, app);
+        return execAlg.map(f, app);
     }
 
     @Override
     public <T, R> App<C, R> flatMap(Function<T, App<C, R>> f, App<C, T> app) {
-        return alg.flatMap(f, app);
+        return execAlg.flatMap(f, app);
     }
 
     @Override
     public <T> App<C, T> filter(Predicate<T> f, App<C, T> app) {
-        return alg.filter(f, app);
+        return execAlg.filter(f, app);
     }
 }

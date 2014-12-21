@@ -34,7 +34,6 @@ public class TestAlgebrasLog extends BaseTest {
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x + 2, alg.source(v)))).value;
 
         Assert.assertEquals(
-                "Starting Execution: \n" +
                         "map: 0 -> 2\n" +
                         "map: 1 -> 3\n" +
                         "map: 2 -> 4\n" +
@@ -57,7 +56,6 @@ public class TestAlgebrasLog extends BaseTest {
         Long actual = Id.prj(alg.reduce(0L, Long::sum, alg.map(x -> x + 2, alg.source(v)))).value;
 
         Assert.assertEquals(
-                "Starting Execution: \n" +
                         "map: 0 -> 2\n" +
                         "map: 1 -> 3\n" +
                         "map: 2 -> 4\n" +

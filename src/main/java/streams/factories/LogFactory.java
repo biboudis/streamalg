@@ -32,7 +32,6 @@ public class LogFactory<E, C> implements ExecStreamAlg<E, C> {
 
     @Override
     public <T> App<C, T> source(T[] array) {
-        System.out.println("Starting Execution: ");
         return alg.source(array);
     }
 
