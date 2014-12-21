@@ -3,10 +3,10 @@ package algebras;
 import org.junit.Before;
 import org.junit.Test;
 import streams.algebras.ExecStreamAlg;
-import streams.factories.ExecFutureFactory;
-import streams.factories.ExecPullFactory;
+import streams.factories.*;
 import streams.higher.Future;
 import streams.higher.Pull;
+import streams.higher.Push;
 
 import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
@@ -30,7 +30,7 @@ public class TestAlgebrasFuture {
     @Test
     public void testFilterCountPull() throws ExecutionException, InterruptedException {
 
-        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory(new ExecPullFactory());
+        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory<>(new ExecPullFactory(), new PullFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v))));
 
@@ -43,7 +43,34 @@ public class TestAlgebrasFuture {
 
     @Test
     public void testMapCountPull() throws ExecutionException, InterruptedException {
-        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory(new ExecPullFactory());
+        ExecStreamAlg<Future.t, Pull.t> alg = new ExecFutureFactory<>(new ExecPullFactory(), new PullFactory());
+
+        Future<Long> actual = Future.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v))));
+
+        Long expected = java.util.stream.Stream.of(v)
+                .map(x -> x ^ 2)
+                .count();
+
+        assertEquals(expected, actual.get());
+    }
+
+    @Test
+    public void testFilterCountPush() throws ExecutionException, InterruptedException {
+
+        ExecStreamAlg<Future.t, Push.t> alg = new ExecFutureFactory<>(new ExecPushFactory(), new PushFactory());
+
+        Future<Long> actual = Future.prj(alg.count(alg.filter(x -> x % 2L == 0, alg.source(v))));
+
+        Long expected = java.util.stream.Stream.of(v)
+                .filter(x -> x % 2L == 0L)
+                .count();
+
+        assertEquals(expected, actual.get());
+    }
+
+    @Test
+    public void testMapCountPush() throws ExecutionException, InterruptedException {
+        ExecStreamAlg<Future.t, Push.t> alg = new ExecFutureFactory<>(new ExecPushFactory(), new PushFactory());
 
         Future<Long> actual = Future.prj(alg.count(alg.map(x -> x ^ 2, alg.source(v))));
 
