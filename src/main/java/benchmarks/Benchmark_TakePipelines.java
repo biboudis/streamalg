@@ -2,11 +2,10 @@ package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
 import streams.algebras.ExecTakeStreamAlg;
-import streams.factories.ExecPullFactory;
-import streams.factories.ExecPullWithTakeFactory;
-import streams.factories.RefCell;
+import streams.factories.*;
 import streams.higher.Id;
 import streams.higher.Pull;
+import streams.higher.Push;
 
 import java.util.stream.Stream;
 
@@ -19,7 +18,7 @@ public class Benchmark_TakePipelines {
 
     // When we need to use different sizes
     private static final int N_small = Integer.getInteger("benchmark.N_small", 10);
-
+    private static final int N_limit = Integer.getInteger("benchmark.N_limit", 250);
     private Long[] v, v_small;
 
     @Setup
@@ -35,7 +34,7 @@ public class Benchmark_TakePipelines {
         Long value = Stream
                 .of(v_small)
                 .flatMap(x -> Stream.of(v).map(y -> y * x))
-                .limit(100000)
+                .limit(N_limit)
                 .count();
 
         return value;
@@ -48,7 +47,7 @@ public class Benchmark_TakePipelines {
 
         Stream.of(v_small)
                 .flatMap(x -> Stream.of(v).map(y -> y * x))
-                .limit(100000)
+                .limit(N_limit)
                 .iterator()
                 .forEachRemaining(i -> acc.value++);
 
@@ -62,7 +61,20 @@ public class Benchmark_TakePipelines {
 
         Long value = Id.prj(
                 alg.count(
-                        alg.take(100000,
+                        alg.take(N_limit,
+                                alg.flatMap(x -> alg.map(y -> x * y, alg.source(v)), alg.source(v_small))))).value;
+
+        return value;
+    }
+
+    // Push Factory Benchmarks
+    @Benchmark
+    public Long limit_count_AlgebrasPush() {
+        ExecTakeStreamAlg<Id.t, Push.t> alg = new ExecPushWithTakeFactory<>(new ExecPushFactory());
+
+        Long value = Id.prj(
+                alg.count(
+                        alg.take(N_limit,
                                 alg.flatMap(x -> alg.map(y -> x * y, alg.source(v)), alg.source(v_small))))).value;
 
         return value;

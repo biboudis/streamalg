@@ -18,22 +18,24 @@ import static org.junit.Assert.assertEquals;
 
 public class TestAlgebrasTake {
 
+    public int limit;
     public Long[] v, v_small;
 
     @Before
     public void setUp() {
-        v = IntStream.range(0, 15).mapToObj(Long::new).toArray(Long[]::new);
-        v_small = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
+        v = IntStream.range(0, 5).mapToObj(Long::new).toArray(Long[]::new);
+        v_small = IntStream.range(0, 2).mapToObj(Long::new).toArray(Long[]::new);
+        limit = 10;
     }
 
     @Test
     public void testTakePull() {
         ExecTakeStreamAlg<Id.t, Pull.t> alg = new ExecPullWithTakeFactory<>(new ExecPullFactory());
 
-        Long actual = Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
+        Long actual = Id.prj(alg.count(alg.take(limit, alg.source(v)))).value;
 
         Long expected = Stream.of(v)
-                .limit(5)
+                .limit(limit)
                 .count();
 
         assertEquals(expected, actual);
@@ -43,10 +45,10 @@ public class TestAlgebrasTake {
     public void testTakePush() {
         ExecTakeStreamAlg<Id.t, Push.t> alg = new ExecPushWithTakeFactory<>(new ExecPushFactory());
 
-        Long actual = Id.prj(alg.count(alg.take(5, alg.source(v)))).value;
+        Long actual = Id.prj(alg.count(alg.take(limit, alg.source(v)))).value;
 
         Long expected = java.util.stream.Stream.of(v)
-                .limit(5)
+                .limit(limit)
                 .count();
 
         assertEquals(expected, actual);
@@ -58,14 +60,23 @@ public class TestAlgebrasTake {
 
         Long actual = Id.prj(
                 alg.reduce(0L, Long::sum,
-                        alg.take(15,
-                                alg.flatMap(x -> alg.map(y -> y * x, alg.source(v_small)), alg.source(v))))).value;
+                        alg.take(limit,
+                                alg.flatMap(x -> alg.map(y -> {
+                                    System.out.println("y: " + y);
+                                    return y * x;
+                                }, alg.source(v)), alg.source(v_small))))).value;
 
+        System.out.println("---");
 
         Long expected = Stream
-                .of(v)
-                .flatMap(x -> Stream.of(v_small).map(y -> y * x))
-                .limit(15)
+                .of(v_small) // 15
+                .flatMap(x -> Stream
+                        .of(v) // 5
+                        .map(y -> {
+                            System.out.println("y: " + y);
+                            return y * x;
+                        }))
+                .limit(limit)
                 .reduce(0L, Long::sum);
 
         assertEquals(expected, actual);
@@ -77,18 +88,22 @@ public class TestAlgebrasTake {
 
         Long actual = Id.prj(
                 alg.reduce(0L, Long::sum,
-                        alg.take(15,
-                                alg.flatMap(x -> alg.map(y -> y * x, alg.source(v_small)), alg.source(v))))).value;
+                        alg.take(limit, alg.flatMap(x -> alg.map(y -> {
+                            System.out.println("y: " + y);
+                            return y * x;
+                        }, alg.source(v)), alg.source(v_small))))).value;
+
+        System.out.println("---");
 
         Long expected = Stream
-                .of(v) // 15
+                .of(v_small) // 5
                 .flatMap(x -> Stream
-                        .of(v_small) // 5
+                        .of(v) // 10
                         .map(y -> {
-                            //System.out.println("y: " + y);
-                            return y;
+                            System.out.println("y: " + y);
+                            return y * x;
                         }))
-                .limit(15)
+                .limit(limit)
                 .reduce(0L, Long::sum);
 
         assertEquals(expected, actual);

@@ -3,6 +3,7 @@ package benchmarks;
 import org.openjdk.jmh.annotations.*;
 import streams.factories.ExecFusedPullFactory;
 import streams.factories.ExecPullFactory;
+import streams.factories.ExecPushFactory;
 import streams.higher.Id;
 
 @State(Scope.Thread)
@@ -115,6 +116,40 @@ public class Benchmark_FusedPipelines {
                 .map(x -> x + 1)
                 .map(x -> x + 1)
                 .count();
+        return value;
+    }
+
+    @Benchmark
+    public Long filters_Algebras_Push() {
+        ExecPushFactory alg = new ExecPushFactory();
+
+        Long value = Id.prj(alg.count(
+                alg.filter(x -> x > 7,
+                        alg.filter(x -> x > 6,
+                                alg.filter(x -> x > 5,
+                                        alg.filter(x -> x > 4,
+                                                alg.filter(x -> x > 3,
+                                                        alg.filter(x -> x > 2,
+                                                                alg.filter(x -> x > 1,
+                                                                        alg.filter(x -> x > 0, alg.source(v_for_fused_filter))))))))))).value;
+
+        return value;
+    }
+
+    @Benchmark
+    public Long maps_Algebras_Push() {
+        ExecPushFactory alg = new ExecPushFactory();
+
+        Long value = Id.prj(alg.count(
+                alg.<Long, Long>map(x -> x + 1,
+                        alg.<Long, Long>map(x -> x + 1,
+                                alg.<Long, Long>map(x -> x + 1,
+                                        alg.<Long, Long>map(x -> x + 1,
+                                                alg.<Long, Long>map(x -> x + 1,
+                                                        alg.<Long, Long>map(x -> x + 1,
+                                                                alg.<Long, Long>map(x -> x + 1,
+                                                                        alg.<Long, Long>map(x -> x + 1, alg.source(v_for_fused_map))))))))))).value;
+
         return value;
     }
 }
