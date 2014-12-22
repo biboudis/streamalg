@@ -62,18 +62,18 @@ public class TestAlgebrasTake {
                 alg.reduce(0L, Long::sum,
                         alg.take(limit,
                                 alg.flatMap(x -> alg.map(y -> {
-                                    System.out.println("y: " + y);
+                                    //System.out.println("y: " + y);
                                     return y * x;
                                 }, alg.source(v)), alg.source(v_small))))).value;
 
-        System.out.println("---");
+        //System.out.println("---");
 
         Long expected = Stream
                 .of(v_small) // 15
                 .flatMap(x -> Stream
                         .of(v) // 5
                         .map(y -> {
-                            System.out.println("y: " + y);
+                            //System.out.println("y: " + y);
                             return y * x;
                         }))
                 .limit(limit)
@@ -89,18 +89,18 @@ public class TestAlgebrasTake {
         Long actual = Id.prj(
                 alg.reduce(0L, Long::sum,
                         alg.take(limit, alg.flatMap(x -> alg.map(y -> {
-                            System.out.println("y: " + y);
+                            //System.out.println("y: " + y);
                             return y * x;
                         }, alg.source(v)), alg.source(v_small))))).value;
 
-        System.out.println("---");
+        //System.out.println("---");
 
         Long expected = Stream
                 .of(v_small) // 5
                 .flatMap(x -> Stream
                         .of(v) // 10
                         .map(y -> {
-                            System.out.println("y: " + y);
+                            //System.out.println("y: " + y);
                             return y * x;
                         }))
                 .limit(limit)
