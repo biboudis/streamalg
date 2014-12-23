@@ -1,11 +1,10 @@
-## Defunctionalizing Streams for Java
-[![Build Status](https://magnum.travis-ci.com/biboudis/defunctionalizing-streams.svg?token=EYsxboxiFVSqpFARwkTX&branch=master)](https://magnum.travis-ci.com/biboudis/defunctionalizing-streams)
+## Streams à la carte: Extensible Pipelines with Object Algebras.
 
-Paper (WIP) at [https://github.com/biboudis/defunctionalizing-streams-paper](https://github.com/biboudis/defunctionalizing-streams-paper)
+[![Build Status](https://magnum.travis-ci.com/biboudis/streamalg.svg?token=EYsxboxiFVSqpFARwkTX&branch=master)](https://magnum.travis-ci.com/biboudis/streamalg)
 
 ## Motivation
-In this project our motivation is to provide a new library design for Stream APIs that enable extensibility of Stream
-libraries in 2 dimensions: open to both new combinators and new traversal methods.
+In this project our motivation is to provide a new library design for Stream APIs
+that enable extensibility in 2 dimensions: new behavior and new operators.
 
 ## References
 ### 1. Push vs Pull
