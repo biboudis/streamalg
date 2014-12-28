@@ -25,7 +25,7 @@ public class LogFactory<E, C> implements ExecStreamAlg<E, C> {
         return alg.flatMap(i -> {
             System.out.print("flatMap : " + i.toString());
             App<C, R> result = mapper.apply(i);
-            System.out.println(" -> " + i.toString());
+            System.out.print(" -> " + i.toString() + '\n');
             return result;
         }, app);
     }
@@ -40,7 +40,7 @@ public class LogFactory<E, C> implements ExecStreamAlg<E, C> {
         return alg.map(i -> {
             System.out.print("map: " + i.toString());
             R result = mapper.apply(i);
-            System.out.println(" -> " + result.toString());
+            System.out.print(" -> " + result.toString() + '\n');
             return result;
         }, app);
     }

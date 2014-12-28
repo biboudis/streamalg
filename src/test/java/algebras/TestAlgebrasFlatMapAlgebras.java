@@ -37,7 +37,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         PullFactory algebra = new PullFactory();
 
         App<Pull.t, Long> map = algebra.map(y -> {
-            System.out.println("inner: " + y);
+            System.out.print("inner: " + y + '\n');
             return (long) 10 * y;
         }, algebra.source(v_small));
 
@@ -47,11 +47,11 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         prj.hasNext();
 
-        System.out.println(prj.next());
+        System.out.print(prj.next());
 
         Assert.assertEquals(
                 "inner: 0\n" +
-                        "0\n",
+                        "0",
                 outContent.toString());
     }
 
@@ -60,14 +60,14 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         Iterator<Long> iterator = Stream.of(v)
                 .flatMap(x -> {
                     return Stream.of(v_small).map(y -> {
-                        System.out.println("inner: " + y);
+                        System.out.print("inner: " + y + '\n');
                         return x * y;
                     });
                 }).iterator();
 
         iterator.hasNext();
 
-        System.out.println(iterator.next());
+        System.out.print(iterator.next());
 
         Assert.assertEquals(
                 "inner: 0\n" +
@@ -75,7 +75,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
                         "inner: 2\n" +
                         "inner: 3\n" +
                         "inner: 4\n" +
-                        "0\n",
+                        "0",
                 outContent.toString());
     }
 
@@ -103,7 +103,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
         ExecIterateStreamAlg<Id.t, Pull.t> algebra = new ExecPullWithIterateFactory<>(new ExecPullFactory());
 
         App<Pull.t, Long> flatMap = algebra.flatMap(x -> algebra.map(y -> {
-            System.out.println("inner: " + y);
+            System.out.print("inner: " + y + '\n');
             return x * y;
         }, algebra.iterate(0L, i -> i + 2)), algebra.source(v));
 
@@ -111,7 +111,7 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
 
         prj.hasNext();
 
-        System.out.println(prj.next());
+        System.out.print(prj.next() + "\n");
 
         Assert.assertEquals(
                 "inner: 0\n" +
