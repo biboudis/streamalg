@@ -5,6 +5,7 @@ import org.junit.Before;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.concurrent.*;
 
 /**
  * Authors:
@@ -25,5 +26,14 @@ public class BaseTest {
     public void cleanUpStreams() {
         System.setOut(null);
         System.setErr(null);
+    }
+
+
+    protected <T> T runWithExpectedException(Callable<T> task) throws InterruptedException, ExecutionException, TimeoutException {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+
+        Future<T> result = service.submit(task);
+
+        return result.get(1000, TimeUnit.MILLISECONDS);
     }
 }

@@ -13,7 +13,8 @@ import streams.higher.Id;
 import streams.higher.Pull;
 
 import java.util.Iterator;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -79,25 +80,6 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
                 outContent.toString());
     }
 
-    @Test(expected = TimeoutException.class)
-    public void testJava8StreamsPushWithInfinite() throws ExecutionException, InterruptedException, TimeoutException {
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        Future<Long> result = service.submit(() -> {
-            Stream<Long> longStream = Stream
-                    .iterate(0L, i -> i + 2);
-
-            Iterator<Long> iterator = Stream.of(v)
-                    .flatMap(x -> longStream.map(y -> x * y))
-                    .iterator();
-
-            iterator.hasNext();
-
-            return iterator.next();
-        });
-
-        result.get(1000, TimeUnit.MILLISECONDS);
-    }
-
     @Test
     public void testPullAlgebraWithInfinite() {
         ExecIterateStreamAlg<Id.t, Pull.t> algebra = new ExecPullWithIterateFactory<>(new ExecPullFactory());
@@ -117,5 +99,37 @@ public class TestAlgebrasFlatMapAlgebras extends BaseTest {
                 "inner: 0\n" +
                         "0\n",
                 outContent.toString());
+    }
+
+    @Test(expected = TimeoutException.class)
+    public void testJava8StreamsTimeoutWithInfinite() throws ExecutionException, InterruptedException, TimeoutException {
+        runWithExpectedException(() -> {
+            Stream<Long> longStream = Stream
+                    .iterate(0L, i -> i + 2);
+
+            Iterator<Long> iterator = Stream.of(v)
+                    .flatMap(x -> longStream.map(y -> x * y))
+                    .iterator();
+
+            iterator.hasNext();
+
+            return iterator.next();
+        });
+
+        assert false;
+    }
+
+    @Test(expected = TimeoutException.class)
+    public void testJava8TimeoutFlatMapWithAny() throws ExecutionException, InterruptedException, TimeoutException {
+        runWithExpectedException(() -> Stream.iterate(0, i -> i + 1).flatMap(j -> Stream.iterate(0, i -> i + 1)).anyMatch(x -> true));
+
+        assert false;
+    }
+
+    @Test(expected = TimeoutException.class)
+    public void testJava8TimeoutFlatMapWithNone() throws ExecutionException, InterruptedException, TimeoutException {
+        runWithExpectedException(() -> Stream.iterate(0, i -> i + 1).flatMap(j -> Stream.iterate(0, i -> i + 1)).noneMatch(x -> false));
+
+        assert false;
     }
 }
