@@ -24,8 +24,8 @@ the original, highly-optimized Java streams library.
 Current operators implemented: the basic set of sequential operators ```map```,
 ```filter```, ```reduce```, ```count```, ```take/limit``` and ```iterate```.
 
-Current behaviors implemented: push, pull, fused pull, logged, id (for
-blocking), future (for async operators).
+Current behaviors implemented: push, pull, fused pull, logging, id (for
+blocking terminal operators), future (for async terminal operators).
 
 ### Getting Started
 
