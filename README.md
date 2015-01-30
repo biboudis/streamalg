@@ -7,7 +7,7 @@ _Streams à la carte: Extensible Pipelines with Object Algebras_ currently under
 review on ECOOP15.
 
 - Preprint: http://goo.gl/P2XO68
-- Deck as presented in PL Seminar 2014, NTUA, Athens: https://slides.com/biboudis/streamalg-presentation/
+- Talk. PL Seminar 2014, NTUA, Athens: https://slides.com/biboudis/streamalg-presentation/
 
 ### Overview
 
