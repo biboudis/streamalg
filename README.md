@@ -25,7 +25,7 @@ Current operators implemented: the basic set of sequential operators ```map```,
 ```filter```, ```reduce```, ```count```, ```take/limit``` and ```iterate```.
 
 Current behaviors implemented: push, pull, fused pull, logging, id (for
-blocking terminal operators), future (for async terminal operators).
+blocking terminal operators), future (for non-blocking terminal operators).
 
 ### Getting Started
 
