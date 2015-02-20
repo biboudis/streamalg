@@ -1,6 +1,6 @@
 ## StreamAlg
 
-[![Build Status](https://magnum.travis-ci.com/biboudis/streamalg.svg?token=EYsxboxiFVSqpFARwkTX&branch=master)](https://magnum.travis-ci.com/biboudis/streamalg)
+[![Build Status](https://travis-ci.org/biboudis/streamalg.svg?branch=master)](https://travis-ci.org/biboudis/streamalg)
 
 The StreamAlg repository contains the source code artifact that accompanies the
 _Streams à la carte: Extensible Pipelines with Object Algebras_ currently under
