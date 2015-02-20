@@ -47,4 +47,4 @@ sh run_benchmarks.sh
 Aggelos Biboudis ([@biboudis](https://twitter.com/biboudis)), Nick Palladinos
 ([@NickPalladinos](https://twitter.com/NickPalladinos)), George Fourtounis
 ([@gf0ur](https://twitter.com/gf0ur)) and
-[Yannis Smaragdakis](http://cgi.di.uoa.gr/~smaragd/)
+[Yannis Smaragdakis](http://cgi.di.uoa.gr/~smaragd/).
