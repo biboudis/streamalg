@@ -20,10 +20,10 @@ In this library we apply our design to Java and show that the addition of full
 extensibility is accompanied by high performance, matching or exceeding that of
 the original, highly-optimized Java streams library.
 
-Current operators implemented: the basic set of sequential operators ```map```,
+In this repository we present a fundamental set of sequential operators ```map```,
 ```filter```, ```reduce```, ```count```, ```take/limit``` and ```iterate```.
 
-Current behaviors implemented: push, pull, fused pull, logging, id (for
+Additionally we present the behaviors that are discussed in the paper: push, pull, fused pull, logging, id (for
 blocking terminal operators), future (for non-blocking terminal operators).
 
 ### Getting Started
@@ -43,9 +43,35 @@ Benchmarks are reproduced by executing:
 sh run_benchmarks.sh
 ```
 
+### Project Structure
+The basic packages of this artifact are the following:
+
+#### Object Algebras
+- StreamAlg: describes the object algebra of the intermediate operators of streams.
+- TakeStreamAlg: adds to streams the ```take``` combinator.
+- ExecStreamAlg: adds to streams the terminal operators.
+- ExecIterateStreamAlg: adds to streams the ```iterate``` terminal operator.
+- ExecTakeStreamAlg: unifies terminal operators with the algebra with the ```take``` combinator.
+
+The following factories implement different combinations of behaviors:
+#### Factories
+- ExecFusedPullFactory
+- ExecFutureFactory
+- ExecPullFactory
+- ExecPullWithIterateFactory
+- ExecPullWithTakeFactory
+- ExecPushFactory
+- ExecPushWithTakeFactory
+- LogFactory
+- PullFactory
+- PushFactory
+
+### Benchmarks
+The ```run_benchmarks.sh``` script simply builds the JMH benchmarks über-jar and then uses the command line interface of JMH to pass the arguments of the experiments.
+
 ### Team
 
 Aggelos Biboudis ([@biboudis](https://twitter.com/biboudis)), Nick Palladinos
 ([@NickPalladinos](https://twitter.com/NickPalladinos)), George Fourtounis
 ([@gf0ur](https://twitter.com/gf0ur)) and
-[Yannis Smaragdakis](http://cgi.di.uoa.gr/~smaragd/).
+[Yannis Smaragdakis](http://www.di.uoa.gr/~smaragd/).
