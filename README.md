@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/biboudis/streamalg.svg?branch=master)](https://travis-ci.org/biboudis/streamalg)
 
 The StreamAlg repository contains the source code artifact that accompanies the
-_Streams à la carte: Extensible Pipelines with Object Algebras_ currently under
-review on ECOOP15.
+_Streams à la carte: Extensible Pipelines with Object Algebras_ paper, to appear at [ECOOP15](http://2015.ecoop.org).
 
 - Preprint: http://goo.gl/P2XO68
 - Talk. PL Seminar 2014, NTUA, Athens: https://slides.com/biboudis/streamalg-presentation/
@@ -30,15 +29,17 @@ blocking terminal operators), future (for non-blocking terminal operators).
 ### Getting Started
 
 Clone the project:
-```
+```shell
 git clone git@github.com:biboudis/streamalg.git
 ```
-The project is built with maven and to run the test suite simply run
+The project is built with maven and its dependencies are automatically resolved: Guava, JMH and JUnit. To run the test suite simply run:
+```shell
+mvn test
 ```
-mvn tests
-```
-Benchmarks are reproduced with:
-```
+The tests cover all examples included in the paper (operators, behaviors) and cases used as motivation as well. The ```streams``` package is covered at:	87% classes,	90% methods,	91% lines.
+
+Benchmarks are reproduced by executing:
+```shell
 sh run_benchmarks.sh
 ```
 
