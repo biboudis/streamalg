@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Streamalg by biboudis</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Streamalg</h1>
+        <p>Streams à la carte: Extensible stream pipelines with object algebras.</p>
+
+        <p class="view"><a href="https://github.com/biboudis/streamalg">View the Project on GitHub <small>biboudis/streamalg</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/biboudis/streamalg/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/biboudis/streamalg/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/biboudis/streamalg">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="streamalg" class="anchor" href="#streamalg" aria-hidden="true"><span class="octicon octicon-link"></span></a>StreamAlg</h2>
+
+<p><a href="https://travis-ci.org/biboudis/streamalg"><img src="https://travis-ci.org/biboudis/streamalg.svg?branch=master" alt="Build Status"></a></p>
+
+<p>The StreamAlg repository contains the source code artifact that accompanies the
+<em>Streams à la carte: Extensible Pipelines with Object Algebras</em> paper, to appear at <a href="http://2015.ecoop.org">ECOOP15</a>.</p>
+
+<ul>
+<li>Preprint: <a href="http://goo.gl/P2XO68">http://goo.gl/P2XO68</a>
+</li>
+<li>Talk. PL Seminar 2014, NTUA, Athens: <a href="https://slides.com/biboudis/streamalg-presentation/">https://slides.com/biboudis/streamalg-presentation/</a>
+</li>
+</ul>
+
+<h3>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h3>
+
+<p>We address extensibility shortcomings in libraries for lazy-streaming queries
+with a new design. The architecture underlying this design borrows heavily from
+Oliveira and Cook's object algebra solution to the expression problem, extended
+with a design that exposes the push/pull character of the iteration, and an
+encoding of higher-kinded polymorphism.</p>
+
+<p>In this library we apply our design to Java and show that the addition of full
+extensibility is accompanied by high performance, matching or exceeding that of
+the original, highly-optimized Java streams library.</p>
+
+<p>In this repository we present a fundamental set of sequential operators <code>map</code>,
+<code>filter</code>, <code>reduce</code>, <code>count</code>, <code>take/limit</code> and <code>iterate</code>.</p>
+
+<p>Additionally we present the behaviors that are discussed in the paper: push, pull, fused pull, logging, id (for
+blocking terminal operators), future (for non-blocking terminal operators).</p>
+
+<h3>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h3>
+
+<p>Clone the project:</p>
+
+<div class="highlight highlight-shell"><pre>git clone git@github.com:biboudis/streamalg.git</pre></div>
+
+<p>The project is built with maven and its dependencies are automatically resolved: Guava, JMH and JUnit. To run the test suite simply run:</p>
+
+<div class="highlight highlight-shell"><pre>mvn <span class="pl-s3">test</span></pre></div>
+
+<p>The tests cover all examples included in the paper (operators, behaviors) and cases used as motivation as well. The <code>streams</code> package is covered at:    87% classes,    90% methods,    91% lines.</p>
+
+<p>Benchmarks are reproduced by executing:</p>
+
+<div class="highlight highlight-shell"><pre>sh run_benchmarks.sh</pre></div>
+
+<h3>
+<a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Structure</h3>
+
+<p>The basic packages of this artifact are the following:</p>
+
+<h4>
+<a id="object-algebras" class="anchor" href="#object-algebras" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object Algebras</h4>
+
+<ul>
+<li>StreamAlg: describes the object algebra of the intermediate operators of streams.</li>
+<li>TakeStreamAlg: adds to streams the <code>take</code> combinator.</li>
+<li>ExecStreamAlg: adds to streams the terminal operators.</li>
+<li>ExecIterateStreamAlg: adds to streams the <code>iterate</code> terminal operator.</li>
+<li>ExecTakeStreamAlg: unifies terminal operators with the algebra with the <code>take</code> combinator.</li>
+</ul>
+
+<p>The following factories implement different combinations of behaviors:</p>
+
+<h4>
+<a id="factories" class="anchor" href="#factories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factories</h4>
+
+<ul>
+<li>ExecFusedPullFactory</li>
+<li>ExecFutureFactory</li>
+<li>ExecPullFactory</li>
+<li>ExecPullWithIterateFactory</li>
+<li>ExecPullWithTakeFactory</li>
+<li>ExecPushFactory</li>
+<li>ExecPushWithTakeFactory</li>
+<li>LogFactory</li>
+<li>PullFactory</li>
+<li>PushFactory</li>
+</ul>
+
+<h3>
+<a id="benchmarks" class="anchor" href="#benchmarks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benchmarks</h3>
+
+<p>The <code>run_benchmarks.sh</code> script simply builds the JMH benchmarks über-jar and then uses the command line interface of JMH to pass the arguments of the experiments.</p>
+
+<h3>
+<a id="team" class="anchor" href="#team" aria-hidden="true"><span class="octicon octicon-link"></span></a>Team</h3>
+
+<p>Aggelos Biboudis (<a href="https://twitter.com/biboudis">@biboudis</a>), Nick Palladinos
+(<a href="https://twitter.com/NickPalladinos">@NickPalladinos</a>), George Fourtounis
+(<a href="https://twitter.com/gf0ur">@gf0ur</a>) and
+<a href="http://www.di.uoa.gr/%7Esmaragd/">Yannis Smaragdakis</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/biboudis">biboudis</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
