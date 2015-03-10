@@ -6,7 +6,6 @@ The StreamAlg repository contains the source code artifact that accompanies the
 _Streams à la carte: Extensible Pipelines with Object Algebras_ paper, to appear at [ECOOP15](http://2015.ecoop.org).
 
 - Preprint: http://goo.gl/P2XO68
-- Talk. PL Seminar 2014, NTUA, Athens: https://slides.com/biboudis/streamalg-presentation/
 
 ### Overview
 
