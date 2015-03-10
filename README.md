@@ -67,7 +67,45 @@ The following factories implement different combinations of behaviors:
 - PushFactory
 
 ### Benchmarks
-The ```run_benchmarks.sh``` script simply builds the JMH benchmarks über-jar and then uses the command line interface of JMH to pass the arguments of the experiments.
+The ```run_benchmarks.sh``` script simply builds the JMH benchmarks über-jar and then uses the command line interface
+of JMH to pass the arguments of the experiments. The script will run all benchmarks in
+```streamalg/src/main/java/benchmarks/*``` and their description is included in the paper:
+
+```
+benchmarks.Benchmark_BasicPipelines.cart_AlgebrasPull
+benchmarks.Benchmark_BasicPipelines.cart_AlgebrasPush
+benchmarks.Benchmark_BasicPipelines.cart_reduce_Baseline
+benchmarks.Benchmark_BasicPipelines.cart_reduce_Java8Streams
+benchmarks.Benchmark_BasicPipelines.filter_map_reduce_AlgebrasPull
+benchmarks.Benchmark_BasicPipelines.filter_map_reduce_AlgebrasPush
+benchmarks.Benchmark_BasicPipelines.filter_map_reduce_Baseline
+benchmarks.Benchmark_BasicPipelines.filter_map_reduce_Java8Streams
+benchmarks.Benchmark_BasicPipelines.filter_reduce_AlgebrasPull
+benchmarks.Benchmark_BasicPipelines.filter_reduce_AlgebrasPush
+benchmarks.Benchmark_BasicPipelines.filter_reduce_Baseline
+benchmarks.Benchmark_BasicPipelines.filter_reduce_Java8Streams
+benchmarks.Benchmark_BasicPipelines.reduce_AlgebrasPull
+benchmarks.Benchmark_BasicPipelines.reduce_AlgebrasPush
+benchmarks.Benchmark_BasicPipelines.reduce_Baseline
+benchmarks.Benchmark_BasicPipelines.reduce_Java8Streams
+benchmarks.Benchmark_FusedPipelines.filters_Algebras_FusedPull
+benchmarks.Benchmark_FusedPipelines.filters_Algebras_NotFusedPull
+benchmarks.Benchmark_FusedPipelines.filters_Java8Streams
+benchmarks.Benchmark_FusedPipelines.maps_Algebras_FusedPull
+benchmarks.Benchmark_FusedPipelines.maps_Algebras_NotFusedPull
+benchmarks.Benchmark_FusedPipelines.maps_Java8Streams
+benchmarks.Benchmark_IteratorPipelines.count_iterate_AlgebrasPull
+benchmarks.Benchmark_IteratorPipelines.count_iterate_Java8Streams
+benchmarks.Benchmark_IteratorPipelines.filter_count_iterate_AlgebrasPull
+benchmarks.Benchmark_IteratorPipelines.filter_count_iterate_Java8Streams
+benchmarks.Benchmark_IteratorPipelines.filter_map_count_iterate_AlgebrasPull
+benchmarks.Benchmark_IteratorPipelines.filter_map_count_iterate_Java8Streams
+benchmarks.Benchmark_TakePipelines.limit_count_AlgebrasPull
+benchmarks.Benchmark_TakePipelines.limit_count_Java8Streams
+benchmarks.Benchmark_TakePipelines.limit_count_iterate_Java8Streams
+benchmarks.Benchmark_FusedPipelines.filters_Algebras_Push
+benchmarks.Benchmark_FusedPipelines.maps_Algebras_Push
+```
 
 ### Team
 
