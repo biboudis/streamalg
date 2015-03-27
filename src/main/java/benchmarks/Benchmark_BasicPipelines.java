@@ -131,7 +131,7 @@ public class Benchmark_BasicPipelines {
     }
 
     @Benchmark
-    public Long cart_AlgebrasPush() {
+    public Long cart_reduce_AlgebrasPush() {
         ExecPushFactory alg = new ExecPushFactory();
         Long value = Id.prj(
                 alg.reduce(0L, Long::sum,
@@ -174,7 +174,7 @@ public class Benchmark_BasicPipelines {
     }
 
     @Benchmark
-    public Long cart_AlgebrasPull() {
+    public Long cart_reduce_AlgebrasPull() {
         ExecPullFactory alg = new ExecPullFactory();
         Long value = Id.prj(
                 alg.reduce(0L, Long::sum,

@@ -27,6 +27,10 @@ blocking terminal operators), future (for non-blocking terminal operators).
 
 ### Getting Started
 
+#### Prerequisites
+The project runs with Java 8.
+
+#### Testing
 Clone the project:
 ```shell
 git clone git@github.com:biboudis/streamalg.git
@@ -37,6 +41,7 @@ mvn test
 ```
 The tests cover all examples included in the paper (operators, behaviors) and cases used as motivation as well. The ```streams``` package is covered at:	87% classes,	90% methods,	91% lines.
 
+#### Running Benchmarks
 Benchmarks are reproduced by executing:
 ```shell
 sh run_benchmarks.sh
