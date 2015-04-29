@@ -1,45 +1,32 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>StreamAlg by biboudis</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>StreamAlg</h1>
-        <p>Streams à la carte: Extensible stream pipelines with object algebras.</p>
+    <section class="page-header">
+      <h1 class="project-name">StreamAlg</h1>
+      <h2 class="project-tagline">Streams à la carte: Extensible stream pipelines with object algebras.</h2>
+      <a href="https://github.com/biboudis/streamalg" class="btn">View on GitHub</a>
+      <a href="https://github.com/biboudis/streamalg/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/biboudis/streamalg/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/biboudis/streamalg">View the Project on GitHub <small>biboudis/streamalg</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/biboudis/streamalg/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/biboudis/streamalg/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/biboudis/streamalg">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h2>
+    <section class="main-content">
+      <h2>
 <a id="streamalg" class="anchor" href="#streamalg" aria-hidden="true"><span class="octicon octicon-link"></span></a>StreamAlg</h2>
 
 <p><a href="https://travis-ci.org/biboudis/streamalg"><img src="https://travis-ci.org/biboudis/streamalg.svg?branch=master" alt="Build Status"></a></p>
 
 <p>The StreamAlg repository contains the source code artifact that accompanies the
-<em>Streams à la carte: Extensible Pipelines with Object Algebras</em> paper, to appear at <a href="http://2015.ecoop.org">ECOOP15</a>.</p>
-
-<ul>
-<li>Preprint: <a href="http://goo.gl/P2XO68">http://goo.gl/P2XO68</a>
-</li>
-</ul>
+<a href="http://goo.gl/P2XO68"><em>Streams à la carte: Extensible Pipelines with Object Algebras</em></a> paper, to appear at the
+<a href="http://2015.ecoop.org/">29th European Conference on Object-Oriented Programming (ECOOP'15)</a>.</p>
 
 <h3>
 <a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h3>
@@ -63,15 +50,26 @@ blocking terminal operators), future (for non-blocking terminal operators).</p>
 <h3>
 <a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h3>
 
+<h4>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h4>
+
+<p>The project runs with Java 8.</p>
+
+<h4>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h4>
+
 <p>Clone the project:</p>
 
 <div class="highlight highlight-shell"><pre>git clone git@github.com:biboudis/streamalg.git</pre></div>
 
 <p>The project is built with maven and its dependencies are automatically resolved: Guava, JMH and JUnit. To run the test suite simply run:</p>
 
-<div class="highlight highlight-shell"><pre>mvn <span class="pl-s3">test</span></pre></div>
+<div class="highlight highlight-shell"><pre>mvn <span class="pl-c1">test</span></pre></div>
 
 <p>The tests cover all examples included in the paper (operators, behaviors) and cases used as motivation as well. The <code>streams</code> package is covered at:    87% classes,    90% methods,    91% lines.</p>
+
+<h4>
+<a id="running-benchmarks" class="anchor" href="#running-benchmarks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Benchmarks</h4>
 
 <p>Benchmarks are reproduced by executing:</p>
 
@@ -93,10 +91,10 @@ blocking terminal operators), future (for non-blocking terminal operators).</p>
 <li>ExecTakeStreamAlg: unifies terminal operators with the algebra with the <code>take</code> combinator.</li>
 </ul>
 
-<p>The following factories implement different combinations of behaviors:</p>
-
 <h4>
 <a id="factories" class="anchor" href="#factories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factories</h4>
+
+<p>The following factories implement different combinations of behaviors:</p>
 
 <ul>
 <li>ExecFusedPullFactory</li>
@@ -111,47 +109,45 @@ blocking terminal operators), future (for non-blocking terminal operators).</p>
 <li>PushFactory</li>
 </ul>
 
+<h4>
+<a id="higher-kinded-types" class="anchor" href="#higher-kinded-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Higher Kinded types</h4>
+
+<p>The types that participate in higher-kinded polymorphism scenarios are: <code>Future</code>, <code>Id</code>, <code>Pull</code> and <code>Push</code>.</p>
+
+<h4>
+<a id="gadt-encoding" class="anchor" href="#gadt-encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>GADT encoding</h4>
+
+<p>The encoding appears in the <code>gadt.evaluator</code> package.</p>
+
+<h4>
+<a id="fluent-apis" class="anchor" href="#fluent-apis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fluent APIs</h4>
+
+<p>In <code>streamalg/fluent/Stream.cs</code> and <code>streamalg/fluent/Stream.scala</code> we describe a
+possible solution of obtaining fluent APIs of Streams a la carte in C# and Scala.</p>
+
 <h3>
 <a id="benchmarks" class="anchor" href="#benchmarks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benchmarks</h3>
 
 <p>The <code>run_benchmarks.sh</code> script simply builds the JMH benchmarks über-jar and then uses the command line interface
 of JMH to pass the arguments of the experiments. The script will run all benchmarks in
-<code>streamalg/src/main/java/benchmarks/*</code> and their description is included in the paper:</p>
+<code>streamalg/src/main/java/benchmarks/*</code> and their description is included in the paper.
+The user can run the benchmark script as is or by passing a regular-expression for filter to select only some of them. The
+micro-benchmark suite can be passed the number of elements <code>N</code> for map, count, operations with large number of elements, <code>N_small</code>
+that is used for cart and limit/take examples. <code>N_limit</code> is used as the parameter for <code>limit</code> and <code>F</code> is used for
+benchmarks with fused pipelines.</p>
 
-<pre><code>benchmarks.Benchmark_BasicPipelines.cart_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.cart_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.cart_reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.cart_reduce_Java8Streams
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_Java8Streams
-benchmarks.Benchmark_BasicPipelines.filter_reduce_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.filter_reduce_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.filter_reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.filter_reduce_Java8Streams
-benchmarks.Benchmark_BasicPipelines.reduce_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.reduce_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.reduce_Java8Streams
-benchmarks.Benchmark_FusedPipelines.filters_Algebras_FusedPull
-benchmarks.Benchmark_FusedPipelines.filters_Algebras_NotFusedPull
-benchmarks.Benchmark_FusedPipelines.filters_Java8Streams
-benchmarks.Benchmark_FusedPipelines.maps_Algebras_FusedPull
-benchmarks.Benchmark_FusedPipelines.maps_Algebras_NotFusedPull
-benchmarks.Benchmark_FusedPipelines.maps_Java8Streams
-benchmarks.Benchmark_IteratorPipelines.count_iterate_AlgebrasPull
-benchmarks.Benchmark_IteratorPipelines.count_iterate_Java8Streams
-benchmarks.Benchmark_IteratorPipelines.filter_count_iterate_AlgebrasPull
-benchmarks.Benchmark_IteratorPipelines.filter_count_iterate_Java8Streams
-benchmarks.Benchmark_IteratorPipelines.filter_map_count_iterate_AlgebrasPull
-benchmarks.Benchmark_IteratorPipelines.filter_map_count_iterate_Java8Streams
-benchmarks.Benchmark_TakePipelines.limit_count_AlgebrasPull
-benchmarks.Benchmark_TakePipelines.limit_count_Java8Streams
-benchmarks.Benchmark_TakePipelines.limit_count_iterate_Java8Streams
-benchmarks.Benchmark_FusedPipelines.filters_Algebras_Push
-benchmarks.Benchmark_FusedPipelines.maps_Algebras_Push
-</code></pre>
+<p>For more information on JMH the user can run it directly,
+e.g., to get the help dialog <code>java -jar target/microbenchmarks.jar -h</code>.</p>
+
+<p>We omitted baseline tests from the paper (although we included them in the repo) as the focus of the paper
+is not on comparing hand-optimized tight loops with streaming pipelines.
+We have investigated this in previous work (<a href="http://arxiv.org/abs/1406.6631">http://arxiv.org/abs/1406.6631</a>) and it is something that
+we would like to investigate about the OpenJDK specifically in the immediate future.</p>
+
+<p>We include three basic categories of benchmarks: <em>basic pipelines</em> with various combinations about both Pull and Push algebras,
+<em>fused pipelines</em> to exercise map and filter fusion and help with the comparison between the non-fused pipelines,
+<em>iterator pipelines</em> to demonstrate differences of the Pull algebra and the obtaining of an iterator from Java 8 Streams
+and <em>take pipelines</em> (the <code>take</code> operator is the same as the <code>limit</code> operator in Java 8 Streams.</p>
 
 <h3>
 <a id="team" class="anchor" href="#team" aria-hidden="true"><span class="octicon octicon-link"></span></a>Team</h3>
@@ -160,14 +156,16 @@ benchmarks.Benchmark_FusedPipelines.maps_Algebras_Push
 (<a href="https://twitter.com/NickPalladinos">@NickPalladinos</a>), George Fourtounis
 (<a href="https://twitter.com/gf0ur">@gf0ur</a>) and
 <a href="http://www.di.uoa.gr/%7Esmaragd/">Yannis Smaragdakis</a>.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/biboudis">biboudis</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/biboudis/streamalg">StreamAlg</a> is maintained by <a href="https://github.com/biboudis">biboudis</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-              <script type="text/javascript">
+
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -180,3 +178,4 @@ benchmarks.Benchmark_FusedPipelines.maps_Algebras_Push
 
   </body>
 </html>
+
