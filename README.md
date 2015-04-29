@@ -73,43 +73,24 @@ The following factories implement different combinations of behaviors:
 ### Benchmarks
 The ```run_benchmarks.sh``` script simply builds the JMH benchmarks über-jar and then uses the command line interface
 of JMH to pass the arguments of the experiments. The script will run all benchmarks in
-```streamalg/src/main/java/benchmarks/*``` and their description is included in the paper:
+```streamalg/src/main/java/benchmarks/*``` and their description is included in the paper.
+The user can run the benchmark script as is or by passing a regular-expression for filter to select only some of them. The
+micro-benchmark suite can be passed the number of elements ```N``` for map, count, operations with large number of elements, ```N_small```
+that is used for cart and limit/take examples. ```N_limit``` is used as the parameter for ```limit``` and ```F``` is used for
+benchmarks with fused pipelines.
 
-```
-benchmarks.Benchmark_BasicPipelines.cart_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.cart_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.cart_reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.cart_reduce_Java8Streams
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.filter_map_reduce_Java8Streams
-benchmarks.Benchmark_BasicPipelines.filter_reduce_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.filter_reduce_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.filter_reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.filter_reduce_Java8Streams
-benchmarks.Benchmark_BasicPipelines.reduce_AlgebrasPull
-benchmarks.Benchmark_BasicPipelines.reduce_AlgebrasPush
-benchmarks.Benchmark_BasicPipelines.reduce_Baseline
-benchmarks.Benchmark_BasicPipelines.reduce_Java8Streams
-benchmarks.Benchmark_FusedPipelines.filters_Algebras_FusedPull
-benchmarks.Benchmark_FusedPipelines.filters_Algebras_NotFusedPull
-benchmarks.Benchmark_FusedPipelines.filters_Java8Streams
-benchmarks.Benchmark_FusedPipelines.maps_Algebras_FusedPull
-benchmarks.Benchmark_FusedPipelines.maps_Algebras_NotFusedPull
-benchmarks.Benchmark_FusedPipelines.maps_Java8Streams
-benchmarks.Benchmark_IteratorPipelines.count_iterate_AlgebrasPull
-benchmarks.Benchmark_IteratorPipelines.count_iterate_Java8Streams
-benchmarks.Benchmark_IteratorPipelines.filter_count_iterate_AlgebrasPull
-benchmarks.Benchmark_IteratorPipelines.filter_count_iterate_Java8Streams
-benchmarks.Benchmark_IteratorPipelines.filter_map_count_iterate_AlgebrasPull
-benchmarks.Benchmark_IteratorPipelines.filter_map_count_iterate_Java8Streams
-benchmarks.Benchmark_TakePipelines.limit_count_AlgebrasPull
-benchmarks.Benchmark_TakePipelines.limit_count_Java8Streams
-benchmarks.Benchmark_TakePipelines.limit_count_iterate_Java8Streams
-benchmarks.Benchmark_FusedPipelines.filters_Algebras_Push
-benchmarks.Benchmark_FusedPipelines.maps_Algebras_Push
-```
+For more information on JMH the user can run it directly,
+e.g., to get the help dialog ```java -jar target/microbenchmarks.jar -h```.
+
+We omitted baseline tests from the paper (although we included them in the repo) as the focus of the paper
+is not on comparing hand-optimized tight loops with streaming pipelines.
+We have investigated this in previous work (http://arxiv.org/abs/1406.6631) and it is something that
+we would like to investigate about the OpenJDK specifically in the immediate future.
+
+We include three basic categories of benchmarks: _basic pipelines_ with various combinations about both Pull and Push algebras,
+_fused pipelines_ to exercise map and filter fusion and help with the comparison between the non-fused pipelines,
+_iterator pipelines_ to demonstrate differences of the Pull algebra and the obtaining of an iterator from Java 8 Streams
+and _take pipelines_ (the ```take``` operator is the same as the ```limit``` operator in Java 8 Streams.
 
 ### Team
 
