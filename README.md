@@ -3,9 +3,8 @@
 [![Build Status](https://travis-ci.org/biboudis/streamalg.svg?branch=master)](https://travis-ci.org/biboudis/streamalg)
 
 The StreamAlg repository contains the source code artifact that accompanies the
-_Streams à la carte: Extensible Pipelines with Object Algebras_ paper, to appear at [ECOOP15](http://2015.ecoop.org).
-
-- Preprint: http://goo.gl/P2XO68
+[http://goo.gl/P2XO68](_Streams à la carte: Extensible Pipelines with Object Algebras_) paper, to appear at the
+[29th European Conference on Object-Oriented Programming (ECOOP'15)](http://2015.ecoop.org/).
 
 ### Overview
 
@@ -57,8 +56,9 @@ The basic packages of this artifact are the following:
 - ExecIterateStreamAlg: adds to streams the ```iterate``` terminal operator.
 - ExecTakeStreamAlg: unifies terminal operators with the algebra with the ```take``` combinator.
 
-The following factories implement different combinations of behaviors:
 #### Factories
+The following factories implement different combinations of behaviors:
+
 - ExecFusedPullFactory
 - ExecFutureFactory
 - ExecPullFactory
@@ -69,6 +69,16 @@ The following factories implement different combinations of behaviors:
 - LogFactory
 - PullFactory
 - PushFactory
+
+#### Higher Kinded types
+The types that participate in higher-kinded polymorphism scenarios are: ```Future```, ```Id```, ```Pull``` and ```Push```.
+
+#### GADT encoding
+The encoding appears in the ```gadt.evaluator``` package.
+
+#### Fluent APIs
+In ```streamalg/fluent/Stream.cs``` and ```streamalg/fluent/Stream.scala``` we describe a
+possible solution of obtaining fluent APIs of Streams a la carte in C# and Scala.
 
 ### Benchmarks
 The ```run_benchmarks.sh``` script simply builds the JMH benchmarks über-jar and then uses the command line interface
