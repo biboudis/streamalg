@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/biboudis/streamalg.svg?branch=master)](https://travis-ci.org/biboudis/streamalg)
 
 The StreamAlg repository contains the source code artifact that accompanies the
-[http://goo.gl/P2XO68](_Streams à la carte: Extensible Pipelines with Object Algebras_) paper, to appear at the
+[_Streams à la carte: Extensible Pipelines with Object Algebras_](http://goo.gl/P2XO68) paper, to appear at the
 [29th European Conference on Object-Oriented Programming (ECOOP'15)](http://2015.ecoop.org/).
 
 ### Overview
