@@ -104,7 +104,7 @@ and _take pipelines_ (the ```take``` operator is the same as the ```limit``` ope
 
 ### Team
 
-Aggelos Biboudis ([@biboudis](https://twitter.com/biboudis)), Nick Palladinos
+[Aggelos Biboudis](http://www.di.uoa.gr/~biboudis/)([@biboudis](https://twitter.com/biboudis)), Nick Palladinos
 ([@NickPalladinos](https://twitter.com/NickPalladinos)), George Fourtounis
 ([@gf0ur](https://twitter.com/gf0ur)) and
-[Yannis Smaragdakis](http://www.di.uoa.gr/~smaragd/).
+[Yannis Smaragdakis](http://www.di.uoa.gr/~smaragd/)([@YSmaragdakis](https://twitter.com/YSmaragdakis)).
