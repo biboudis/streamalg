@@ -100,7 +100,7 @@ we would like to investigate about the OpenJDK specifically in the immediate fut
 We include three basic categories of benchmarks: _basic pipelines_ with various combinations about both Pull and Push algebras,
 _fused pipelines_ to exercise map and filter fusion and help with the comparison between the non-fused pipelines,
 _iterator pipelines_ to demonstrate differences of the Pull algebra and the obtaining of an iterator from Java 8 Streams
-and _take pipelines_ (the ```take``` operator is the same as the ```limit``` operator in Java 8 Streams.
+and _take pipelines_ (the ```take``` operator is the same as the ```limit``` operator in Java 8 Streams).
 
 ### Team
 
